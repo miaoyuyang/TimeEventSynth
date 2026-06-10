@@ -1,0 +1,50 @@
+inherits:
+  - configs/tsb_uad.yaml
+  - configs/tsb_uad_public_v2.yaml
+
+experiment:
+  name: low_label_ablation
+
+dataset:
+  max_series: 50
+  min_length: 100
+  max_event_ratio: 0.5
+
+split:
+  train_ratio: 0.7
+  val_ratio: 0.1
+  test_ratio: 0.2
+  stratify_by_has_event: true
+  group_by_parent_folder: true
+
+low_label:
+  default_fraction: 0.2
+
+evaluation:
+  threshold_selection: event_f1
+  event_iou_threshold: 0.1
+  event_beta: 1.0
+  threshold_grid_size: 200
+  prediction_smoothing:
+    enabled: true
+    min_event_length: 3
+    merge_gap: 2
+
+data:
+  train_ratio: 0.7
+  dev_ratio: 0.1
+  test_ratio: 0.2
+
+synthesis:
+  filter_policy: none
+  amplitude_calibration: none
+  context_amplitude_calibration: robust_scale_shift
+  partial_target_synthesis: full_replacement
+  context_size: 5
+  match_partial_amplitude: true
+  confidence_quantile: 0.5
+  min_confidence: 0.5
+  strict_thresholds:
+    donor_similarity: 0.5
+    donor_agreement: 0.5
+    amplitude_compatibility: 0.5

@@ -1,0 +1,7 @@
+detector_backbone,adaptive_groupwise_transfer,all_donors_no_filter,random_event_oversampling,real_only
+autoencoder,0.0,0.028037383177570093,0.015113350125944582,0.0
+iforest,0.0,0.0,0.0,0.0
+internal_classifier,0.04339250493096647,0.038876889848812095,0.0,0.11005692599620494
+lof,0.0,0.07079646017699116,0.023529411764705885,0.0
+ocsvm,0.0,0.0,0.0,0.0
+timesnet,0.0,0.0,0.0,0.0

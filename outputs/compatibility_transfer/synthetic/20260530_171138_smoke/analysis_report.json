@@ -1,0 +1,130 @@
+{
+  "methods": [
+    "real_only",
+    "random_event_oversampling",
+    "learned_prototype_event_time__all_donors_no_filter",
+    "learned_prototype_event_time__cross_dataset_compatible",
+    "dtw_aligned_donor__cross_dataset_compatible"
+  ],
+  "best_by_event_f1": {
+    "method": "learned_prototype_event_time__cross_dataset_compatible",
+    "value": 0.8658536585365854,
+    "donor_policy": "cross_dataset_compatible"
+  },
+  "best_by_best_point_f1": {
+    "method": "real_only",
+    "value": 0.9586905689789555,
+    "donor_policy": null
+  },
+  "compatibility_filtered_beats_all_donors": {
+    "delta_event_f1": 0.043068848410003024,
+    "delta_best_point_f1": 0.0490529728370358
+  },
+  "cross_dataset_compatible_beats_same_dataset_only": null,
+  "rejection_counts": {
+    "kept": 57,
+    "rejected_incompatible_donor": 0,
+    "no_compatible_donor": 0,
+    "below_compatibility_threshold": 0,
+    "below_top_quantile_0.5": 228,
+    "cross_dataset_disallowed": 0,
+    "synthesis_failed": 0,
+    "invalid_candidate": 0,
+    "evaluator_invalid": 0
+  },
+  "compatibility_summary": {
+    "num_target_timelines": 10,
+    "num_source_timelines": 10,
+    "total_donor_pairs_considered": 399,
+    "donor_pairs_kept": 171,
+    "donor_pairs_rejected": 228,
+    "mean_compatibility_score_kept": 0.9386906650060349,
+    "mean_compatibility_score_rejected": 0.9063343894778386,
+    "same_dataset_kept": 171,
+    "same_dataset_rejected": 228,
+    "cross_dataset_kept": 0,
+    "cross_dataset_rejected": 0,
+    "no_compatible_donor_count": 0,
+    "compatibility_enabled_policies": [
+      "compatibility_strict",
+      "compatibility_top50",
+      "cross_dataset_compatible"
+    ]
+  },
+  "masked_completion_ranking": [
+    {
+      "method": "dtw_aligned_donor__cross_dataset_compatible",
+      "normalized_MAE_by_event_std": 0.6937364665743966,
+      "shape_correlation": 0.7376396542385666
+    },
+    {
+      "method": "learned_prototype_event_time__all_donors_no_filter",
+      "normalized_MAE_by_event_std": 1.1063951946490256,
+      "shape_correlation": 0.3737271628373819
+    },
+    {
+      "method": "learned_prototype_event_time__cross_dataset_compatible",
+      "normalized_MAE_by_event_std": 1.1063951946490256,
+      "shape_correlation": 0.3737271628373819
+    }
+  ],
+  "downstream_ranking": [
+    {
+      "method": "learned_prototype_event_time__cross_dataset_compatible",
+      "event_f1": 0.8658536585365854,
+      "best_point_f1": 0.9289176090468497,
+      "donor_policy": "cross_dataset_compatible"
+    },
+    {
+      "method": "random_event_oversampling",
+      "event_f1": 0.8588957055214724,
+      "best_point_f1": 0.8914664457332229,
+      "donor_policy": null
+    },
+    {
+      "method": "real_only",
+      "event_f1": 0.84472049689441,
+      "best_point_f1": 0.9586905689789555,
+      "donor_policy": null
+    },
+    {
+      "method": "dtw_aligned_donor__cross_dataset_compatible",
+      "event_f1": 0.8375,
+      "best_point_f1": 0.946051602814699,
+      "donor_policy": "cross_dataset_compatible"
+    },
+    {
+      "method": "learned_prototype_event_time__all_donors_no_filter",
+      "event_f1": 0.8227848101265823,
+      "best_point_f1": 0.8798646362098139,
+      "donor_policy": "all_donors_no_filter"
+    }
+  ],
+  "reconstruction_vs_downstream": [
+    {
+      "method": "dtw_aligned_donor__cross_dataset_compatible",
+      "shape_correlation": 0.7376396542385666,
+      "event_f1": 0.8375
+    },
+    {
+      "method": "learned_prototype_event_time__all_donors_no_filter",
+      "shape_correlation": 0.3737271628373819,
+      "event_f1": 0.8227848101265823
+    },
+    {
+      "method": "learned_prototype_event_time__cross_dataset_compatible",
+      "shape_correlation": 0.3737271628373819,
+      "event_f1": 0.8658536585365854
+    }
+  ],
+  "strict_filter_note": {
+    "top50_filter_method": null,
+    "strict_filter_method": null,
+    "num_rejected_top50": 228,
+    "strict_filter_failures": 0
+  },
+  "reconstruction_downstream_correlation": -0.17984652338546211,
+  "warnings": [
+    "Masked-completion shape correlation disagrees with downstream event F1 ranking."
+  ]
+}

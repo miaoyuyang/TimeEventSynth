@@ -1,0 +1,19 @@
+inherits:
+  - configs/paper_main_tsb_100_seed0.yaml
+
+experiment:
+  name: paper_main_tsb_300_3seed
+
+dataset:
+  max_series: 300
+
+data:
+  load_options:
+    max_series: 300
+
+evaluation:
+  seeds: [0, 1, 2]
+  dataset_balanced: true
+  max_timelines_per_dataset: 20
+  max_points_per_dataset: null
+  stratify_by_dataset: true

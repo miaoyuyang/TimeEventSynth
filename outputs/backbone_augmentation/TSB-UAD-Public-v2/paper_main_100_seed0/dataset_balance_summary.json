@@ -1,0 +1,154 @@
+{
+  "dataset_balanced": true,
+  "base_before": {
+    "num_datasets": 5,
+    "per_dataset": {
+      "Genesis": {
+        "num_timelines": 4,
+        "num_points": 64880,
+        "num_anomalous_timelines": 4,
+        "num_anomaly_points": 200
+      },
+      "IOPS": {
+        "num_timelines": 7,
+        "num_points": 62718,
+        "num_anomalous_timelines": 7,
+        "num_anomaly_points": 766
+      },
+      "MSL": {
+        "num_timelines": 17,
+        "num_points": 47169,
+        "num_anomalous_timelines": 17,
+        "num_anomaly_points": 2297
+      },
+      "NAB": {
+        "num_timelines": 51,
+        "num_points": 318620,
+        "num_anomalous_timelines": 51,
+        "num_anomaly_points": 31115
+      },
+      "TODS": {
+        "num_timelines": 15,
+        "num_points": 75000,
+        "num_anomalous_timelines": 15,
+        "num_anomaly_points": 4783
+      }
+    }
+  },
+  "per_seed": {
+    "0": {
+      "enabled": true,
+      "seed": 0,
+      "before": {
+        "num_datasets": 5,
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_points": 64880,
+            "num_anomalous_timelines": 4,
+            "num_anomaly_points": 200
+          },
+          "IOPS": {
+            "num_timelines": 7,
+            "num_points": 62718,
+            "num_anomalous_timelines": 7,
+            "num_anomaly_points": 766
+          },
+          "MSL": {
+            "num_timelines": 17,
+            "num_points": 47169,
+            "num_anomalous_timelines": 17,
+            "num_anomaly_points": 2297
+          },
+          "NAB": {
+            "num_timelines": 51,
+            "num_points": 318620,
+            "num_anomalous_timelines": 51,
+            "num_anomaly_points": 31115
+          },
+          "TODS": {
+            "num_timelines": 15,
+            "num_points": 75000,
+            "num_anomalous_timelines": 15,
+            "num_anomaly_points": 4783
+          }
+        }
+      },
+      "after": {
+        "num_datasets": 5,
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_points": 64880,
+            "num_anomalous_timelines": 4,
+            "num_anomaly_points": 200
+          },
+          "IOPS": {
+            "num_timelines": 7,
+            "num_points": 62718,
+            "num_anomalous_timelines": 7,
+            "num_anomaly_points": 766
+          },
+          "MSL": {
+            "num_timelines": 10,
+            "num_points": 21726,
+            "num_anomalous_timelines": 10,
+            "num_anomaly_points": 1241
+          },
+          "NAB": {
+            "num_timelines": 10,
+            "num_points": 86079,
+            "num_anomalous_timelines": 10,
+            "num_anomaly_points": 8373
+          },
+          "TODS": {
+            "num_timelines": 10,
+            "num_points": 50000,
+            "num_anomalous_timelines": 10,
+            "num_anomaly_points": 3395
+          }
+        }
+      },
+      "max_timelines_per_dataset": 10,
+      "max_points_per_dataset": null,
+      "min_timelines_per_dataset": 3,
+      "preserve_anomaly_timelines": true,
+      "split_dataset_coverage": {
+        "num_datasets": 5,
+        "datasets_missing_from_test": [],
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_test_timelines": 1,
+            "num_train_timelines": 2,
+            "num_val_timelines": 1
+          },
+          "IOPS": {
+            "num_timelines": 7,
+            "num_test_timelines": 1,
+            "num_train_timelines": 5,
+            "num_val_timelines": 1
+          },
+          "MSL": {
+            "num_timelines": 10,
+            "num_test_timelines": 2,
+            "num_train_timelines": 7,
+            "num_val_timelines": 1
+          },
+          "NAB": {
+            "num_timelines": 10,
+            "num_test_timelines": 2,
+            "num_train_timelines": 7,
+            "num_val_timelines": 1
+          },
+          "TODS": {
+            "num_timelines": 10,
+            "num_test_timelines": 2,
+            "num_train_timelines": 7,
+            "num_val_timelines": 1
+          }
+        }
+      }
+    }
+  }
+}

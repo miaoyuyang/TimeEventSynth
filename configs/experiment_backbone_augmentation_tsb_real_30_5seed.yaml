@@ -1,0 +1,62 @@
+inherits:
+  - configs/experiment_backbone_augmentation_full.yaml
+  - configs/tsb_uad_public_v2.yaml
+
+experiment:
+  name: backbone_augmentation_tsb_real_30_5seed
+
+dataset:
+  name: TSB-UAD-Public-v2
+  max_series: 30
+  min_length: 500
+  max_length: 20000
+
+augmentation:
+  default_synthesis_method: learned_prototype_event_time
+  adaptive_groupwise:
+    density_backbones: [iforest, lof, ocsvm]
+    broad_backbones: [internal_classifier, current_internal_classifier, cnn, timesnet, autoencoder]
+    primary_policy_by_family:
+      density: groupwise_cross_dataset_compatible
+      broad: groupwise_cross_dataset_all
+      default: groupwise_cross_dataset_compatible
+    fallback_policy_by_family:
+      density: groupwise_cross_dataset_all
+      broad: groupwise_cross_dataset_compatible
+      default: groupwise_cross_dataset_all
+    min_synthetic_windows: 1
+
+synthesis:
+  top_k: 3
+  alignment_grid_size: 32
+  grouping:
+    num_groups: 4
+    grid_size: 32
+    context_size: 5
+
+augmentation_policies:
+  - name: real_only
+  - name: random_event_oversampling
+  - name: cross_dataset_all
+  - name: cross_dataset_compatible
+  - name: compatibility_strict
+  - name: groupwise_cross_dataset_all
+  - name: groupwise_cross_dataset_compatible
+  - name: groupwise_compatibility_strict
+  - name: adaptive_groupwise_transfer
+
+backbones:
+  autoencoder:
+    train_with_synthetic: false
+  cnn:
+    train_with_synthetic: false
+  timesnet:
+    train_with_synthetic: false
+
+evaluation:
+  seeds: [0, 1, 2, 3, 4]
+  labeled_fraction: 0.2
+  dataset_balanced: true
+  max_timelines_per_dataset: 5
+  max_points_per_dataset: null
+  stratify_by_dataset: true

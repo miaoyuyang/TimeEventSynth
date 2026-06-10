@@ -1,0 +1,10 @@
+{
+  "mask_fraction": 0.3,
+  "mask_policies": [
+    "middle_30",
+    "suffix_30"
+  ],
+  "num_test_events": 52,
+  "num_evaluations": 936,
+  "donor_source": "train_val"
+}

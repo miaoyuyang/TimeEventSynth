@@ -1,0 +1,77 @@
+inherits:
+  - configs/experiment_backbone_augmentation_tsb_real_30_5seed.yaml
+
+experiment:
+  name: paper_main_tsb_100_seed0
+
+dataset:
+  name: TSB-UAD-Public-v2
+  max_series: 100
+  min_length: 500
+  max_length: 20000
+
+data:
+  raw_path: data/raw/TSB-UAD-Public-v2
+  dataset_name: TSB-UAD-Public-v2
+  load_options:
+    max_series: 100
+    max_length: 20000
+
+detector_backbones:
+  - name: internal_classifier
+    config: {}
+  - name: iforest
+    config:
+      contamination: 0.1
+      window_size: 15
+      stride: 1
+      threshold_mode: synthetic_separation
+  - name: lof
+    config:
+      contamination: 0.1
+      n_neighbors: 20
+      window_size: 15
+      stride: 1
+      threshold_mode: synthetic_separation
+  - name: ocsvm
+    config:
+      nu: 0.1
+      kernel: rbf
+      window_size: 15
+      stride: 1
+      threshold_mode: synthetic_separation
+  - name: autoencoder
+    config:
+      hidden_layer_sizes: [64, 32, 64]
+      max_iter: 200
+      window_size: 15
+      threshold_mode: synthetic_separation
+      train_with_synthetic: false
+      max_train_points: 50000
+  - name: timesnet
+    config:
+      window_size: 48
+      stride: 1
+      epochs: 10
+      batch_size: 128
+      learning_rate: 0.001
+      d_model: 32
+      top_k_periods: 3
+      num_blocks: 2
+      threshold_mode: synthetic_separation
+      train_with_synthetic: false
+      max_train_windows: 20000
+
+augmentation_policies:
+  - name: real_only
+  - name: random_event_oversampling
+  - name: all_donors_no_filter
+  - name: adaptive_groupwise_transfer
+
+evaluation:
+  seeds: [0]
+  labeled_fraction: 0.2
+  dataset_balanced: true
+  max_timelines_per_dataset: 10
+  max_points_per_dataset: null
+  stratify_by_dataset: true

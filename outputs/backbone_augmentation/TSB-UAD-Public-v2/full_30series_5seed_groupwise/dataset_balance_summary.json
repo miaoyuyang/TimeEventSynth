@@ -1,0 +1,610 @@
+{
+  "dataset_balanced": true,
+  "base_before": {
+    "num_datasets": 5,
+    "per_dataset": {
+      "Genesis": {
+        "num_timelines": 4,
+        "num_points": 64880,
+        "num_anomalous_timelines": 4,
+        "num_anomaly_points": 200
+      },
+      "IOPS": {
+        "num_timelines": 7,
+        "num_points": 62718,
+        "num_anomalous_timelines": 7,
+        "num_anomaly_points": 766
+      },
+      "MSL": {
+        "num_timelines": 6,
+        "num_points": 19128,
+        "num_anomalous_timelines": 6,
+        "num_anomaly_points": 789
+      },
+      "NAB": {
+        "num_timelines": 7,
+        "num_points": 45204,
+        "num_anomalous_timelines": 7,
+        "num_anomaly_points": 4206
+      },
+      "TODS": {
+        "num_timelines": 6,
+        "num_points": 30000,
+        "num_anomalous_timelines": 6,
+        "num_anomaly_points": 1900
+      }
+    }
+  },
+  "per_seed": {
+    "0": {
+      "enabled": true,
+      "seed": 0,
+      "before": {
+        "num_datasets": 5,
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_points": 64880,
+            "num_anomalous_timelines": 4,
+            "num_anomaly_points": 200
+          },
+          "IOPS": {
+            "num_timelines": 7,
+            "num_points": 62718,
+            "num_anomalous_timelines": 7,
+            "num_anomaly_points": 766
+          },
+          "MSL": {
+            "num_timelines": 6,
+            "num_points": 19128,
+            "num_anomalous_timelines": 6,
+            "num_anomaly_points": 789
+          },
+          "NAB": {
+            "num_timelines": 7,
+            "num_points": 45204,
+            "num_anomalous_timelines": 7,
+            "num_anomaly_points": 4206
+          },
+          "TODS": {
+            "num_timelines": 6,
+            "num_points": 30000,
+            "num_anomalous_timelines": 6,
+            "num_anomaly_points": 1900
+          }
+        }
+      },
+      "after": {
+        "num_datasets": 5,
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_points": 64880,
+            "num_anomalous_timelines": 4,
+            "num_anomaly_points": 200
+          },
+          "IOPS": {
+            "num_timelines": 5,
+            "num_points": 42714,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 526
+          },
+          "MSL": {
+            "num_timelines": 5,
+            "num_points": 15593,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 561
+          },
+          "NAB": {
+            "num_timelines": 5,
+            "num_points": 41958,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 3884
+          },
+          "TODS": {
+            "num_timelines": 5,
+            "num_points": 25000,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 1675
+          }
+        }
+      },
+      "max_timelines_per_dataset": 5,
+      "max_points_per_dataset": null,
+      "min_timelines_per_dataset": 3,
+      "preserve_anomaly_timelines": true,
+      "split_dataset_coverage": {
+        "num_datasets": 5,
+        "datasets_missing_from_test": [],
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_test_timelines": 1,
+            "num_train_timelines": 2,
+            "num_val_timelines": 1
+          },
+          "IOPS": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          },
+          "MSL": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          },
+          "NAB": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          },
+          "TODS": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          }
+        }
+      }
+    },
+    "1": {
+      "enabled": true,
+      "seed": 1,
+      "before": {
+        "num_datasets": 5,
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_points": 64880,
+            "num_anomalous_timelines": 4,
+            "num_anomaly_points": 200
+          },
+          "IOPS": {
+            "num_timelines": 7,
+            "num_points": 62718,
+            "num_anomalous_timelines": 7,
+            "num_anomaly_points": 766
+          },
+          "MSL": {
+            "num_timelines": 6,
+            "num_points": 19128,
+            "num_anomalous_timelines": 6,
+            "num_anomaly_points": 789
+          },
+          "NAB": {
+            "num_timelines": 7,
+            "num_points": 45204,
+            "num_anomalous_timelines": 7,
+            "num_anomaly_points": 4206
+          },
+          "TODS": {
+            "num_timelines": 6,
+            "num_points": 30000,
+            "num_anomalous_timelines": 6,
+            "num_anomaly_points": 1900
+          }
+        }
+      },
+      "after": {
+        "num_datasets": 5,
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_points": 64880,
+            "num_anomalous_timelines": 4,
+            "num_anomaly_points": 200
+          },
+          "IOPS": {
+            "num_timelines": 5,
+            "num_points": 45068,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 633
+          },
+          "MSL": {
+            "num_timelines": 5,
+            "num_points": 16972,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 688
+          },
+          "NAB": {
+            "num_timelines": 5,
+            "num_points": 25513,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 2546
+          },
+          "TODS": {
+            "num_timelines": 5,
+            "num_points": 25000,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 1576
+          }
+        }
+      },
+      "max_timelines_per_dataset": 5,
+      "max_points_per_dataset": null,
+      "min_timelines_per_dataset": 3,
+      "preserve_anomaly_timelines": true,
+      "split_dataset_coverage": {
+        "num_datasets": 5,
+        "datasets_missing_from_test": [],
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_test_timelines": 1,
+            "num_train_timelines": 2,
+            "num_val_timelines": 1
+          },
+          "IOPS": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          },
+          "MSL": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          },
+          "NAB": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          },
+          "TODS": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          }
+        }
+      }
+    },
+    "2": {
+      "enabled": true,
+      "seed": 2,
+      "before": {
+        "num_datasets": 5,
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_points": 64880,
+            "num_anomalous_timelines": 4,
+            "num_anomaly_points": 200
+          },
+          "IOPS": {
+            "num_timelines": 7,
+            "num_points": 62718,
+            "num_anomalous_timelines": 7,
+            "num_anomaly_points": 766
+          },
+          "MSL": {
+            "num_timelines": 6,
+            "num_points": 19128,
+            "num_anomalous_timelines": 6,
+            "num_anomaly_points": 789
+          },
+          "NAB": {
+            "num_timelines": 7,
+            "num_points": 45204,
+            "num_anomalous_timelines": 7,
+            "num_anomaly_points": 4206
+          },
+          "TODS": {
+            "num_timelines": 6,
+            "num_points": 30000,
+            "num_anomalous_timelines": 6,
+            "num_anomaly_points": 1900
+          }
+        }
+      },
+      "after": {
+        "num_datasets": 5,
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_points": 64880,
+            "num_anomalous_timelines": 4,
+            "num_anomaly_points": 200
+          },
+          "IOPS": {
+            "num_timelines": 5,
+            "num_points": 45068,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 498
+          },
+          "MSL": {
+            "num_timelines": 5,
+            "num_points": 16272,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 768
+          },
+          "NAB": {
+            "num_timelines": 5,
+            "num_points": 26968,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 2384
+          },
+          "TODS": {
+            "num_timelines": 5,
+            "num_points": 25000,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 1576
+          }
+        }
+      },
+      "max_timelines_per_dataset": 5,
+      "max_points_per_dataset": null,
+      "min_timelines_per_dataset": 3,
+      "preserve_anomaly_timelines": true,
+      "split_dataset_coverage": {
+        "num_datasets": 5,
+        "datasets_missing_from_test": [],
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_test_timelines": 1,
+            "num_train_timelines": 2,
+            "num_val_timelines": 1
+          },
+          "IOPS": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          },
+          "MSL": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          },
+          "NAB": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          },
+          "TODS": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          }
+        }
+      }
+    },
+    "3": {
+      "enabled": true,
+      "seed": 3,
+      "before": {
+        "num_datasets": 5,
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_points": 64880,
+            "num_anomalous_timelines": 4,
+            "num_anomaly_points": 200
+          },
+          "IOPS": {
+            "num_timelines": 7,
+            "num_points": 62718,
+            "num_anomalous_timelines": 7,
+            "num_anomaly_points": 766
+          },
+          "MSL": {
+            "num_timelines": 6,
+            "num_points": 19128,
+            "num_anomalous_timelines": 6,
+            "num_anomaly_points": 789
+          },
+          "NAB": {
+            "num_timelines": 7,
+            "num_points": 45204,
+            "num_anomalous_timelines": 7,
+            "num_anomaly_points": 4206
+          },
+          "TODS": {
+            "num_timelines": 6,
+            "num_points": 30000,
+            "num_anomalous_timelines": 6,
+            "num_anomaly_points": 1900
+          }
+        }
+      },
+      "after": {
+        "num_datasets": 5,
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_points": 64880,
+            "num_anomalous_timelines": 4,
+            "num_anomaly_points": 200
+          },
+          "IOPS": {
+            "num_timelines": 5,
+            "num_points": 42714,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 526
+          },
+          "MSL": {
+            "num_timelines": 5,
+            "num_points": 13028,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 608
+          },
+          "NAB": {
+            "num_timelines": 5,
+            "num_points": 11298,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 1124
+          },
+          "TODS": {
+            "num_timelines": 5,
+            "num_points": 25000,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 1639
+          }
+        }
+      },
+      "max_timelines_per_dataset": 5,
+      "max_points_per_dataset": null,
+      "min_timelines_per_dataset": 3,
+      "preserve_anomaly_timelines": true,
+      "split_dataset_coverage": {
+        "num_datasets": 5,
+        "datasets_missing_from_test": [],
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_test_timelines": 1,
+            "num_train_timelines": 2,
+            "num_val_timelines": 1
+          },
+          "IOPS": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          },
+          "MSL": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          },
+          "NAB": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          },
+          "TODS": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          }
+        }
+      }
+    },
+    "4": {
+      "enabled": true,
+      "seed": 4,
+      "before": {
+        "num_datasets": 5,
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_points": 64880,
+            "num_anomalous_timelines": 4,
+            "num_anomaly_points": 200
+          },
+          "IOPS": {
+            "num_timelines": 7,
+            "num_points": 62718,
+            "num_anomalous_timelines": 7,
+            "num_anomaly_points": 766
+          },
+          "MSL": {
+            "num_timelines": 6,
+            "num_points": 19128,
+            "num_anomalous_timelines": 6,
+            "num_anomaly_points": 789
+          },
+          "NAB": {
+            "num_timelines": 7,
+            "num_points": 45204,
+            "num_anomalous_timelines": 7,
+            "num_anomaly_points": 4206
+          },
+          "TODS": {
+            "num_timelines": 6,
+            "num_points": 30000,
+            "num_anomalous_timelines": 6,
+            "num_anomaly_points": 1900
+          }
+        }
+      },
+      "after": {
+        "num_datasets": 5,
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_points": 64880,
+            "num_anomalous_timelines": 4,
+            "num_anomaly_points": 200
+          },
+          "IOPS": {
+            "num_timelines": 5,
+            "num_points": 46356,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 633
+          },
+          "MSL": {
+            "num_timelines": 5,
+            "num_points": 17077,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 652
+          },
+          "NAB": {
+            "num_timelines": 5,
+            "num_points": 11298,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 1124
+          },
+          "TODS": {
+            "num_timelines": 5,
+            "num_points": 25000,
+            "num_anomalous_timelines": 5,
+            "num_anomaly_points": 1675
+          }
+        }
+      },
+      "max_timelines_per_dataset": 5,
+      "max_points_per_dataset": null,
+      "min_timelines_per_dataset": 3,
+      "preserve_anomaly_timelines": true,
+      "split_dataset_coverage": {
+        "num_datasets": 5,
+        "datasets_missing_from_test": [],
+        "per_dataset": {
+          "Genesis": {
+            "num_timelines": 4,
+            "num_test_timelines": 1,
+            "num_train_timelines": 2,
+            "num_val_timelines": 1
+          },
+          "IOPS": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          },
+          "MSL": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          },
+          "NAB": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          },
+          "TODS": {
+            "num_timelines": 5,
+            "num_test_timelines": 1,
+            "num_train_timelines": 3,
+            "num_val_timelines": 1
+          }
+        }
+      }
+    }
+  }
+}

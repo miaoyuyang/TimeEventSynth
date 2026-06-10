@@ -1,0 +1,45 @@
+inherits: configs/tsb_uad.yaml
+
+experiment:
+  name: masked_completion
+
+masked_completion:
+  mask_fraction: 0.3
+  mask_policies:
+    - middle_30
+    - suffix_30
+    - prefix_30
+    - random_contiguous
+  methods:
+    - linear_interpolation
+    - random_donor
+    - normalized_time_mean_donor
+    - dtw_aligned_donor
+    - learned_prototype_event_time
+  donor_source: train_val
+  allow_test_series_donors: false
+  top_k_donors: 3
+  alignment_grid_size: 64
+  context_size: 5
+  max_qualitative_examples: 5
+
+synthesis:
+  donor_source: train_val
+  top_k: 3
+
+dataset:
+  max_series: 50
+  min_length: 100
+  min_event_windows: 1
+
+split:
+  train_ratio: 0.7
+  val_ratio: 0.1
+  test_ratio: 0.2
+  stratify_by_has_event: true
+  group_by_parent_folder: true
+
+data:
+  train_ratio: 0.7
+  dev_ratio: 0.1
+  test_ratio: 0.2

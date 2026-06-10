@@ -1,0 +1,49 @@
+# Full TSB-UAD-Public-v2 backbone augmentation run (no series / per-domain caps).
+# Loads every domain matching length/event filters (~1300+ series at max_length=20000).
+# Does NOT inherit configs/tsb_uad_public_v2.yaml (that file caps max_series and domains).
+
+inherits:
+  - configs/experiment_backbone_augmentation_full.yaml
+
+experiment:
+  name: backbone_augmentation_tsb_real_all
+
+dataset:
+  name: TSB-UAD-Public-v2
+  path: data/raw/TSB-UAD-Public-v2
+  max_series: null
+  min_length: 500
+  max_length: 20000
+  min_event_windows: 1
+  max_event_ratio: 0.35
+  include_patterns: []
+  exclude_patterns: []
+  group_by_parent_folder: true
+
+data:
+  raw_path: data/raw/TSB-UAD-Public-v2
+  dataset_name: TSB-UAD-Public-v2
+  load_options:
+    max_series: null
+    max_length: 20000
+    include_patterns: []
+    exclude_patterns: []
+
+split:
+  group_by_parent_folder: false
+  stratify_by_dataset: true
+
+augmentation:
+  default_synthesis_method: learned_prototype_event_time
+
+synthesis:
+  top_k: 3
+  alignment_grid_size: 32
+
+evaluation:
+  seeds: [0, 1, 2]
+  labeled_fraction: 0.2
+  dataset_balanced: true
+  max_timelines_per_dataset: null
+  max_points_per_dataset: null
+  stratify_by_dataset: true

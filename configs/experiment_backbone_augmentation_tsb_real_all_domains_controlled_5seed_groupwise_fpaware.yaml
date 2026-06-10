@@ -1,0 +1,18 @@
+inherits:
+  - configs/experiment_backbone_augmentation_tsb_real_100_5seed_groupwise_fpaware.yaml
+
+experiment:
+  name: backbone_augmentation_tsb_real_all_domains_controlled_5seed_groupwise_fpaware
+
+dataset:
+  max_series: null
+
+data:
+  load_options:
+    max_series: null
+
+evaluation:
+  seeds: [0, 1, 2, 3, 4]
+  dataset_balanced: true
+  max_timelines_per_dataset: 20
+  max_points_per_dataset: null

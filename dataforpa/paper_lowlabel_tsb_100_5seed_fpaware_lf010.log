@@ -1,0 +1,28 @@
+compatibility enabled: feature_table=28 series, donor_windows=77, target_windows=77
+compatibility enabled: feature_table=28 series, donor_windows=77, target_windows=77
+compatibility enabled: feature_table=28 series, donor_windows=77, target_windows=77
+compatibility enabled: feature_table=28 series, donor_windows=77, target_windows=77
+compatibility enabled: feature_table=28 series, donor_windows=77, target_windows=77
+compatibility enabled: feature_table=28 series, donor_windows=77, target_windows=77
+compatibility enabled: feature_table=28 series, donor_windows=77, target_windows=77
+compatibility enabled: feature_table=28 series, donor_windows=77, target_windows=77
+compatibility enabled: feature_table=28 series, donor_windows=77, target_windows=77
+compatibility enabled: feature_table=28 series, donor_windows=77, target_windows=77
+compatibility enabled: feature_table=28 series, donor_windows=77, target_windows=77
+compatibility enabled: feature_table=28 series, donor_windows=77, target_windows=77
+WARNING: augmentation policy groupwise_compatibility_strict produced zero synthetic windows.
+compatibility enabled: feature_table=28 series, donor_windows=77, target_windows=77
+compatibility enabled: feature_table=28 series, donor_windows=77, target_windows=77
+compatibility enabled: feature_table=28 series, donor_windows=77, target_windows=77
+compatibility enabled: feature_table=28 series, donor_windows=91, target_windows=91
+compatibility enabled: feature_table=28 series, donor_windows=91, target_windows=91
+WARNING: augmentation policy groupwise_compatibility_strict produced zero synthetic windows.
+compatibility enabled: feature_table=28 series, donor_windows=91, target_windows=91
+compatibility enabled: feature_table=28 series, donor_windows=91, target_windows=91
+compatibility enabled: feature_table=28 series, donor_windows=91, target_windows=91
+compatibility enabled: feature_table=28 series, donor_windows=85, target_windows=85
+compatibility enabled: feature_table=28 series, donor_windows=85, target_windows=85
+compatibility enabled: feature_table=28 series, donor_windows=85, target_windows=85
+compatibility enabled: feature_table=28 series, donor_windows=85, target_windows=85
+compatibility enabled: feature_table=28 series, donor_windows=85, target_windows=85
+Saved backbone augmentation results to outputs/backbone_augmentation/TSB-UAD-Public-v2/paper_lowlabel_tsb_100_5seed_fpaware_lf010

@@ -1,0 +1,14 @@
+inherits: configs/experiment_compatibility_transfer.yaml
+
+experiment:
+  name: compatibility_transfer_smoke
+
+dataset:
+  max_series: 8
+
+compatibility_transfer:
+  allow_no_donor_rejections: false
+  masked_completion:
+    enabled: true
+    mask_policies:
+      - middle_30

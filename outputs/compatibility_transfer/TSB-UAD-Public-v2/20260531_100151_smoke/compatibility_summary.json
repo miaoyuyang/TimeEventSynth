@@ -1,0 +1,69 @@
+{
+  "num_target_timelines": 14,
+  "num_source_timelines": 21,
+  "total_donor_pairs_considered": 2648,
+  "donor_pairs_kept": 216,
+  "donor_pairs_rejected": 992,
+  "same_dataset_kept": 0,
+  "same_dataset_rejected": 0,
+  "cross_dataset_kept": 216,
+  "cross_dataset_rejected": 992,
+  "no_compatible_donor_count": 0,
+  "mean_compatibility_score_kept": 0.6619670376691084,
+  "mean_compatibility_score_rejected": 0.5806954236896597,
+  "global": {
+    "num_target_timelines": 14,
+    "num_source_timelines": 21,
+    "num_unique_datasets": 4,
+    "dataset_counts": {
+      "IOPS": 400,
+      "MSL": 190,
+      "NAB": 74,
+      "TODS": 2200
+    }
+  },
+  "policies": {
+    "cross_dataset_all": {
+      "total_donor_pairs_considered": 1208,
+      "same_dataset_pairs_considered": 0,
+      "cross_dataset_pairs_considered": 1208,
+      "donor_pairs_kept": 0,
+      "donor_pairs_rejected": 0,
+      "same_dataset_kept": 0,
+      "same_dataset_rejected": 0,
+      "cross_dataset_kept": 0,
+      "cross_dataset_rejected": 0,
+      "mean_compatibility_score_kept": null,
+      "mean_compatibility_score_rejected": null,
+      "no_compatible_donor_count": 0
+    },
+    "cross_dataset_compatible": {
+      "total_donor_pairs_considered": 1208,
+      "same_dataset_pairs_considered": 0,
+      "cross_dataset_pairs_considered": 1208,
+      "donor_pairs_kept": 216,
+      "donor_pairs_rejected": 992,
+      "same_dataset_kept": 0,
+      "same_dataset_rejected": 0,
+      "cross_dataset_kept": 216,
+      "cross_dataset_rejected": 992,
+      "mean_compatibility_score_kept": 0.6619670376691084,
+      "mean_compatibility_score_rejected": 0.5806954236896597,
+      "no_compatible_donor_count": 0
+    },
+    "same_dataset_only": {
+      "total_donor_pairs_considered": 232,
+      "same_dataset_pairs_considered": 232,
+      "cross_dataset_pairs_considered": 0,
+      "donor_pairs_kept": 0,
+      "donor_pairs_rejected": 0,
+      "same_dataset_kept": 0,
+      "same_dataset_rejected": 0,
+      "cross_dataset_kept": 0,
+      "cross_dataset_rejected": 0,
+      "mean_compatibility_score_kept": null,
+      "mean_compatibility_score_rejected": null,
+      "no_compatible_donor_count": 0
+    }
+  }
+}

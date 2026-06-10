@@ -1,0 +1,59 @@
+inherits:
+  - configs/experiment_backbone_augmentation_smoke.yaml
+
+experiment:
+  name: backbone_augmentation_balanced_smoke
+  labeled_fraction: 0.2
+
+evaluation:
+  seeds: [0, 1]
+  labeled_fraction: 0.2
+  dataset_balanced: true
+  max_timelines_per_dataset: 3
+  max_points_per_dataset: null
+  stratify_by_dataset: true
+
+split:
+  group_by_parent_folder: false
+  stratify_by_dataset: true
+
+detector_backbones:
+  - name: internal_classifier
+    config: {}
+  - name: iforest
+    config:
+      contamination: 0.1
+      window_size: 15
+      stride: 1
+      threshold_mode: synthetic_separation
+  - name: cnn
+    config:
+      window_size: 15
+      stride: 1
+      horizon: 1
+      hidden_channels: 16
+      kernel_size: 3
+      batch_size: 16
+      epochs: 1
+      learning_rate: 0.001
+      max_train_windows: 128
+      threshold_mode: synthetic_separation
+  - name: timesnet
+    config:
+      window_size: 15
+      stride: 1
+      horizon: 1
+      d_model: 16
+      num_blocks: 1
+      top_k_periods: 2
+      batch_size: 16
+      epochs: 1
+      learning_rate: 0.001
+      max_train_windows: 128
+      threshold_mode: synthetic_separation
+
+augmentation_policies:
+  - name: real_only
+  - name: cross_dataset_all
+  - name: cross_dataset_compatible
+  - name: compatibility_strict

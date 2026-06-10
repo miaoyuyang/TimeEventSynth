@@ -1,0 +1,25 @@
+inherits:
+  - configs/experiment_backbone_augmentation_full.yaml
+  - configs/tsb_uad_public_v2.yaml
+
+experiment:
+  name: backbone_augmentation_tsb_real_full
+
+dataset:
+  name: TSB-UAD-Public-v2
+  max_series: null
+  min_length: 500
+  max_length: 20000
+
+augmentation:
+  default_synthesis_method: learned_prototype_event_time
+
+synthesis:
+  top_k: 3
+  alignment_grid_size: 32
+
+evaluation:
+  seeds: [0, 1, 2]
+  dataset_balanced: true
+  max_timelines_per_dataset: null
+  max_points_per_dataset: null

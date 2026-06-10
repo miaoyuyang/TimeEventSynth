@@ -1,0 +1,337 @@
+{
+  "methods": [
+    "real_only",
+    "random_event_oversampling",
+    "learned_prototype_event_time__all_donors_no_filter",
+    "learned_prototype_event_time__same_dataset_only",
+    "learned_prototype_event_time__cross_dataset_all",
+    "learned_prototype_event_time__cross_dataset_compatible",
+    "learned_prototype_event_time__compatibility_top50",
+    "learned_prototype_event_time__compatibility_strict",
+    "learned_prototype_event_time__strict_filter",
+    "dtw_aligned_donor__cross_dataset_compatible",
+    "normalized_time_mean_donor__cross_dataset_compatible"
+  ],
+  "best_by_event_f1": {
+    "method": "random_event_oversampling",
+    "value": 0.0779401530967293,
+    "donor_policy": null
+  },
+  "best_by_best_point_f1": {
+    "method": "random_event_oversampling",
+    "value": 0.12197397059476747,
+    "donor_policy": null
+  },
+  "compatibility_filtered_beats_all_donors": {
+    "delta_event_f1": 0.02126300225438326,
+    "delta_best_point_f1": 0.016916801457822497
+  },
+  "cross_dataset_compatible_beats_same_dataset_only": {
+    "delta_event_f1": 0.0015210477450960935,
+    "delta_best_point_f1": 0.02819417923659749
+  },
+  "rejection_counts": {
+    "kept": 27159,
+    "rejected_incompatible_donor": 7815,
+    "no_compatible_donor": 0,
+    "below_compatibility_threshold": 0,
+    "below_top_quantile_0.5": 40246,
+    "cross_dataset_disallowed": 0,
+    "synthesis_failed": 0,
+    "invalid_candidate": 0,
+    "evaluator_invalid": 0,
+    "strict_filter_failed:reconstruction_consistency_confidence,amplitude_compatibility_score,aggregate_confidence": 66,
+    "strict_filter_failed:donor_similarity_confidence,reconstruction_consistency_confidence,donor_agreement_confidence,amplitude_compatibility_score,aggregate_confidence": 1,
+    "strict_filter_failed:amplitude_compatibility_score": 14,
+    "strict_filter_failed:donor_agreement_confidence,amplitude_compatibility_score": 13,
+    "strict_filter_failed:donor_similarity_confidence,donor_agreement_confidence,amplitude_compatibility_score,aggregate_confidence": 1,
+    "strict_filter_failed:donor_similarity_confidence,reconstruction_consistency_confidence,amplitude_compatibility_score,aggregate_confidence": 1,
+    "strict_filter_failed:reconstruction_consistency_confidence,donor_agreement_confidence,amplitude_compatibility_score,aggregate_confidence": 144,
+    "strict_filter_failed:donor_agreement_confidence": 3,
+    "strict_filter_failed:donor_agreement_confidence,amplitude_compatibility_score,aggregate_confidence": 7
+  },
+  "compatibility_summary": {
+    "num_target_timelines": 32,
+    "num_source_timelines": 42,
+    "total_donor_pairs_considered": 73184,
+    "donor_pairs_kept": 4295,
+    "donor_pairs_rejected": 48061,
+    "same_dataset_kept": 1235,
+    "same_dataset_rejected": 3829,
+    "cross_dataset_kept": 3060,
+    "cross_dataset_rejected": 44232,
+    "no_compatible_donor_count": 0,
+    "mean_compatibility_score_kept": 0.8417732499740027,
+    "mean_compatibility_score_rejected": 0.6192344968333009,
+    "global": {
+      "num_target_timelines": 32,
+      "num_source_timelines": 42,
+      "num_unique_datasets": 5,
+      "dataset_counts": {
+        "Genesis": 666,
+        "IOPS": 987,
+        "MSL": 2312,
+        "NAB": 2601,
+        "TODS": 68904
+      }
+    },
+    "policies": {
+      "all_donors_no_filter": {
+        "total_donor_pairs_considered": 10414,
+        "same_dataset_pairs_considered": 2532,
+        "cross_dataset_pairs_considered": 7882,
+        "donor_pairs_kept": 0,
+        "donor_pairs_rejected": 0,
+        "same_dataset_kept": 0,
+        "same_dataset_rejected": 0,
+        "cross_dataset_kept": 0,
+        "cross_dataset_rejected": 0,
+        "mean_compatibility_score_kept": null,
+        "mean_compatibility_score_rejected": null,
+        "no_compatible_donor_count": 0
+      },
+      "compatibility_strict": {
+        "total_donor_pairs_considered": 10414,
+        "same_dataset_pairs_considered": 2532,
+        "cross_dataset_pairs_considered": 7882,
+        "donor_pairs_kept": 739,
+        "donor_pairs_rejected": 9675,
+        "same_dataset_kept": 733,
+        "same_dataset_rejected": 1799,
+        "cross_dataset_kept": 6,
+        "cross_dataset_rejected": 7876,
+        "mean_compatibility_score_kept": 0.9172111213338635,
+        "mean_compatibility_score_rejected": 0.6324597710704349,
+        "no_compatible_donor_count": 0
+      },
+      "compatibility_top50": {
+        "total_donor_pairs_considered": 10414,
+        "same_dataset_pairs_considered": 2532,
+        "cross_dataset_pairs_considered": 7882,
+        "donor_pairs_kept": 508,
+        "donor_pairs_rejected": 9906,
+        "same_dataset_kept": 502,
+        "same_dataset_rejected": 2030,
+        "cross_dataset_kept": 6,
+        "cross_dataset_rejected": 7876,
+        "mean_compatibility_score_kept": 0.923179155025094,
+        "mean_compatibility_score_rejected": 0.6387938918856688,
+        "no_compatible_donor_count": 0
+      },
+      "cross_dataset_all": {
+        "total_donor_pairs_considered": 7882,
+        "same_dataset_pairs_considered": 0,
+        "cross_dataset_pairs_considered": 7882,
+        "donor_pairs_kept": 0,
+        "donor_pairs_rejected": 0,
+        "same_dataset_kept": 0,
+        "same_dataset_rejected": 0,
+        "cross_dataset_kept": 0,
+        "cross_dataset_rejected": 0,
+        "mean_compatibility_score_kept": null,
+        "mean_compatibility_score_rejected": null,
+        "no_compatible_donor_count": 0
+      },
+      "cross_dataset_compatible": {
+        "total_donor_pairs_considered": 31528,
+        "same_dataset_pairs_considered": 0,
+        "cross_dataset_pairs_considered": 31528,
+        "donor_pairs_kept": 3048,
+        "donor_pairs_rejected": 28480,
+        "same_dataset_kept": 0,
+        "same_dataset_rejected": 0,
+        "cross_dataset_kept": 3048,
+        "cross_dataset_rejected": 28480,
+        "mean_compatibility_score_kept": 0.6849294735630507,
+        "mean_compatibility_score_rejected": 0.5864498275437989,
+        "no_compatible_donor_count": 0
+      },
+      "same_dataset_only": {
+        "total_donor_pairs_considered": 2532,
+        "same_dataset_pairs_considered": 2532,
+        "cross_dataset_pairs_considered": 0,
+        "donor_pairs_kept": 0,
+        "donor_pairs_rejected": 0,
+        "same_dataset_kept": 0,
+        "same_dataset_rejected": 0,
+        "cross_dataset_kept": 0,
+        "cross_dataset_rejected": 0,
+        "mean_compatibility_score_kept": null,
+        "mean_compatibility_score_rejected": null,
+        "no_compatible_donor_count": 0
+      }
+    }
+  },
+  "masked_completion_ranking": [
+    {
+      "method": "learned_prototype_event_time__all_donors_no_filter",
+      "normalized_MAE_by_event_std": 19.534069875168022,
+      "shape_correlation": 0.2797182971725755
+    },
+    {
+      "method": "learned_prototype_event_time__compatibility_top50",
+      "normalized_MAE_by_event_std": 18.070380234388374,
+      "shape_correlation": 0.2622045538149558
+    },
+    {
+      "method": "learned_prototype_event_time__same_dataset_only",
+      "normalized_MAE_by_event_std": 17.067642653854147,
+      "shape_correlation": 0.25335319404454465
+    },
+    {
+      "method": "learned_prototype_event_time__compatibility_strict",
+      "normalized_MAE_by_event_std": 17.135019488825954,
+      "shape_correlation": 0.23500309832837082
+    },
+    {
+      "method": "learned_prototype_event_time__cross_dataset_all",
+      "normalized_MAE_by_event_std": 14.748012046829574,
+      "shape_correlation": 0.10432289191633377
+    },
+    {
+      "method": "learned_prototype_event_time__cross_dataset_compatible",
+      "normalized_MAE_by_event_std": 14.748012046829574,
+      "shape_correlation": 0.10432289191633377
+    },
+    {
+      "method": "learned_prototype_event_time__strict_filter",
+      "normalized_MAE_by_event_std": 14.748012046829574,
+      "shape_correlation": 0.10432289191633377
+    },
+    {
+      "method": "dtw_aligned_donor__cross_dataset_compatible",
+      "normalized_MAE_by_event_std": 14.39175114731347,
+      "shape_correlation": 0.09748956382912095
+    },
+    {
+      "method": "normalized_time_mean_donor__cross_dataset_compatible",
+      "normalized_MAE_by_event_std": 14.845409995916302,
+      "shape_correlation": 0.09094438460424663
+    }
+  ],
+  "downstream_ranking": [
+    {
+      "method": "random_event_oversampling",
+      "event_f1": 0.0779401530967293,
+      "best_point_f1": 0.12197397059476747,
+      "donor_policy": null
+    },
+    {
+      "method": "real_only",
+      "event_f1": 0.07710843373493977,
+      "best_point_f1": 0.12157099697885196,
+      "donor_policy": null
+    },
+    {
+      "method": "learned_prototype_event_time__cross_dataset_compatible",
+      "event_f1": 0.060308555399719486,
+      "best_point_f1": 0.1005871840694409,
+      "donor_policy": "cross_dataset_compatible"
+    },
+    {
+      "method": "normalized_time_mean_donor__cross_dataset_compatible",
+      "event_f1": 0.05917955615332885,
+      "best_point_f1": 0.09624026696329255,
+      "donor_policy": "cross_dataset_compatible"
+    },
+    {
+      "method": "learned_prototype_event_time__same_dataset_only",
+      "event_f1": 0.05878750765462339,
+      "best_point_f1": 0.0723930048328434,
+      "donor_policy": "same_dataset_only"
+    },
+    {
+      "method": "learned_prototype_event_time__compatibility_top50",
+      "event_f1": 0.050672182006204755,
+      "best_point_f1": 0.08637892067691968,
+      "donor_policy": "compatibility_top50"
+    },
+    {
+      "method": "learned_prototype_event_time__cross_dataset_all",
+      "event_f1": 0.046858359957401494,
+      "best_point_f1": 0.08116920926982649,
+      "donor_policy": "cross_dataset_all"
+    },
+    {
+      "method": "learned_prototype_event_time__compatibility_strict",
+      "event_f1": 0.04552845528455284,
+      "best_point_f1": 0.09221736951385408,
+      "donor_policy": "compatibility_strict"
+    },
+    {
+      "method": "learned_prototype_event_time__strict_filter",
+      "event_f1": 0.04476709013914096,
+      "best_point_f1": 0.11341721332042871,
+      "donor_policy": "cross_dataset_compatible"
+    },
+    {
+      "method": "dtw_aligned_donor__cross_dataset_compatible",
+      "event_f1": 0.041379310344827586,
+      "best_point_f1": 0.08571958358718974,
+      "donor_policy": "cross_dataset_compatible"
+    },
+    {
+      "method": "learned_prototype_event_time__all_donors_no_filter",
+      "event_f1": 0.039045553145336226,
+      "best_point_f1": 0.0836703826116184,
+      "donor_policy": "all_donors_no_filter"
+    }
+  ],
+  "reconstruction_vs_downstream": [
+    {
+      "method": "learned_prototype_event_time__all_donors_no_filter",
+      "shape_correlation": 0.2797182971725755,
+      "event_f1": 0.039045553145336226
+    },
+    {
+      "method": "learned_prototype_event_time__compatibility_top50",
+      "shape_correlation": 0.2622045538149558,
+      "event_f1": 0.050672182006204755
+    },
+    {
+      "method": "learned_prototype_event_time__same_dataset_only",
+      "shape_correlation": 0.25335319404454465,
+      "event_f1": 0.05878750765462339
+    },
+    {
+      "method": "learned_prototype_event_time__compatibility_strict",
+      "shape_correlation": 0.23500309832837082,
+      "event_f1": 0.04552845528455284
+    },
+    {
+      "method": "learned_prototype_event_time__cross_dataset_all",
+      "shape_correlation": 0.10432289191633377,
+      "event_f1": 0.046858359957401494
+    },
+    {
+      "method": "learned_prototype_event_time__cross_dataset_compatible",
+      "shape_correlation": 0.10432289191633377,
+      "event_f1": 0.060308555399719486
+    },
+    {
+      "method": "learned_prototype_event_time__strict_filter",
+      "shape_correlation": 0.10432289191633377,
+      "event_f1": 0.04476709013914096
+    },
+    {
+      "method": "dtw_aligned_donor__cross_dataset_compatible",
+      "shape_correlation": 0.09748956382912095,
+      "event_f1": 0.041379310344827586
+    },
+    {
+      "method": "normalized_time_mean_donor__cross_dataset_compatible",
+      "shape_correlation": 0.09094438460424663,
+      "event_f1": 0.05917955615332885
+    }
+  ],
+  "strict_filter_note": {
+    "top50_filter_method": "learned_prototype_event_time__compatibility_top50",
+    "strict_filter_method": "learned_prototype_event_time__strict_filter",
+    "num_rejected_top50": 40246,
+    "strict_filter_failures": 250
+  },
+  "reconstruction_downstream_correlation": -0.17144649106441812,
+  "warnings": [
+    "Masked-completion shape correlation disagrees with downstream event F1 ranking."
+  ]
+}

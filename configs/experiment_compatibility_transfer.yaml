@@ -1,0 +1,142 @@
+inherits:
+  - configs/tsb_uad.yaml
+  - configs/tsb_uad_public_v2.yaml
+
+experiment:
+  name: compatibility_transfer
+
+dataset:
+  max_series: 50
+  min_length: 100
+
+split:
+  train_ratio: 0.7
+  val_ratio: 0.1
+  test_ratio: 0.2
+  stratify_by_has_event: true
+  group_by_parent_folder: true
+
+low_label:
+  default_fraction: 0.2
+
+evaluation:
+  threshold_selection: event_f1
+  event_iou_threshold: 0.1
+  event_beta: 1.0
+  threshold_grid_size: 200
+  prediction_smoothing:
+    enabled: true
+    min_event_length: 3
+    merge_gap: 2
+
+synthesis:
+  top_k: 3
+  alignment_grid_size: 64
+  filter_policy: none
+  donor_source: train_only
+  methods: []
+  donor_policy_experiments: []
+  compatibility:
+    enabled: false
+    min_score: 0.5
+    fallback_when_no_compatible_donor: skip
+
+compatibility_transfer:
+  labeled_fraction: 0.2
+  allow_no_donor_rejections: false
+  smoke:
+    max_series: 8
+    experiments:
+      - name: real_only
+        kind: real
+      - name: random_event_oversampling
+        kind: oversample
+      - name: learned_prototype_event_time__all_donors_no_filter
+        kind: synthetic
+        synthesis_method: learned_prototype_event_time
+        donor_policy: all_donors_no_filter
+        filter_policy: none
+      - name: learned_prototype_event_time__cross_dataset_compatible
+        kind: synthetic
+        synthesis_method: learned_prototype_event_time
+        donor_policy: cross_dataset_compatible
+        filter_policy: none
+      - name: dtw_aligned_donor__cross_dataset_compatible
+        kind: synthetic
+        synthesis_method: dtw_aligned_donor
+        donor_policy: cross_dataset_compatible
+        filter_policy: none
+  experiments:
+    - name: real_only
+      kind: real
+    - name: random_event_oversampling
+      kind: oversample
+    - name: learned_prototype_event_time__all_donors_no_filter
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: all_donors_no_filter
+      filter_policy: none
+    - name: learned_prototype_event_time__cross_dataset_all
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: cross_dataset_all
+      filter_policy: none
+    - name: learned_prototype_event_time__same_dataset_only
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: same_dataset_only
+      filter_policy: none
+    - name: learned_prototype_event_time__cross_dataset_compatible
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: cross_dataset_compatible
+      filter_policy: none
+    - name: learned_prototype_event_time__compatibility_top50
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: compatibility_top50
+      filter_policy: none
+    - name: learned_prototype_event_time__compatibility_strict
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: compatibility_strict
+      filter_policy: none
+    - name: learned_prototype_event_time__top50_filter
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: cross_dataset_compatible
+      filter_policy: top_quantile
+    - name: learned_prototype_event_time__strict_filter
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: cross_dataset_compatible
+      filter_policy: strict
+    - name: dtw_aligned_donor__cross_dataset_compatible
+      kind: synthetic
+      synthesis_method: dtw_aligned_donor
+      donor_policy: cross_dataset_compatible
+      filter_policy: none
+    - name: normalized_time_mean_donor__all_donors_no_filter
+      kind: synthetic
+      synthesis_method: normalized_time_mean_donor
+      donor_policy: all_donors_no_filter
+      filter_policy: none
+    - name: normalized_time_mean_donor__cross_dataset_compatible
+      kind: synthetic
+      synthesis_method: normalized_time_mean_donor
+      donor_policy: cross_dataset_compatible
+      filter_policy: none
+  masked_completion:
+    enabled: true
+    use_donor_policies: true
+    mask_fraction: 0.3
+    mask_policies:
+      - middle_30
+    methods:
+      - learned_prototype_event_time
+      - dtw_aligned_donor
+      - normalized_time_mean_donor
+    donor_source: train_val
+    top_k_donors: 3
+    alignment_grid_size: 64
+    context_size: 5

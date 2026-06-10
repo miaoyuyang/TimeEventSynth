@@ -1,0 +1,20 @@
+inherits:
+  - configs/experiment_backbone_augmentation_tsb_real_100_5seed_groupwise_fpaware.yaml
+
+experiment:
+  name: paper_main_tsb_100_5seed_fpaware
+
+dataset:
+  max_series: 100
+
+data:
+  load_options:
+    max_series: 100
+
+evaluation:
+  seeds: [0, 1, 2, 3, 4]
+  dataset_balanced: true
+  max_timelines_per_dataset: 10
+  max_points_per_dataset: null
+  stratify_by_dataset: true
+  threshold_tradeoff_grid_size: 80

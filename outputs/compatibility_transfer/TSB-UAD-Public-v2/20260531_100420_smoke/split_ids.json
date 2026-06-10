@@ -1,0 +1,38 @@
+{
+  "train": [
+    "IOPS/KPI-301c70d8-1630-35ac-8f96-bc1b6f4359ea",
+    "IOPS/KPI-54350a12-7a9d-3ca8-b81f-f886b9d156fd",
+    "IOPS/KPI-c02607e8-7399-3dde-9d28-8a8da5e5d251",
+    "IOPS/KPI-e0747cad-8dc8-38a9-a9ab-855b61f5551d",
+    "MSL/M-7_col_0",
+    "MSL/P-10_col_0",
+    "MSL/S-2_col_0",
+    "MSL/T-4_col_0",
+    "MSL/T-5_col_0",
+    "MSL/T-8_col_0",
+    "NAB/NAB_data_CloudWatch_12",
+    "NAB/NAB_data_CloudWatch_2",
+    "NAB/NAB_data_CloudWatch_3",
+    "NAB/NAB_data_Exchange_3",
+    "NAB/NAB_data_KnownCause_7",
+    "NAB/NAB_data_Traffic_7",
+    "NAB/NAB_data_art1_5",
+    "TODS/TODS_12",
+    "TODS/TODS_123",
+    "TODS/TODS_1234",
+    "TODS/TODS_3"
+  ],
+  "val": [
+    "IOPS/KPI-ab216663-dcc2-3a24-b1ee-2c3e550e06c9",
+    "TODS/TODS_1",
+    "TODS/TODS_2"
+  ],
+  "test": [
+    "IOPS/KPI-0efb375b-b902-3661-ab23-9a0bb799f4e3",
+    "IOPS/KPI-a8c06b47-cc41-3738-9110-12df0ee4c721",
+    "MSL/F-5_col_0",
+    "MSL/M-4_col_0",
+    "NAB/NAB_data_Traffic_5",
+    "TODS/TODS_012"
+  ]
+}

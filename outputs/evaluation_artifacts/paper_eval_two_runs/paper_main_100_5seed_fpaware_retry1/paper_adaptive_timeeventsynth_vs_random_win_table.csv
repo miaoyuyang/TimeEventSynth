@@ -1,0 +1,8 @@
+Detector,Seeds,Event-F1 Delta Mean,Event-F1 Wins,Precision Delta Mean,Recall Delta Mean,FP Reduction Mean,Lower-FP Wins
+IForest,5,-0.0107,1/5,-0.0225,-0.0062,+15.0,2/5
+LOF,5,-0.0072,3/5,-0.0293,-0.0414,-71.4,2/5
+OCSVM,5,+0.0022,1/5,+0.0049,+0.0014,-16.2,0/5
+AutoEncoder,5,-0.0038,2/5,+0.0019,-0.0900,+228.6,4/5
+CNN,5,-0.0209,1/5,-0.0882,-0.0350,+119.0,3/5
+TimesNet,5,+0.0030,1/5,-0.0249,+0.0043,-29.6,0/5
+Supervised,5,+0.0230,4/5,+0.0040,+0.0434,-147.0,1/5

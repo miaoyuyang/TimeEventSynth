@@ -1,0 +1,49 @@
+{
+  "num_series_total": 30,
+  "num_series_after_filter": 30,
+  "num_train_series": 10,
+  "num_val_series": 10,
+  "num_test_series": 10,
+  "total_points": 3600,
+  "total_event_points": 1926,
+  "total_event_windows": 273,
+  "event_ratio": 0.535,
+  "length_stats": {
+    "min": 120,
+    "mean": 120.0,
+    "median": 120.0,
+    "max": 120
+  },
+  "event_window_length_stats": {
+    "min": 5,
+    "mean": 7.054945054945055,
+    "median": 6.0,
+    "max": 16
+  },
+  "num_parent_folders": 3,
+  "parent_folders": [
+    "domain_a",
+    "domain_b",
+    "domain_c"
+  ],
+  "test_parent_folders": [
+    "domain_c"
+  ],
+  "num_test_event_windows": 93,
+  "load_summary": {},
+  "dataset_name": "TSB-UAD",
+  "data_path": "synthetic",
+  "load_options": {
+    "max_series": 50,
+    "min_event_windows": 1,
+    "min_length": 100,
+    "min_event_length": 1,
+    "merge_gap": 0,
+    "max_event_ratio": null,
+    "include_patterns": [],
+    "exclude_patterns": [],
+    "group_by_parent_folder": true,
+    "dataset_name": "TSB-UAD",
+    "seed": 42
+  }
+}

@@ -1,0 +1,39 @@
+inherits:
+  - configs/experiment_cross_dataset_compatibility_smoke.yaml
+  - configs/tsb_uad_public_v2.yaml
+
+experiment:
+  name: cross_dataset_compatibility_tsb_real_smoke
+
+dataset:
+  max_series: 30
+  min_length: 500
+  max_length: 12000
+
+synthesis:
+  top_k: 2
+  alignment_grid_size: 32
+
+compatibility_transfer:
+  smoke:
+    max_series: 30
+    experiments:
+      - name: real_only
+        kind: real
+      - name: learned_prototype_event_time__same_dataset_only
+        kind: synthetic
+        synthesis_method: learned_prototype_event_time
+        donor_policy: same_dataset_only
+        filter_policy: none
+      - name: learned_prototype_event_time__cross_dataset_all
+        kind: synthetic
+        synthesis_method: learned_prototype_event_time
+        donor_policy: cross_dataset_all
+        filter_policy: none
+      - name: learned_prototype_event_time__cross_dataset_compatible
+        kind: synthetic
+        synthesis_method: learned_prototype_event_time
+        donor_policy: cross_dataset_compatible
+        filter_policy: none
+  masked_completion:
+    enabled: false

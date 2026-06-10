@@ -1,0 +1,417 @@
+{
+  "best_policy_per_detector": {
+    "autoencoder": {
+      "augmentation_policy": "adaptive_groupwise_transfer",
+      "event_f1_mean": 0.048284519854619214,
+      "event_f1_std": 0.03755240177992244,
+      "best_point_f1_mean": 0.05632453065274914
+    },
+    "cnn": {
+      "augmentation_policy": "random_event_oversampling",
+      "event_f1_mean": 0.04111037628772133,
+      "event_f1_std": 0.027828645777527763,
+      "best_point_f1_mean": 0.07934568671904439
+    },
+    "iforest": {
+      "augmentation_policy": "adaptive_groupwise_transfer",
+      "event_f1_mean": 0.05318707660239709,
+      "event_f1_std": 0.06307876843771679,
+      "best_point_f1_mean": 0.07675230142262295
+    },
+    "internal_classifier": {
+      "augmentation_policy": "real_only",
+      "event_f1_mean": 0.059091529906486605,
+      "event_f1_std": 0.03241076898227198,
+      "best_point_f1_mean": 0.1175701612143385
+    },
+    "lof": {
+      "augmentation_policy": "groupwise_cross_dataset_all",
+      "event_f1_mean": 0.03747100573624784,
+      "event_f1_std": 0.01208807084779757,
+      "best_point_f1_mean": 0.05852942671225246
+    },
+    "ocsvm": {
+      "augmentation_policy": "random_event_oversampling",
+      "event_f1_mean": 0.002507836990595611,
+      "event_f1_std": 0.005015673981191222,
+      "best_point_f1_mean": 0.03575345740482886
+    },
+    "timesnet": {
+      "augmentation_policy": "random_event_oversampling",
+      "event_f1_mean": 0.010079981180898612,
+      "event_f1_std": 0.013083780611131541,
+      "best_point_f1_mean": 0.04908246799112506
+    }
+  },
+  "best_augmentation_policy_per_detector": {
+    "autoencoder": {
+      "augmentation_policy": "adaptive_groupwise_transfer",
+      "event_f1": 0.048284519854619214,
+      "auprc": NaN,
+      "auroc": NaN
+    },
+    "cnn": {
+      "augmentation_policy": "random_event_oversampling",
+      "event_f1": 0.04111037628772133,
+      "auprc": NaN,
+      "auroc": NaN
+    },
+    "iforest": {
+      "augmentation_policy": "adaptive_groupwise_transfer",
+      "event_f1": 0.05318707660239709,
+      "auprc": NaN,
+      "auroc": NaN
+    },
+    "internal_classifier": {
+      "augmentation_policy": "real_only",
+      "event_f1": 0.059091529906486605,
+      "auprc": NaN,
+      "auroc": NaN
+    },
+    "lof": {
+      "augmentation_policy": "groupwise_cross_dataset_all",
+      "event_f1": 0.03747100573624784,
+      "auprc": NaN,
+      "auroc": NaN
+    },
+    "ocsvm": {
+      "augmentation_policy": "random_event_oversampling",
+      "event_f1": 0.002507836990595611,
+      "auprc": NaN,
+      "auroc": NaN
+    },
+    "timesnet": {
+      "augmentation_policy": "random_event_oversampling",
+      "event_f1": 0.010079981180898612,
+      "auprc": NaN,
+      "auroc": NaN
+    }
+  },
+  "statistical_comparison": [
+    {
+      "detector_backbone": "autoencoder",
+      "policy_a": "groupwise_compatibility_strict",
+      "policy_b": "real_only",
+      "metric": "event_f1",
+      "mean_delta": 0.02163377688429164,
+      "std_delta": 0.0446409860703681,
+      "wins_policy_a": 2,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.4,
+      "paired_t_pvalue": 0.3873136515909361,
+      "wilcoxon_pvalue": 0.75
+    },
+    {
+      "detector_backbone": "autoencoder",
+      "policy_a": "groupwise_cross_dataset_compatible",
+      "policy_b": "groupwise_cross_dataset_all",
+      "metric": "event_f1",
+      "mean_delta": -0.0002158759560364404,
+      "std_delta": 0.006173033481386131,
+      "wins_policy_a": 2,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.4,
+      "paired_t_pvalue": 0.9475971822598273,
+      "wilcoxon_pvalue": 1.0
+    },
+    {
+      "detector_backbone": "autoencoder",
+      "policy_a": "groupwise_compatibility_strict",
+      "policy_b": "random_event_oversampling",
+      "metric": "event_f1",
+      "mean_delta": -0.023509232207460602,
+      "std_delta": 0.021262391232732433,
+      "wins_policy_a": 1,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.2,
+      "paired_t_pvalue": 0.09148910343452729,
+      "wilcoxon_pvalue": 0.125
+    },
+    {
+      "detector_backbone": "cnn",
+      "policy_a": "groupwise_compatibility_strict",
+      "policy_b": "real_only",
+      "metric": "event_f1",
+      "mean_delta": 0.024968998496379086,
+      "std_delta": 0.029090112608568263,
+      "wins_policy_a": 3,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.6,
+      "paired_t_pvalue": 0.161177875611501,
+      "wilcoxon_pvalue": 0.25
+    },
+    {
+      "detector_backbone": "cnn",
+      "policy_a": "groupwise_cross_dataset_compatible",
+      "policy_b": "groupwise_cross_dataset_all",
+      "metric": "event_f1",
+      "mean_delta": -0.00679286977301191,
+      "std_delta": 0.028603413822949442,
+      "wins_policy_a": 2,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.4,
+      "paired_t_pvalue": 0.6595805112675605,
+      "wilcoxon_pvalue": 0.875
+    },
+    {
+      "detector_backbone": "cnn",
+      "policy_a": "groupwise_compatibility_strict",
+      "policy_b": "random_event_oversampling",
+      "metric": "event_f1",
+      "mean_delta": -0.0038212954712599236,
+      "std_delta": 0.029589278286812157,
+      "wins_policy_a": 3,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.6,
+      "paired_t_pvalue": 0.8089291746763566,
+      "wilcoxon_pvalue": 1.0
+    },
+    {
+      "detector_backbone": "iforest",
+      "policy_a": "groupwise_compatibility_strict",
+      "policy_b": "real_only",
+      "metric": "event_f1",
+      "mean_delta": 0.023319358222106002,
+      "std_delta": 0.028561014918598228,
+      "wins_policy_a": 2,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.4,
+      "paired_t_pvalue": 0.17781678327868913,
+      "wilcoxon_pvalue": 0.5
+    },
+    {
+      "detector_backbone": "iforest",
+      "policy_a": "groupwise_cross_dataset_compatible",
+      "policy_b": "groupwise_cross_dataset_all",
+      "metric": "event_f1",
+      "mean_delta": 0.030460176991150445,
+      "std_delta": 0.0701058439242956,
+      "wins_policy_a": 1,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.2,
+      "paired_t_pvalue": 0.4338923940138511,
+      "wilcoxon_pvalue": 1.0
+    },
+    {
+      "detector_backbone": "iforest",
+      "policy_a": "groupwise_compatibility_strict",
+      "policy_b": "random_event_oversampling",
+      "metric": "event_f1",
+      "mean_delta": -0.012243313584474556,
+      "std_delta": 0.05363376126464281,
+      "wins_policy_a": 1,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.2,
+      "paired_t_pvalue": 0.6716844308209974,
+      "wilcoxon_pvalue": 1.0
+    },
+    {
+      "detector_backbone": "internal_classifier",
+      "policy_a": "groupwise_compatibility_strict",
+      "policy_b": "real_only",
+      "metric": "event_f1",
+      "mean_delta": -0.0023312060465221335,
+      "std_delta": 0.014428342071300386,
+      "wins_policy_a": 2,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.4,
+      "paired_t_pvalue": 0.7627747899295372,
+      "wilcoxon_pvalue": 1.0
+    },
+    {
+      "detector_backbone": "internal_classifier",
+      "policy_a": "groupwise_cross_dataset_compatible",
+      "policy_b": "groupwise_cross_dataset_all",
+      "metric": "event_f1",
+      "mean_delta": -0.0023129523625250873,
+      "std_delta": 0.010630170014488334,
+      "wins_policy_a": 3,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.6,
+      "paired_t_pvalue": 0.6858914373548969,
+      "wilcoxon_pvalue": 1.0
+    },
+    {
+      "detector_backbone": "internal_classifier",
+      "policy_a": "groupwise_compatibility_strict",
+      "policy_b": "random_event_oversampling",
+      "metric": "event_f1",
+      "mean_delta": -0.0017969277875999738,
+      "std_delta": 0.06590724766184163,
+      "wins_policy_a": 4,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.8,
+      "paired_t_pvalue": 0.9591285724962649,
+      "wilcoxon_pvalue": 0.625
+    },
+    {
+      "detector_backbone": "lof",
+      "policy_a": "groupwise_compatibility_strict",
+      "policy_b": "real_only",
+      "metric": "event_f1",
+      "mean_delta": 0.0063264655443778005,
+      "std_delta": 0.014023270873934414,
+      "wins_policy_a": 2,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.4,
+      "paired_t_pvalue": 0.41792778102213435,
+      "wilcoxon_pvalue": 0.75
+    },
+    {
+      "detector_backbone": "lof",
+      "policy_a": "groupwise_cross_dataset_compatible",
+      "policy_b": "groupwise_cross_dataset_all",
+      "metric": "event_f1",
+      "mean_delta": -0.0005919065409472846,
+      "std_delta": 0.024152190153867662,
+      "wins_policy_a": 3,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.6,
+      "paired_t_pvalue": 0.9632573400630937,
+      "wilcoxon_pvalue": 1.0
+    },
+    {
+      "detector_backbone": "lof",
+      "policy_a": "groupwise_compatibility_strict",
+      "policy_b": "random_event_oversampling",
+      "metric": "event_f1",
+      "mean_delta": 0.011515509429869637,
+      "std_delta": 0.031067340447928738,
+      "wins_policy_a": 2,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.4,
+      "paired_t_pvalue": 0.49965817437112103,
+      "wilcoxon_pvalue": 0.875
+    },
+    {
+      "detector_backbone": "ocsvm",
+      "policy_a": "groupwise_compatibility_strict",
+      "policy_b": "real_only",
+      "metric": "event_f1",
+      "mean_delta": 0.0,
+      "std_delta": 0.0,
+      "wins_policy_a": 0,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.0,
+      "paired_t_pvalue": NaN,
+      "wilcoxon_pvalue": 1.0
+    },
+    {
+      "detector_backbone": "ocsvm",
+      "policy_a": "groupwise_cross_dataset_compatible",
+      "policy_b": "groupwise_cross_dataset_all",
+      "metric": "event_f1",
+      "mean_delta": 0.0,
+      "std_delta": 0.0,
+      "wins_policy_a": 0,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.0,
+      "paired_t_pvalue": NaN,
+      "wilcoxon_pvalue": 1.0
+    },
+    {
+      "detector_backbone": "ocsvm",
+      "policy_a": "groupwise_compatibility_strict",
+      "policy_b": "random_event_oversampling",
+      "metric": "event_f1",
+      "mean_delta": -0.0002978922392143958,
+      "std_delta": 0.0005957844784287916,
+      "wins_policy_a": 0,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.0,
+      "paired_t_pvalue": 0.37390096630005887,
+      "wilcoxon_pvalue": 1.0
+    },
+    {
+      "detector_backbone": "timesnet",
+      "policy_a": "groupwise_compatibility_strict",
+      "policy_b": "real_only",
+      "metric": "event_f1",
+      "mean_delta": 0.0,
+      "std_delta": 0.0,
+      "wins_policy_a": 0,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.0,
+      "paired_t_pvalue": NaN,
+      "wilcoxon_pvalue": 1.0
+    },
+    {
+      "detector_backbone": "timesnet",
+      "policy_a": "groupwise_cross_dataset_compatible",
+      "policy_b": "groupwise_cross_dataset_all",
+      "metric": "event_f1",
+      "mean_delta": 0.0,
+      "std_delta": 0.0,
+      "wins_policy_a": 0,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.0,
+      "paired_t_pvalue": NaN,
+      "wilcoxon_pvalue": 1.0
+    },
+    {
+      "detector_backbone": "timesnet",
+      "policy_a": "groupwise_compatibility_strict",
+      "policy_b": "random_event_oversampling",
+      "metric": "event_f1",
+      "mean_delta": -0.002243589743589744,
+      "std_delta": 0.004487179487179488,
+      "wins_policy_a": 0,
+      "num_seeds": 5,
+      "win_rate_policy_a": 0.0,
+      "paired_t_pvalue": 0.37390096630005887,
+      "wilcoxon_pvalue": 1.0
+    }
+  ],
+  "aggregate_improvement": {
+    "number_of_detectors_improved_by_compatibility_strict_over_real_only": 4,
+    "number_of_detectors_improved_by_cross_dataset_compatible_over_cross_dataset_all": 1,
+    "average_event_f1_gain_compatibility_strict_over_real_only": 0.010559627585804627,
+    "median_event_f1_gain_compatibility_strict_over_real_only": 0.0063264655443778005,
+    "average_event_f1_gain_cross_dataset_compatible_over_cross_dataset_all": 0.002935224622661389,
+    "median_event_f1_gain_cross_dataset_compatible_over_cross_dataset_all": -0.0002158759560364404,
+    "average_false_positive_reduction_compatibility_strict_over_real_only": -32.74285714285714
+  },
+  "average_gain_compatibility_strict_over_real_only": 0.010559627585804627,
+  "average_gain_cross_dataset_compatible_over_cross_dataset_all": 0.002935224622661389,
+  "num_backbones_improved_by_compatibility_strict": 4,
+  "num_backbones_improved_by_cross_dataset_compatible": 1,
+  "negative_cases": [
+    {
+      "detector_backbone": "internal_classifier",
+      "augmentation_policy": "adaptive_groupwise_transfer",
+      "mean_event_f1_delta_vs_real_only": -0.014873913643431436,
+      "num_seeds": 5
+    },
+    {
+      "detector_backbone": "internal_classifier",
+      "augmentation_policy": "groupwise_compatibility_strict",
+      "mean_event_f1_delta_vs_real_only": -0.0023312060465221335,
+      "num_seeds": 5
+    },
+    {
+      "detector_backbone": "internal_classifier",
+      "augmentation_policy": "groupwise_cross_dataset_all",
+      "mean_event_f1_delta_vs_real_only": -0.014873913643431436,
+      "num_seeds": 5
+    },
+    {
+      "detector_backbone": "internal_classifier",
+      "augmentation_policy": "groupwise_cross_dataset_compatible",
+      "mean_event_f1_delta_vs_real_only": -0.017186866005956525,
+      "num_seeds": 5
+    },
+    {
+      "detector_backbone": "internal_classifier",
+      "augmentation_policy": "random_event_oversampling",
+      "mean_event_f1_delta_vs_real_only": -0.0005342782589221606,
+      "num_seeds": 5
+    },
+    {
+      "detector_backbone": "lof",
+      "augmentation_policy": "random_event_oversampling",
+      "mean_event_f1_delta_vs_real_only": -0.005189043885491833,
+      "num_seeds": 5
+    }
+  ],
+  "paper_ready_summary": "Across 7 detector backbones, compatibility-aware augmentation improves event F1 for 4 detectors against real_only and for 1 detectors against naive cross-dataset transfer. The mean event-F1 delta is 0.0106 for compatibility_strict over real_only and 0.0029 for cross_dataset_compatible over cross_dataset_all. These results should be interpreted as stability evidence, not as a final detector-level claim without broader multi-seed, dataset-balanced runs."
+}

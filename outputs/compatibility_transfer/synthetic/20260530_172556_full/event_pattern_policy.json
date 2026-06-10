@@ -1,0 +1,21 @@
+{
+  "event_pattern_policy": {
+    "anomaly": {
+      "mode": "diagnostic_only",
+      "selection_reason": "only_low_confidence_windows_available",
+      "diagnostics": {
+        "num_synthetic_total": 3157,
+        "num_high_confidence": 0,
+        "num_moderate_confidence": 0,
+        "num_unique_donor_series": 0,
+        "top_donor_fraction": 0.0,
+        "top_donor_series_id": ""
+      }
+    }
+  },
+  "selection_thresholds": {
+    "min_high_confidence_windows": 5,
+    "min_unique_donor_series": 2,
+    "max_top_donor_fraction": 0.6
+  }
+}

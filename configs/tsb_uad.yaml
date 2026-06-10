@@ -1,0 +1,122 @@
+seed: 42
+
+dataset:
+  path: null
+  name: null
+  max_series: null
+  min_event_windows: 0
+  min_length: 1
+  max_event_ratio: null
+  include_patterns: []
+  exclude_patterns: []
+  group_by_parent_folder: true
+
+split:
+  seed: 42
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+  stratify_by_has_event: true
+  group_by_parent_folder: true
+
+low_label:
+  fractions: [0.01, 0.05, 0.1, 0.2]
+  default_fraction: 0.2
+
+event_extraction:
+  min_event_length: 3
+  merge_gap: 1
+  context_padding: 5
+
+synthesis:
+  methods:
+    - normalized_time_mean_donor
+    - dtw_aligned_donor
+    - learned_prototype_event_time
+    - normalized_time_context_calibrated
+    - dtw_context_calibrated
+    - learned_prototype_context_calibrated
+  top_k: 3
+  alignment_grid_size: 64
+  donor_source: train_only
+  random_oversample_target_multiplier: 2.0
+  amplitude_calibration: none
+  context_amplitude_calibration: robust_scale_shift
+  partial_target_synthesis: full_replacement
+  context_size: 5
+  match_partial_amplitude: true
+  filter_policy: none
+  donor_policy: null
+  compatibility:
+    enabled: false
+    min_score: 0.5
+    top_k: null
+    top_quantile: null
+    weights:
+      shape_similarity: 0.25
+      amplitude_compatibility: 0.25
+      duration_compatibility: 0.15
+      context_similarity: 0.15
+      frequency_similarity: 0.10
+      trend_similarity: 0.10
+    same_dataset_bonus: 0.05
+    allow_cross_dataset: true
+    allow_incompatible_donors: false
+    fallback_when_no_compatible_donor: skip
+  donor_policy_experiments: []
+  # Example donor-policy ablation entries (uncomment to enable):
+  # donor_policy_experiments:
+  #   - name: cross_dataset_compatible_mean_donor
+  #     synthesis_method: normalized_time_mean_donor
+  #     donor_policy: cross_dataset_compatible
+  confidence_quantile: 0.5
+  min_confidence: 0.5
+  strict_thresholds:
+    donor_similarity: 0.5
+    donor_agreement: 0.5
+    amplitude_compatibility: 0.5
+  confidence_filter:
+    default: no_filter
+    strict:
+      name: strict
+      min_confidence: 0.60
+      min_donor_similarity_confidence: 0.55
+      min_reconstruction_consistency_confidence: 0.60
+      min_donor_agreement_confidence: 0.55
+      min_amplitude_compatibility_score: 0.55
+
+alignment:
+  normalized_num_bins: 10
+  dtw_radius: null
+
+detector:
+  name: random_forest_window
+  model_type: random_forest_window
+  window_size: 15
+  negative_sample_ratio: 5
+  class_weight: balanced
+  params:
+    n_estimators: 200
+    max_depth: 12
+    random_state: 42
+
+evaluation:
+  threshold_selection: event_f1
+  threshold_metric: event_f1
+  point_threshold: 0.5
+  event_iou_threshold: 0.1
+  event_beta: 1.0
+  threshold_grid_size: 200
+  fixed_quantile: 0.95
+  prediction_smoothing:
+    enabled: true
+    min_event_length: 3
+    merge_gap: 2
+
+data:
+  processed_dir: data/processed
+  splits_dir: data/splits
+  train_ratio: 0.7
+  dev_ratio: 0.15
+  test_ratio: 0.15
+  val_ratio_within_train: 0.2

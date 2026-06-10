@@ -1,0 +1,23 @@
+inherits:
+  - configs/experiment_backbone_augmentation_tsb_real_30_5seed.yaml
+
+experiment:
+  name: backbone_augmentation_tsb_real_30_5seed_verify
+
+detector_backbones:
+  - name: internal_classifier
+    config: {}
+  - name: iforest
+    config:
+      contamination: 0.1
+      window_size: 15
+      stride: 1
+      threshold_mode: synthetic_separation
+      max_train_windows: 10000
+
+augmentation_policies:
+  - name: real_only
+  - name: random_event_oversampling
+  - name: cross_dataset_all
+  - name: cross_dataset_compatible
+  - name: compatibility_strict

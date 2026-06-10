@@ -1,0 +1,38 @@
+{
+  "train": [
+    "domain_a/series_006",
+    "domain_a/series_009",
+    "domain_a/series_012",
+    "domain_a/series_015",
+    "domain_a/series_018",
+    "domain_a/series_021",
+    "domain_a/series_027",
+    "domain_b/series_001",
+    "domain_b/series_010",
+    "domain_b/series_013",
+    "domain_b/series_016",
+    "domain_b/series_019",
+    "domain_b/series_022",
+    "domain_b/series_025",
+    "domain_c/series_002",
+    "domain_c/series_005",
+    "domain_c/series_011",
+    "domain_c/series_014",
+    "domain_c/series_017",
+    "domain_c/series_026",
+    "domain_c/series_029"
+  ],
+  "val": [
+    "domain_a/series_024",
+    "domain_b/series_004",
+    "domain_b/series_028"
+  ],
+  "test": [
+    "domain_a/series_000",
+    "domain_a/series_003",
+    "domain_b/series_007",
+    "domain_c/series_008",
+    "domain_c/series_020",
+    "domain_c/series_023"
+  ]
+}

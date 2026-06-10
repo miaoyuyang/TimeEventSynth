@@ -1,0 +1,25 @@
+inherits:
+  - configs/paper_main_tsb_100_5seed_fpaware.yaml
+
+experiment:
+  name: paper_main_tsb_100_5seed_fpaware_learnedalpha
+
+synthesis:
+  compatibility:
+    learned_weights:
+      enabled: true
+      component_keys:
+        - shape_similarity
+        - amplitude_compatibility
+        - context_similarity
+        - group_compatibility
+      epochs: 250
+      learning_rate: 0.2
+      temperature: 0.15
+      l2_to_prior: 0.02
+      max_pairs: 5000
+      min_positive_pairs: 4
+      min_negative_pairs: 4
+      positive_group_overlap: 0.2
+      seed: 0
+

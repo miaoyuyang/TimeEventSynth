@@ -1,0 +1,7 @@
+domain,series_mean,series_min,series_max,points_mean,anomaly_points_mean,train_series_mean,val_series_mean,test_series_mean
+Genesis,4.0,4,4,64880.0,200.0,2.0,1.0,1.0
+IOPS,7.0,7,7,62718.0,766.0,5.0,1.0,1.0
+MSL,17.0,17,17,47169.0,2297.0,12.0,2.0,3.0
+NAB,20.0,20,20,125561.4,12272.4,14.0,2.0,4.0
+TODS,15.0,15,15,75000.0,4783.0,10.0,2.0,3.0
+TOTAL,63.0,63,63,375328.4,20318.4,43.0,8.0,12.0

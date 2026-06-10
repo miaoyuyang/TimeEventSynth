@@ -1,0 +1,9 @@
+{
+  "mask_fraction": 0.3,
+  "mask_policies": [
+    "middle_30"
+  ],
+  "num_test_events": 93,
+  "num_evaluations": 930,
+  "donor_source": "train_val"
+}

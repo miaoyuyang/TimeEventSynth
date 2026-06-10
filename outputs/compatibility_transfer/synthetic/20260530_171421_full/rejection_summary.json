@@ -1,0 +1,231 @@
+{
+  "learned_prototype_event_time__all_donors_no_filter": {
+    "donor_policy": "all_donors_no_filter",
+    "num_candidates": 19,
+    "num_kept": 19,
+    "num_rejected": 0,
+    "counts": {
+      "kept": 19,
+      "rejected_incompatible_donor": 0,
+      "no_compatible_donor": 0,
+      "below_compatibility_threshold": 0,
+      "below_top_quantile_0.5": 0,
+      "cross_dataset_disallowed": 0,
+      "synthesis_failed": 0,
+      "invalid_candidate": 0,
+      "evaluator_invalid": 0
+    },
+    "reasons": {
+      "kept": 19
+    }
+  },
+  "learned_prototype_event_time__cross_dataset_all": {
+    "donor_policy": "cross_dataset_all",
+    "num_candidates": 19,
+    "num_kept": 19,
+    "num_rejected": 0,
+    "counts": {
+      "kept": 19,
+      "rejected_incompatible_donor": 0,
+      "no_compatible_donor": 0,
+      "below_compatibility_threshold": 0,
+      "below_top_quantile_0.5": 0,
+      "cross_dataset_disallowed": 0,
+      "synthesis_failed": 0,
+      "invalid_candidate": 0,
+      "evaluator_invalid": 0
+    },
+    "reasons": {
+      "kept": 19
+    }
+  },
+  "learned_prototype_event_time__same_dataset_only": {
+    "donor_policy": "same_dataset_only",
+    "num_candidates": 19,
+    "num_kept": 19,
+    "num_rejected": 0,
+    "counts": {
+      "kept": 19,
+      "rejected_incompatible_donor": 0,
+      "no_compatible_donor": 0,
+      "below_compatibility_threshold": 0,
+      "below_top_quantile_0.5": 0,
+      "cross_dataset_disallowed": 0,
+      "synthesis_failed": 0,
+      "invalid_candidate": 0,
+      "evaluator_invalid": 0
+    },
+    "reasons": {
+      "kept": 19
+    }
+  },
+  "learned_prototype_event_time__cross_dataset_compatible": {
+    "donor_policy": "cross_dataset_compatible",
+    "num_candidates": 133,
+    "num_kept": 19,
+    "num_rejected": 114,
+    "counts": {
+      "kept": 19,
+      "rejected_incompatible_donor": 0,
+      "no_compatible_donor": 0,
+      "below_compatibility_threshold": 0,
+      "below_top_quantile_0.5": 114,
+      "cross_dataset_disallowed": 0,
+      "synthesis_failed": 0,
+      "invalid_candidate": 0,
+      "evaluator_invalid": 0
+    },
+    "reasons": {
+      "below_top_quantile_0.5": 114,
+      "kept": 19
+    }
+  },
+  "learned_prototype_event_time__compatibility_top50": {
+    "donor_policy": "compatibility_top50",
+    "num_candidates": 152,
+    "num_kept": 19,
+    "num_rejected": 133,
+    "counts": {
+      "kept": 19,
+      "rejected_incompatible_donor": 0,
+      "no_compatible_donor": 0,
+      "below_compatibility_threshold": 0,
+      "below_top_quantile_0.5": 133,
+      "cross_dataset_disallowed": 0,
+      "synthesis_failed": 0,
+      "invalid_candidate": 0,
+      "evaluator_invalid": 0
+    },
+    "reasons": {
+      "below_top_quantile_0.5": 133,
+      "kept": 19
+    }
+  },
+  "learned_prototype_event_time__compatibility_strict": {
+    "donor_policy": "compatibility_strict",
+    "num_candidates": 133,
+    "num_kept": 19,
+    "num_rejected": 114,
+    "counts": {
+      "kept": 19,
+      "rejected_incompatible_donor": 0,
+      "no_compatible_donor": 0,
+      "below_compatibility_threshold": 0,
+      "below_top_quantile_0.5": 114,
+      "cross_dataset_disallowed": 0,
+      "synthesis_failed": 0,
+      "invalid_candidate": 0,
+      "evaluator_invalid": 0
+    },
+    "reasons": {
+      "below_top_quantile_0.5": 114,
+      "kept": 19
+    }
+  },
+  "learned_prototype_event_time__top50_filter": {
+    "donor_policy": "cross_dataset_compatible",
+    "num_candidates": 133,
+    "num_kept": 10,
+    "num_rejected": 123,
+    "counts": {
+      "kept": 10,
+      "rejected_incompatible_donor": 0,
+      "no_compatible_donor": 0,
+      "below_compatibility_threshold": 0,
+      "below_top_quantile_0.5": 123,
+      "cross_dataset_disallowed": 0,
+      "synthesis_failed": 0,
+      "invalid_candidate": 0,
+      "evaluator_invalid": 0
+    },
+    "reasons": {
+      "below_top_quantile_0.5": 123,
+      "kept": 10
+    }
+  },
+  "learned_prototype_event_time__strict_filter": {
+    "donor_policy": "cross_dataset_compatible",
+    "num_candidates": 133,
+    "num_kept": 2,
+    "num_rejected": 131,
+    "counts": {
+      "kept": 2,
+      "rejected_incompatible_donor": 0,
+      "no_compatible_donor": 0,
+      "below_compatibility_threshold": 0,
+      "below_top_quantile_0.5": 114,
+      "cross_dataset_disallowed": 0,
+      "synthesis_failed": 0,
+      "invalid_candidate": 0,
+      "evaluator_invalid": 0,
+      "strict_filter_failed:amplitude_compatibility_score": 17
+    },
+    "reasons": {
+      "below_top_quantile_0.5": 114,
+      "strict_filter_failed:amplitude_compatibility_score": 17,
+      "kept": 2
+    }
+  },
+  "dtw_aligned_donor__cross_dataset_compatible": {
+    "donor_policy": "cross_dataset_compatible",
+    "num_candidates": 133,
+    "num_kept": 19,
+    "num_rejected": 114,
+    "counts": {
+      "kept": 19,
+      "rejected_incompatible_donor": 0,
+      "no_compatible_donor": 0,
+      "below_compatibility_threshold": 0,
+      "below_top_quantile_0.5": 114,
+      "cross_dataset_disallowed": 0,
+      "synthesis_failed": 0,
+      "invalid_candidate": 0,
+      "evaluator_invalid": 0
+    },
+    "reasons": {
+      "below_top_quantile_0.5": 114,
+      "kept": 19
+    }
+  },
+  "normalized_time_mean_donor__all_donors_no_filter": {
+    "donor_policy": "all_donors_no_filter",
+    "num_candidates": 19,
+    "num_kept": 19,
+    "num_rejected": 0,
+    "counts": {
+      "kept": 19,
+      "rejected_incompatible_donor": 0,
+      "no_compatible_donor": 0,
+      "below_compatibility_threshold": 0,
+      "below_top_quantile_0.5": 0,
+      "cross_dataset_disallowed": 0,
+      "synthesis_failed": 0,
+      "invalid_candidate": 0,
+      "evaluator_invalid": 0
+    },
+    "reasons": {
+      "kept": 19
+    }
+  },
+  "normalized_time_mean_donor__cross_dataset_compatible": {
+    "donor_policy": "cross_dataset_compatible",
+    "num_candidates": 133,
+    "num_kept": 19,
+    "num_rejected": 114,
+    "counts": {
+      "kept": 19,
+      "rejected_incompatible_donor": 0,
+      "no_compatible_donor": 0,
+      "below_compatibility_threshold": 0,
+      "below_top_quantile_0.5": 114,
+      "cross_dataset_disallowed": 0,
+      "synthesis_failed": 0,
+      "invalid_candidate": 0,
+      "evaluator_invalid": 0
+    },
+    "reasons": {
+      "below_top_quantile_0.5": 114,
+      "kept": 19
+    }
+  }
+}

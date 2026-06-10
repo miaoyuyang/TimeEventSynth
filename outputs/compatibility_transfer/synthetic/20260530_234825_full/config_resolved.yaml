@@ -1,0 +1,116 @@
+inherits: configs/tsb_uad.yaml
+experiment:
+  name: cross_dataset_compatibility_full
+  labeled_fraction: 0.2
+  low_label_fractions: &id001
+  - 0.2
+  top_k_donors: 2
+  alignment_grid_size: 32
+  synthesis_methods: &id002 []
+dataset:
+  path: data/raw/TSB-UAD
+  name: TSB-UAD
+  max_series: 50
+  min_length: 100
+  min_event_windows: 1
+  group_by_parent_folder: true
+  include_patterns: []
+  max_event_ratio: null
+  exclude_patterns: []
+split:
+  train_ratio: 0.7
+  val_ratio: 0.1
+  test_ratio: 0.2
+  stratify_by_has_event: true
+  group_by_parent_folder: false
+  seed: 42
+low_label:
+  default_fraction: 0.2
+  fractions: *id001
+synthesis:
+  top_k: 2
+  alignment_grid_size: 32
+  filter_policy: none
+  donor_source: train_val
+  methods: *id002
+  donor_policy_experiments: []
+  compatibility:
+    enabled: false
+    min_score: 0.5
+    fallback_when_no_compatible_donor: skip
+  strict_thresholds:
+    donor_similarity: 0.5
+    donor_agreement: 0.5
+    amplitude_compatibility: 0.5
+compatibility_transfer:
+  labeled_fraction: 0.2
+  allow_no_donor_rejections: false
+  experiments:
+  - name: real_only
+    kind: real
+  - name: random_event_oversampling
+    kind: oversample
+  - name: learned_prototype_event_time__all_donors_no_filter
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: all_donors_no_filter
+  - name: learned_prototype_event_time__same_dataset_only
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: same_dataset_only
+  - name: learned_prototype_event_time__cross_dataset_all
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: cross_dataset_all
+  - name: learned_prototype_event_time__cross_dataset_compatible
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: cross_dataset_compatible
+  - name: learned_prototype_event_time__compatibility_top50
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: compatibility_top50
+  - name: learned_prototype_event_time__compatibility_strict
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: compatibility_strict
+  - name: learned_prototype_event_time__strict_filter
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: cross_dataset_compatible
+    filter_policy: strict
+  - name: dtw_aligned_donor__cross_dataset_compatible
+    kind: synthetic
+    synthesis_method: dtw_aligned_donor
+    donor_policy: cross_dataset_compatible
+  - name: normalized_time_mean_donor__cross_dataset_compatible
+    kind: synthetic
+    synthesis_method: normalized_time_mean_donor
+    donor_policy: cross_dataset_compatible
+  masked_completion:
+    enabled: true
+    mask_policies:
+    - middle_30
+    - suffix_30
+data:
+  raw_path: data/raw/TSB-UAD
+  dataset_name: TSB-UAD
+  load_options:
+    max_series: 50
+    min_event_windows: 1
+    min_length: 100
+    min_event_length: 1
+    merge_gap: 0
+    max_event_ratio: null
+    include_patterns: []
+    exclude_patterns: []
+    group_by_parent_folder: true
+    dataset_name: TSB-UAD
+    seed: 42
+  train_ratio: 0.7
+  dev_ratio: 0.1
+  val_ratio: 0.1
+  test_ratio: 0.2
+seed: 42
+detector: {}
+evaluation: {}

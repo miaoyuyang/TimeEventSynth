@@ -1,0 +1,322 @@
+seed: 42
+dataset:
+  path: data/raw/TSB-UAD-Public-v2
+  name: TSB-UAD-Public-v2
+  max_series: 100
+  min_event_windows: 1
+  min_length: 500
+  max_event_ratio: 0.35
+  include_patterns:
+  - MSL/*
+  - NAB/*
+  - TODS/*
+  - MGAB/*
+  - Genesis/*
+  - IOPS/*
+  exclude_patterns:
+  - Exathlon/*
+  - OPPORTUNITY/*
+  - UCR/*
+  - SMD/*
+  - GHL/*
+  - SWaT/*
+  - MITDB/*
+  - SVDB/*
+  - CreditCard/*
+  group_by_parent_folder: true
+  max_length: 20000
+split:
+  seed: 42
+  train_ratio: 0.7
+  val_ratio: 0.1
+  test_ratio: 0.2
+  stratify_by_has_event: true
+  group_by_parent_folder: false
+  stratify_by_dataset: true
+low_label:
+  fractions: &id001
+  - 0.2
+  default_fraction: 0.2
+event_extraction:
+  min_event_length: 3
+  merge_gap: 1
+  context_padding: 5
+synthesis:
+  methods:
+  - normalized_time_mean_donor
+  - dtw_aligned_donor
+  - learned_prototype_event_time
+  - normalized_time_context_calibrated
+  - dtw_context_calibrated
+  - learned_prototype_context_calibrated
+  top_k: 3
+  alignment_grid_size: 32
+  donor_source: train_only
+  random_oversample_target_multiplier: 2.0
+  amplitude_calibration: none
+  context_amplitude_calibration: robust_scale_shift
+  partial_target_synthesis: full_replacement
+  context_size: 5
+  match_partial_amplitude: true
+  filter_policy: none
+  donor_policy: null
+  compatibility:
+    enabled: false
+    min_score: 0.5
+    top_k: null
+    top_quantile: null
+    weights:
+      shape_similarity: 0.25
+      amplitude_compatibility: 0.25
+      duration_compatibility: 0.15
+      context_similarity: 0.15
+      frequency_similarity: 0.1
+      trend_similarity: 0.1
+    same_dataset_bonus: 0.05
+    allow_cross_dataset: true
+    allow_incompatible_donors: false
+    fallback_when_no_compatible_donor: skip
+  donor_policy_experiments: []
+  confidence_quantile: 0.5
+  min_confidence: 0.5
+  strict_thresholds:
+    donor_similarity: 0.5
+    donor_agreement: 0.5
+    amplitude_compatibility: 0.5
+  confidence_filter:
+    default: no_filter
+    strict:
+      name: strict
+      min_confidence: 0.6
+      min_donor_similarity_confidence: 0.55
+      min_reconstruction_consistency_confidence: 0.6
+      min_donor_agreement_confidence: 0.55
+      min_amplitude_compatibility_score: 0.55
+  grouping:
+    num_groups: 4
+    grid_size: 32
+    context_size: 5
+alignment:
+  normalized_num_bins: 10
+  dtw_radius: null
+detector:
+  name: random_forest_window
+  model_type: random_forest_window
+  window_size: 15
+  negative_sample_ratio: 5
+  class_weight: balanced
+  params:
+    n_estimators: 200
+    max_depth: 12
+    random_state: 42
+  n_estimators: 200
+  max_depth: 12
+  random_state: 42
+evaluation:
+  threshold_selection: event_f1
+  threshold_metric: event_f1
+  point_threshold: 0.5
+  event_iou_threshold: 0.1
+  event_beta: 1.0
+  threshold_grid_size: 200
+  fixed_quantile: 0.95
+  prediction_smoothing:
+    enabled: true
+    min_event_length: 3
+    merge_gap: 2
+  seeds:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  labeled_fraction: 0.2
+  dataset_balanced: true
+  max_timelines_per_dataset: 10
+  max_points_per_dataset: null
+  stratify_by_dataset: true
+  threshold_tradeoff_grid_size: 80
+data:
+  processed_dir: data/processed
+  splits_dir: data/splits
+  train_ratio: 0.7
+  dev_ratio: 0.1
+  test_ratio: 0.2
+  val_ratio_within_train: 0.2
+  load_options:
+    max_series: 100
+    min_event_windows: 1
+    min_length: 500
+    max_length: 20000
+    min_event_length: 1
+    merge_gap: 0
+    max_event_ratio: 0.35
+    include_patterns:
+    - MSL/*
+    - NAB/*
+    - TODS/*
+    - MGAB/*
+    - Genesis/*
+    - IOPS/*
+    exclude_patterns:
+    - Exathlon/*
+    - OPPORTUNITY/*
+    - UCR/*
+    - SMD/*
+    - GHL/*
+    - SWaT/*
+    - MITDB/*
+    - SVDB/*
+    - CreditCard/*
+    group_by_parent_folder: true
+    dataset_name: TSB-UAD-Public-v2
+    seed: 42
+  val_ratio: 0.1
+  raw_path: data/raw/TSB-UAD-Public-v2
+  dataset_name: TSB-UAD-Public-v2
+experiment:
+  labeled_fraction: 0.05
+  low_label_fractions: *id001
+  top_k_donors: 3
+  alignment_grid_size: 64
+  synthesis_methods: []
+  name: paper_lowlabel_tsb_100_5seed_fpaware_lf005
+augmentation:
+  default_synthesis_method: learned_prototype_event_time
+  adaptive_groupwise:
+    density_backbones:
+    - iforest
+    - lof
+    - ocsvm
+    broad_backbones:
+    - internal_classifier
+    - current_internal_classifier
+    - cnn
+    - timesnet
+    - autoencoder
+    primary_policy_by_family:
+      density: groupwise_cross_dataset_compatible
+      broad: groupwise_cross_dataset_all
+      default: groupwise_cross_dataset_compatible
+    fallback_policy_by_family:
+      density: groupwise_cross_dataset_all
+      broad: groupwise_cross_dataset_compatible
+      default: groupwise_cross_dataset_all
+    min_synthetic_windows: 1
+detector_backbones:
+- name: internal_classifier
+  config: {}
+- name: iforest
+  config:
+    contamination: 0.1
+    window_size: 15
+    stride: 1
+    threshold_mode: synthetic_separation
+- name: ocsvm
+  config:
+    nu: 0.1
+    kernel: rbf
+    window_size: 15
+    stride: 1
+    threshold_mode: fp_aware_synthetic_separation
+    quantile: 0.99
+    false_positive_penalty: 1.0
+    max_false_positive_rate: 0.02
+    min_calibration_precision: 0.1
+    fallback_when_inverted_gap: true
+- name: lof
+  config:
+    contamination: 0.1
+    n_neighbors: 20
+    window_size: 15
+    stride: 1
+    threshold_mode: synthetic_separation
+- name: autoencoder
+  config:
+    hidden_layer_sizes:
+    - 64
+    - 32
+    - 64
+    max_iter: 200
+    window_size: 15
+    threshold_mode: synthetic_separation
+    train_with_synthetic: true
+    max_train_points: 50000
+- name: cnn
+  config:
+    window_size: 32
+    stride: 1
+    epochs: 10
+    batch_size: 128
+    learning_rate: 0.001
+    threshold_mode: synthetic_separation
+    train_with_synthetic: false
+    max_train_windows: 20000
+- name: timesnet
+  config:
+    window_size: 48
+    stride: 1
+    epochs: 10
+    batch_size: 128
+    learning_rate: 0.001
+    d_model: 32
+    top_k_periods: 3
+    num_blocks: 2
+    threshold_mode: fp_aware_synthetic_separation
+    quantile: 0.99
+    false_positive_penalty: 1.0
+    max_false_positive_rate: 0.02
+    min_calibration_precision: 0.1
+    fallback_when_inverted_gap: true
+    train_with_synthetic: false
+    max_train_windows: 20000
+augmentation_policies:
+- name: real_only
+- name: random_event_oversampling
+- name: groupwise_cross_dataset_all
+- name: groupwise_cross_dataset_compatible
+- name: groupwise_compatibility_strict
+- name: adaptive_groupwise_transfer
+backbones:
+  iforest:
+    contamination: 0.1
+    window_size: 15
+  ocsvm:
+    nu: 0.1
+    kernel: rbf
+    window_size: 15
+  lof:
+    contamination: 0.1
+    n_neighbors: 20
+    window_size: 15
+  autoencoder:
+    hidden_layer_sizes:
+    - 64
+    - 32
+    - 64
+    max_iter: 200
+    window_size: 15
+    threshold_mode: synthetic_separation
+    train_with_synthetic: false
+    max_train_points: 50000
+  cnn:
+    window_size: 32
+    stride: 1
+    epochs: 10
+    batch_size: 128
+    learning_rate: 0.001
+    threshold_mode: synthetic_separation
+    train_with_synthetic: false
+    max_train_windows: 20000
+  timesnet:
+    window_size: 48
+    stride: 1
+    epochs: 10
+    batch_size: 128
+    learning_rate: 0.001
+    d_model: 32
+    top_k_periods: 3
+    num_blocks: 2
+    threshold_mode: synthetic_separation
+    train_with_synthetic: false
+    max_train_windows: 20000

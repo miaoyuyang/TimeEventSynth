@@ -1,0 +1,49 @@
+{
+  "run_dir": "C:\\Users\\Admin\\Desktop\\paper_main_100_5seed_fpaware_retry1",
+  "artifact_dir": "C:\\Users\\Admin\\Desktop\\TimeEventSynth\\outputs\\evaluation_artifacts\\paper_eval_two_runs\\paper_main_100_5seed_fpaware_retry1",
+  "num_seeds": 5,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "num_detectors": 7,
+  "detectors": [
+    "iforest",
+    "lof",
+    "ocsvm",
+    "autoencoder",
+    "cnn",
+    "timesnet",
+    "internal_classifier"
+  ],
+  "num_policies": 6,
+  "policies": [
+    "real_only",
+    "random_event_oversampling",
+    "groupwise_cross_dataset_all",
+    "groupwise_cross_dataset_compatible",
+    "groupwise_compatibility_strict",
+    "adaptive_groupwise_transfer"
+  ],
+  "mean_series_per_seed": 41.0,
+  "aggregate_rows": 42,
+  "seed_metric_rows": 210,
+  "missing_or_not_reconstructable": [
+    "threshold_tradeoff_curve.csv or threshold_tradeoff_summary.csv"
+  ],
+  "evaluation_tables": [
+    "dataset_setup_summary",
+    "paper_main_full_metrics",
+    "paper_policy_ablation_event_f1",
+    "paper_adaptive_timeeventsynth_vs_baselines",
+    "paper_best_timeeventsynth_vs_baselines",
+    "paper_adaptive_timeeventsynth_vs_random_win_table",
+    "paper_best_timeeventsynth_vs_random_win_table",
+    "paper_compatibility_filter_summary",
+    "paper_threshold_diagnostics",
+    "paper_threshold_tradeoff_summary"
+  ]
+}

@@ -1,0 +1,160 @@
+inherits: configs/tsb_uad.yaml
+experiment:
+  name: compatibility_transfer_smoke
+  labeled_fraction: 0.2
+  low_label_fractions: &id001
+  - 0.2
+  top_k_donors: 3
+  alignment_grid_size: 64
+  synthesis_methods: &id002 []
+dataset:
+  path: data/raw/TSB-UAD
+  name: TSB-UAD
+  max_series: 8
+  min_length: 100
+  min_event_windows: 1
+  group_by_parent_folder: true
+  max_event_ratio: null
+  include_patterns: []
+  exclude_patterns: []
+split:
+  train_ratio: 0.7
+  val_ratio: 0.1
+  test_ratio: 0.2
+  stratify_by_has_event: true
+  group_by_parent_folder: true
+  seed: 42
+low_label:
+  default_fraction: 0.2
+  fractions: *id001
+evaluation:
+  threshold_selection: event_f1
+  event_iou_threshold: 0.1
+  event_beta: 1.0
+  threshold_grid_size: 200
+  prediction_smoothing:
+    enabled: true
+    min_event_length: 3
+    merge_gap: 2
+  threshold_metric: event_f1
+synthesis:
+  top_k: 3
+  alignment_grid_size: 64
+  filter_policy: none
+  donor_source: train_only
+  methods: *id002
+  donor_policy_experiments: []
+  compatibility:
+    enabled: false
+    min_score: 0.5
+    fallback_when_no_compatible_donor: skip
+compatibility_transfer:
+  labeled_fraction: 0.2
+  allow_no_donor_rejections: false
+  smoke:
+    max_series: 8
+    experiments:
+    - name: real_only
+      kind: real
+    - name: random_event_oversampling
+      kind: oversample
+    - name: learned_prototype_event_time__all_donors_no_filter
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: all_donors_no_filter
+      filter_policy: none
+    - name: learned_prototype_event_time__cross_dataset_compatible
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: cross_dataset_compatible
+      filter_policy: none
+    - name: dtw_aligned_donor__cross_dataset_compatible
+      kind: synthetic
+      synthesis_method: dtw_aligned_donor
+      donor_policy: cross_dataset_compatible
+      filter_policy: none
+  experiments:
+  - name: real_only
+    kind: real
+  - name: random_event_oversampling
+    kind: oversample
+  - name: learned_prototype_event_time__all_donors_no_filter
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: all_donors_no_filter
+    filter_policy: none
+  - name: learned_prototype_event_time__cross_dataset_all
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: cross_dataset_all
+    filter_policy: none
+  - name: learned_prototype_event_time__same_dataset_only
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: same_dataset_only
+    filter_policy: none
+  - name: learned_prototype_event_time__cross_dataset_compatible
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: cross_dataset_compatible
+    filter_policy: none
+  - name: learned_prototype_event_time__compatibility_top50
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: compatibility_top50
+    filter_policy: none
+  - name: learned_prototype_event_time__compatibility_strict
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: compatibility_strict
+    filter_policy: none
+  - name: learned_prototype_event_time__top50_filter
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: cross_dataset_compatible
+    filter_policy: top_quantile
+  - name: learned_prototype_event_time__strict_filter
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: cross_dataset_compatible
+    filter_policy: strict
+  - name: dtw_aligned_donor__cross_dataset_compatible
+    kind: synthetic
+    synthesis_method: dtw_aligned_donor
+    donor_policy: cross_dataset_compatible
+    filter_policy: none
+  - name: normalized_time_mean_donor__all_donors_no_filter
+    kind: synthetic
+    synthesis_method: normalized_time_mean_donor
+    donor_policy: all_donors_no_filter
+    filter_policy: none
+  - name: normalized_time_mean_donor__cross_dataset_compatible
+    kind: synthetic
+    synthesis_method: normalized_time_mean_donor
+    donor_policy: cross_dataset_compatible
+    filter_policy: none
+  masked_completion:
+    enabled: true
+    mask_policies:
+    - middle_30
+data:
+  raw_path: data/raw/TSB-UAD
+  dataset_name: TSB-UAD
+  load_options:
+    max_series: 8
+    min_event_windows: 1
+    min_length: 100
+    min_event_length: 1
+    merge_gap: 0
+    max_event_ratio: null
+    include_patterns: []
+    exclude_patterns: []
+    group_by_parent_folder: true
+    dataset_name: TSB-UAD
+    seed: 42
+  train_ratio: 0.7
+  dev_ratio: 0.1
+  val_ratio: 0.1
+  test_ratio: 0.2
+seed: 42
+detector: {}

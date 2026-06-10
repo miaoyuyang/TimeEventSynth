@@ -1,0 +1,89 @@
+inherits: configs/tsb_uad.yaml
+
+experiment:
+  name: cross_dataset_compatibility_smoke
+
+dataset:
+  path: data/raw/TSB-UAD
+  name: TSB-UAD
+  max_series: 24
+  min_length: 50
+  min_event_windows: 1
+  group_by_parent_folder: true
+
+split:
+  train_ratio: 0.7
+  val_ratio: 0.1
+  test_ratio: 0.2
+  stratify_by_has_event: true
+  group_by_parent_folder: false
+
+low_label:
+  default_fraction: 0.2
+
+synthesis:
+  top_k: 2
+  alignment_grid_size: 32
+  filter_policy: none
+  donor_source: train_val
+  methods: []
+  donor_policy_experiments: []
+  compatibility:
+    enabled: false
+    min_score: 0.5
+    fallback_when_no_compatible_donor: skip
+  strict_thresholds:
+    donor_similarity: 0.5
+    donor_agreement: 0.5
+    amplitude_compatibility: 0.5
+
+compatibility_transfer:
+  labeled_fraction: 0.2
+  allow_no_donor_rejections: false
+  experiments:
+    - name: real_only
+      kind: real
+    - name: learned_prototype_event_time__same_dataset_only
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: same_dataset_only
+      filter_policy: none
+    - name: learned_prototype_event_time__cross_dataset_all
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: cross_dataset_all
+      filter_policy: none
+    - name: learned_prototype_event_time__cross_dataset_compatible
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: cross_dataset_compatible
+      filter_policy: none
+    - name: learned_prototype_event_time__compatibility_top50
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: compatibility_top50
+      filter_policy: none
+    - name: learned_prototype_event_time__strict_filter
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: cross_dataset_compatible
+      filter_policy: strict
+    - name: dtw_aligned_donor__cross_dataset_compatible
+      kind: synthetic
+      synthesis_method: dtw_aligned_donor
+      donor_policy: cross_dataset_compatible
+      filter_policy: none
+  masked_completion:
+    enabled: true
+    use_donor_policies: true
+    mask_fraction: 0.3
+    mask_policies:
+      - middle_30
+    methods:
+      - learned_prototype_event_time
+      - dtw_aligned_donor
+    donor_source: train_val
+    top_k_donors: 2
+
+# When using --use-synthetic, domains domain_a/domain_b/domain_c provide cross-dataset pairs.
+# For real TSB-UAD, ensure max_series spans multiple parent folders (ECG, NASA, etc.).

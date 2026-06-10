@@ -1,0 +1,14 @@
+inherits:
+  - configs/experiment_cross_dataset_compatibility_full.yaml
+  - configs/tsb_uad_public_v2.yaml
+
+experiment:
+  name: cross_dataset_compatibility_tsb_real_full
+
+dataset:
+  max_series: 60
+  max_length: 20000
+
+synthesis:
+  top_k: 3
+  alignment_grid_size: 64

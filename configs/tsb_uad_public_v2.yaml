@@ -1,0 +1,45 @@
+# Shared defaults for TSB-UAD-Public-v2 (heterogeneous benchmark tree).
+# Data lives at repo sibling: ../TSB-UAD/data/TSB-UAD-Public-v2
+# Symlink: TimeEventSynth/data/raw/TSB-UAD-Public-v2
+
+seed: 42
+
+dataset:
+  path: data/raw/TSB-UAD-Public-v2
+  name: TSB-UAD-Public-v2
+  max_series: 50
+  min_length: 500
+  max_length: 15000
+  min_event_windows: 1
+  max_event_ratio: 0.35
+  group_by_parent_folder: true
+  # Medium-length domains for practical cross-dataset transfer (avoid 650k-point ECG/SWaT in smoke).
+  include_patterns:
+    - MSL/*
+    - NAB/*
+    - TODS/*
+    - MGAB/*
+    - Genesis/*
+    - IOPS/*
+  exclude_patterns:
+    - Exathlon/*
+    - OPPORTUNITY/*
+    - UCR/*
+    - SMD/*
+    - GHL/*
+    - SWaT/*
+    - MITDB/*
+    - SVDB/*
+    - CreditCard/*
+
+split:
+  seed: 42
+  train_ratio: 0.7
+  val_ratio: 0.1
+  test_ratio: 0.2
+  stratify_by_has_event: true
+  group_by_parent_folder: false
+
+data:
+  raw_path: data/raw/TSB-UAD-Public-v2
+  dataset_name: TSB-UAD-Public-v2

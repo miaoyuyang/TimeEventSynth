@@ -1,0 +1,19 @@
+{
+  "num_target_timelines": 10,
+  "num_source_timelines": 10,
+  "total_donor_pairs_considered": 1347,
+  "donor_pairs_kept": 530,
+  "donor_pairs_rejected": 817,
+  "mean_compatibility_score_kept": 0.9397381415103945,
+  "mean_compatibility_score_rejected": 0.9068719936734371,
+  "same_dataset_kept": 530,
+  "same_dataset_rejected": 817,
+  "cross_dataset_kept": 0,
+  "cross_dataset_rejected": 0,
+  "no_compatible_donor_count": 0,
+  "compatibility_enabled_policies": [
+    "compatibility_strict",
+    "compatibility_top50",
+    "cross_dataset_compatible"
+  ]
+}

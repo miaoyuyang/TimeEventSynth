@@ -1,0 +1,64 @@
+{
+  "learned_prototype_event_time__all_donors_no_filter": {
+    "donor_policy": "all_donors_no_filter",
+    "num_candidates": 19,
+    "num_kept": 19,
+    "num_rejected": 0,
+    "counts": {
+      "kept": 19,
+      "rejected_incompatible_donor": 0,
+      "no_compatible_donor": 0,
+      "below_compatibility_threshold": 0,
+      "below_top_quantile_0.5": 0,
+      "cross_dataset_disallowed": 0,
+      "synthesis_failed": 0,
+      "invalid_candidate": 0,
+      "evaluator_invalid": 0
+    },
+    "reasons": {
+      "kept": 19
+    }
+  },
+  "learned_prototype_event_time__cross_dataset_compatible": {
+    "donor_policy": "cross_dataset_compatible",
+    "num_candidates": 133,
+    "num_kept": 19,
+    "num_rejected": 114,
+    "counts": {
+      "kept": 19,
+      "rejected_incompatible_donor": 0,
+      "no_compatible_donor": 0,
+      "below_compatibility_threshold": 0,
+      "below_top_quantile_0.5": 114,
+      "cross_dataset_disallowed": 0,
+      "synthesis_failed": 0,
+      "invalid_candidate": 0,
+      "evaluator_invalid": 0
+    },
+    "reasons": {
+      "below_top_quantile_0.5": 114,
+      "kept": 19
+    }
+  },
+  "dtw_aligned_donor__cross_dataset_compatible": {
+    "donor_policy": "cross_dataset_compatible",
+    "num_candidates": 133,
+    "num_kept": 19,
+    "num_rejected": 114,
+    "counts": {
+      "kept": 19,
+      "rejected_incompatible_donor": 0,
+      "no_compatible_donor": 0,
+      "below_compatibility_threshold": 0,
+      "below_top_quantile_0.5": 114,
+      "cross_dataset_disallowed": 0,
+      "synthesis_failed": 0,
+      "invalid_candidate": 0,
+      "evaluator_invalid": 0
+    },
+    "reasons": {
+      "below_top_quantile_0.5": 114,
+      "kept": 19
+    }
+  }
+}

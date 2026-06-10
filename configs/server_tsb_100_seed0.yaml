@@ -1,0 +1,44 @@
+inherits:
+  - configs/experiment_backbone_augmentation_tsb_real_30_5seed.yaml
+
+experiment:
+  name: server_tsb_100_seed0_density2
+
+dataset:
+  max_series: 100
+
+data:
+  load_options:
+    max_series: 100
+
+detector_backbones:
+  - name: iforest
+    config:
+      contamination: 0.1
+      window_size: 15
+      stride: 1
+      threshold_mode: synthetic_separation
+  - name: lof
+    config:
+      contamination: 0.1
+      n_neighbors: 20
+      window_size: 15
+      stride: 1
+      threshold_mode: synthetic_separation
+
+augmentation_policies:
+  - name: real_only
+  - name: random_event_oversampling
+  - name: cross_dataset_all
+  - name: cross_dataset_compatible
+  - name: groupwise_cross_dataset_all
+  - name: groupwise_cross_dataset_compatible
+  - name: groupwise_compatibility_strict
+  - name: adaptive_groupwise_transfer
+
+evaluation:
+  seeds: [0]
+  dataset_balanced: true
+  max_timelines_per_dataset: 10
+  max_points_per_dataset: null
+  stratify_by_dataset: true

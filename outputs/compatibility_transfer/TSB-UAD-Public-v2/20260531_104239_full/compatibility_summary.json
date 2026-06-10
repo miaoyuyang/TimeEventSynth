@@ -1,0 +1,112 @@
+{
+  "num_target_timelines": 32,
+  "num_source_timelines": 42,
+  "total_donor_pairs_considered": 73184,
+  "donor_pairs_kept": 4295,
+  "donor_pairs_rejected": 48061,
+  "same_dataset_kept": 1235,
+  "same_dataset_rejected": 3829,
+  "cross_dataset_kept": 3060,
+  "cross_dataset_rejected": 44232,
+  "no_compatible_donor_count": 0,
+  "mean_compatibility_score_kept": 0.8417732499740027,
+  "mean_compatibility_score_rejected": 0.6192344968333009,
+  "global": {
+    "num_target_timelines": 32,
+    "num_source_timelines": 42,
+    "num_unique_datasets": 5,
+    "dataset_counts": {
+      "Genesis": 666,
+      "IOPS": 987,
+      "MSL": 2312,
+      "NAB": 2601,
+      "TODS": 68904
+    }
+  },
+  "policies": {
+    "all_donors_no_filter": {
+      "total_donor_pairs_considered": 10414,
+      "same_dataset_pairs_considered": 2532,
+      "cross_dataset_pairs_considered": 7882,
+      "donor_pairs_kept": 0,
+      "donor_pairs_rejected": 0,
+      "same_dataset_kept": 0,
+      "same_dataset_rejected": 0,
+      "cross_dataset_kept": 0,
+      "cross_dataset_rejected": 0,
+      "mean_compatibility_score_kept": null,
+      "mean_compatibility_score_rejected": null,
+      "no_compatible_donor_count": 0
+    },
+    "compatibility_strict": {
+      "total_donor_pairs_considered": 10414,
+      "same_dataset_pairs_considered": 2532,
+      "cross_dataset_pairs_considered": 7882,
+      "donor_pairs_kept": 739,
+      "donor_pairs_rejected": 9675,
+      "same_dataset_kept": 733,
+      "same_dataset_rejected": 1799,
+      "cross_dataset_kept": 6,
+      "cross_dataset_rejected": 7876,
+      "mean_compatibility_score_kept": 0.9172111213338635,
+      "mean_compatibility_score_rejected": 0.6324597710704349,
+      "no_compatible_donor_count": 0
+    },
+    "compatibility_top50": {
+      "total_donor_pairs_considered": 10414,
+      "same_dataset_pairs_considered": 2532,
+      "cross_dataset_pairs_considered": 7882,
+      "donor_pairs_kept": 508,
+      "donor_pairs_rejected": 9906,
+      "same_dataset_kept": 502,
+      "same_dataset_rejected": 2030,
+      "cross_dataset_kept": 6,
+      "cross_dataset_rejected": 7876,
+      "mean_compatibility_score_kept": 0.923179155025094,
+      "mean_compatibility_score_rejected": 0.6387938918856688,
+      "no_compatible_donor_count": 0
+    },
+    "cross_dataset_all": {
+      "total_donor_pairs_considered": 7882,
+      "same_dataset_pairs_considered": 0,
+      "cross_dataset_pairs_considered": 7882,
+      "donor_pairs_kept": 0,
+      "donor_pairs_rejected": 0,
+      "same_dataset_kept": 0,
+      "same_dataset_rejected": 0,
+      "cross_dataset_kept": 0,
+      "cross_dataset_rejected": 0,
+      "mean_compatibility_score_kept": null,
+      "mean_compatibility_score_rejected": null,
+      "no_compatible_donor_count": 0
+    },
+    "cross_dataset_compatible": {
+      "total_donor_pairs_considered": 31528,
+      "same_dataset_pairs_considered": 0,
+      "cross_dataset_pairs_considered": 31528,
+      "donor_pairs_kept": 3048,
+      "donor_pairs_rejected": 28480,
+      "same_dataset_kept": 0,
+      "same_dataset_rejected": 0,
+      "cross_dataset_kept": 3048,
+      "cross_dataset_rejected": 28480,
+      "mean_compatibility_score_kept": 0.6849294735630507,
+      "mean_compatibility_score_rejected": 0.5864498275437989,
+      "no_compatible_donor_count": 0
+    },
+    "same_dataset_only": {
+      "total_donor_pairs_considered": 2532,
+      "same_dataset_pairs_considered": 2532,
+      "cross_dataset_pairs_considered": 0,
+      "donor_pairs_kept": 0,
+      "donor_pairs_rejected": 0,
+      "same_dataset_kept": 0,
+      "same_dataset_rejected": 0,
+      "cross_dataset_kept": 0,
+      "cross_dataset_rejected": 0,
+      "mean_compatibility_score_kept": null,
+      "mean_compatibility_score_rejected": null,
+      "no_compatible_donor_count": 0
+    }
+  }
+}

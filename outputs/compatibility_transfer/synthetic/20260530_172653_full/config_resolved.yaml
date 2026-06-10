@@ -1,0 +1,166 @@
+seed: 42
+dataset:
+  path: data/raw/TSB-UAD
+  name: TSB-UAD
+  max_series: 24
+  min_event_windows: 1
+  min_length: 50
+  max_event_ratio: null
+  include_patterns: []
+  exclude_patterns: []
+  group_by_parent_folder: true
+split:
+  seed: 42
+  train_ratio: 0.7
+  val_ratio: 0.1
+  test_ratio: 0.2
+  stratify_by_has_event: true
+  group_by_parent_folder: false
+low_label:
+  fractions: &id001
+  - 0.01
+  - 0.05
+  - 0.1
+  - 0.2
+  default_fraction: 0.2
+event_extraction:
+  min_event_length: 3
+  merge_gap: 1
+  context_padding: 5
+synthesis:
+  methods: &id002 []
+  top_k: 2
+  alignment_grid_size: 32
+  donor_source: train_val
+  random_oversample_target_multiplier: 2.0
+  amplitude_calibration: none
+  context_amplitude_calibration: robust_scale_shift
+  partial_target_synthesis: full_replacement
+  context_size: 5
+  match_partial_amplitude: true
+  filter_policy: none
+  donor_policy: null
+  compatibility:
+    enabled: false
+    min_score: 0.5
+    fallback_when_no_compatible_donor: skip
+  donor_policy_experiments: []
+  confidence_quantile: 0.5
+  min_confidence: 0.5
+  strict_thresholds:
+    donor_similarity: 0.5
+    donor_agreement: 0.5
+    amplitude_compatibility: 0.5
+  confidence_filter:
+    default: no_filter
+    strict:
+      name: strict
+      min_confidence: 0.6
+      min_donor_similarity_confidence: 0.55
+      min_reconstruction_consistency_confidence: 0.6
+      min_donor_agreement_confidence: 0.55
+      min_amplitude_compatibility_score: 0.55
+alignment:
+  normalized_num_bins: 10
+  dtw_radius: null
+detector:
+  name: random_forest_window
+  model_type: random_forest_window
+  window_size: 15
+  negative_sample_ratio: 5
+  class_weight: balanced
+  params:
+    n_estimators: 200
+    max_depth: 12
+    random_state: 42
+  n_estimators: 200
+  max_depth: 12
+  random_state: 42
+evaluation:
+  threshold_selection: event_f1
+  threshold_metric: event_f1
+  point_threshold: 0.5
+  event_iou_threshold: 0.1
+  event_beta: 1.0
+  threshold_grid_size: 200
+  fixed_quantile: 0.95
+  prediction_smoothing:
+    enabled: true
+    min_event_length: 3
+    merge_gap: 2
+data:
+  processed_dir: data/processed
+  splits_dir: data/splits
+  train_ratio: 0.7
+  dev_ratio: 0.1
+  test_ratio: 0.2
+  val_ratio_within_train: 0.2
+  raw_path: data/raw/TSB-UAD
+  dataset_name: TSB-UAD
+  load_options:
+    max_series: 24
+    min_event_windows: 1
+    min_length: 50
+    min_event_length: 1
+    merge_gap: 0
+    max_event_ratio: null
+    include_patterns: []
+    exclude_patterns: []
+    group_by_parent_folder: true
+    dataset_name: TSB-UAD
+    seed: 42
+  val_ratio: 0.1
+experiment:
+  name: cross_dataset_compatibility_smoke
+  labeled_fraction: 0.2
+  low_label_fractions: *id001
+  top_k_donors: 2
+  alignment_grid_size: 32
+  synthesis_methods: *id002
+compatibility_transfer:
+  labeled_fraction: 0.2
+  allow_no_donor_rejections: false
+  experiments:
+  - name: real_only
+    kind: real
+  - name: learned_prototype_event_time__same_dataset_only
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: same_dataset_only
+    filter_policy: none
+  - name: learned_prototype_event_time__cross_dataset_all
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: cross_dataset_all
+    filter_policy: none
+  - name: learned_prototype_event_time__cross_dataset_compatible
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: cross_dataset_compatible
+    filter_policy: none
+  - name: learned_prototype_event_time__compatibility_top50
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: compatibility_top50
+    filter_policy: none
+  - name: learned_prototype_event_time__strict_filter
+    kind: synthetic
+    synthesis_method: learned_prototype_event_time
+    donor_policy: cross_dataset_compatible
+    filter_policy: strict
+  - name: dtw_aligned_donor__cross_dataset_compatible
+    kind: synthetic
+    synthesis_method: dtw_aligned_donor
+    donor_policy: cross_dataset_compatible
+    filter_policy: none
+  masked_completion:
+    enabled: true
+    use_donor_policies: true
+    mask_fraction: 0.3
+    mask_policies:
+    - middle_30
+    methods:
+    - learned_prototype_event_time
+    - dtw_aligned_donor
+    donor_source: train_val
+    top_k_donors: 2

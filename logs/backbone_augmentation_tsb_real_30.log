@@ -1,0 +1,5 @@
+compatibility enabled: feature_table=14 series, donor_windows=598, target_windows=122
+compatibility enabled: feature_table=14 series, donor_windows=598, target_windows=122
+compatibility enabled: feature_table=14 series, donor_windows=598, target_windows=122
+WARNING: augmentation policy compatibility_strict produced zero synthetic windows.
+Saved backbone augmentation results to /Users/wusai/Documents/code/CrisisBench/TimeEventSynth/outputs/backbone_augmentation/TSB-UAD-Public-v2/20260601_151346

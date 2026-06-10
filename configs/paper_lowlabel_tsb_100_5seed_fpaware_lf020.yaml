@@ -1,0 +1,9 @@
+inherits:
+  - configs/paper_main_tsb_100_5seed_fpaware.yaml
+
+experiment:
+  name: paper_lowlabel_tsb_100_5seed_fpaware_lf020
+  labeled_fraction: 0.20
+
+evaluation:
+  seeds: [0, 1, 2, 3, 4]

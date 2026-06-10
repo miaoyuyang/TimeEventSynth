@@ -1,0 +1,7 @@
+detector_backbone,real_only_event_f1,random_event_oversampling_event_f1,cross_dataset_all_event_f1,cross_dataset_compatible_event_f1,compatibility_strict_event_f1,adaptive_groupwise_transfer_event_f1,cross_dataset_all_policy,cross_dataset_compatible_policy,compatibility_strict_policy,adaptive_groupwise_transfer_policy,gain_compatibility_strict_over_real_only,gain_compatibility_strict_over_cross_dataset_all,false_positive_change_vs_real_only,gain_adaptive_groupwise_transfer_over_real_only,adaptive_false_positive_change_vs_real_only
+autoencoder,0.0,0.015113350125944582,,,,0.0,,,,adaptive_groupwise_transfer,,,,0.0,38.0
+iforest,0.0,0.0,,,,0.0,,,,adaptive_groupwise_transfer,,,,0.0,1.0
+internal_classifier,0.11005692599620494,0.0,,,,0.04339250493096647,,,,adaptive_groupwise_transfer,,,,-0.06666442106523847,-2.0
+lof,0.0,0.023529411764705885,,,,0.0,,,,adaptive_groupwise_transfer,,,,0.0,1.0
+ocsvm,0.0,0.0,,,,0.0,,,,adaptive_groupwise_transfer,,,,0.0,1.0
+timesnet,0.0,0.0,,,,0.0,,,,adaptive_groupwise_transfer,,,,0.0,1.0

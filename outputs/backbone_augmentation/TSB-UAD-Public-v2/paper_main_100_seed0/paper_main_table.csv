@@ -1,0 +1,25 @@
+Detector,Method,Event-F1,Precision,Recall,False Positive Events,Selected Policy
+IForest,No Aug.,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,real_only
+IForest,Random Aug.,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,1.0000 +/- 0.0000,random_event_oversampling
+IForest,Sampling Aug.,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,1.0000 +/- 0.0000,all_donors_no_filter
+IForest,TimeEventSynth,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,1.0000 +/- 0.0000,groupwise_cross_dataset_compatible
+LOF,No Aug.,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,real_only
+LOF,Random Aug.,0.0235 +/- 0.0000,0.1053 +/- 0.0000,0.0132 +/- 0.0000,34.0000 +/- 0.0000,random_event_oversampling
+LOF,Sampling Aug.,0.0708 +/- 0.0000,0.0760 +/- 0.0000,0.0662 +/- 0.0000,243.0000 +/- 0.0000,all_donors_no_filter
+LOF,TimeEventSynth,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,1.0000 +/- 0.0000,groupwise_cross_dataset_compatible
+OCSVM,No Aug.,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,real_only
+OCSVM,Random Aug.,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,1.0000 +/- 0.0000,random_event_oversampling
+OCSVM,Sampling Aug.,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,1.0000 +/- 0.0000,all_donors_no_filter
+OCSVM,TimeEventSynth,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,1.0000 +/- 0.0000,groupwise_cross_dataset_compatible
+AutoEncoder,No Aug.,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,real_only
+AutoEncoder,Random Aug.,0.0151 +/- 0.0000,0.0316 +/- 0.0000,0.0099 +/- 0.0000,92.0000 +/- 0.0000,random_event_oversampling
+AutoEncoder,Sampling Aug.,0.0280 +/- 0.0000,0.0476 +/- 0.0000,0.0199 +/- 0.0000,120.0000 +/- 0.0000,all_donors_no_filter
+AutoEncoder,TimeEventSynth,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,38.0000 +/- 0.0000,groupwise_cross_dataset_all
+TimesNet,No Aug.,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,real_only
+TimesNet,Random Aug.,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,1.0000 +/- 0.0000,random_event_oversampling
+TimesNet,Sampling Aug.,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,1.0000 +/- 0.0000,all_donors_no_filter
+TimesNet,TimeEventSynth,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,1.0000 +/- 0.0000,groupwise_cross_dataset_all
+Supervised,No Aug.,0.1101 +/- 0.0000,0.1289 +/- 0.0000,0.0960 +/- 0.0000,196.0000 +/- 0.0000,real_only
+Supervised,Random Aug.,0.0000 +/- 0.0000,0.0000 +/- 0.0000,0.0000 +/- 0.0000,23.0000 +/- 0.0000,random_event_oversampling
+Supervised,Sampling Aug.,0.0389 +/- 0.0000,0.0559 +/- 0.0000,0.0298 +/- 0.0000,152.0000 +/- 0.0000,all_donors_no_filter
+Supervised,TimeEventSynth,0.0434 +/- 0.0000,0.0537 +/- 0.0000,0.0364 +/- 0.0000,194.0000 +/- 0.0000,groupwise_cross_dataset_all

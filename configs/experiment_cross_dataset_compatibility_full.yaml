@@ -1,0 +1,57 @@
+inherits: configs/experiment_cross_dataset_compatibility_smoke.yaml
+
+experiment:
+  name: cross_dataset_compatibility_full
+
+dataset:
+  max_series: 50
+  min_length: 100
+
+compatibility_transfer:
+  experiments:
+    - name: real_only
+      kind: real
+    - name: random_event_oversampling
+      kind: oversample
+    - name: learned_prototype_event_time__all_donors_no_filter
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: all_donors_no_filter
+    - name: learned_prototype_event_time__same_dataset_only
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: same_dataset_only
+    - name: learned_prototype_event_time__cross_dataset_all
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: cross_dataset_all
+    - name: learned_prototype_event_time__cross_dataset_compatible
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: cross_dataset_compatible
+    - name: learned_prototype_event_time__compatibility_top50
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: compatibility_top50
+    - name: learned_prototype_event_time__compatibility_strict
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: compatibility_strict
+    - name: learned_prototype_event_time__strict_filter
+      kind: synthetic
+      synthesis_method: learned_prototype_event_time
+      donor_policy: cross_dataset_compatible
+      filter_policy: strict
+    - name: dtw_aligned_donor__cross_dataset_compatible
+      kind: synthetic
+      synthesis_method: dtw_aligned_donor
+      donor_policy: cross_dataset_compatible
+    - name: normalized_time_mean_donor__cross_dataset_compatible
+      kind: synthetic
+      synthesis_method: normalized_time_mean_donor
+      donor_policy: cross_dataset_compatible
+  masked_completion:
+    enabled: true
+    mask_policies:
+      - middle_30
+      - suffix_30

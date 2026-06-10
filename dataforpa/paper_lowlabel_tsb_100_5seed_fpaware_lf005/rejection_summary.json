@@ -1,0 +1,1198 @@
+{
+  "0": {
+    "real_only": {},
+    "random_event_oversampling": {},
+    "groupwise_cross_dataset_all": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 408,
+        "num_kept": 408,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 408,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 408
+        }
+      }
+    },
+    "groupwise_cross_dataset_compatible": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 408,
+        "num_kept": 168,
+        "num_rejected": 240,
+        "counts": {
+          "kept": 168,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 240,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 168,
+          "below_top_quantile_0.5": 240
+        }
+      }
+    },
+    "groupwise_compatibility_strict": {
+      "groupwise_compatibility_strict": {
+        "donor_policy": "compatibility_strict",
+        "num_candidates": 630,
+        "num_kept": 120,
+        "num_rejected": 510,
+        "counts": {
+          "kept": 120,
+          "rejected_incompatible_donor": 368,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 101,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0,
+          "strict_filter_failed:donor_agreement_confidence,amplitude_compatibility_score": 13,
+          "strict_filter_failed:reconstruction_consistency_confidence": 3,
+          "strict_filter_failed:amplitude_compatibility_score": 23,
+          "strict_filter_failed:reconstruction_consistency_confidence,amplitude_compatibility_score": 2
+        },
+        "reasons": {
+          "kept": 120,
+          "below_top_quantile_0.5": 101,
+          "rejected_incompatible_donor": 368,
+          "strict_filter_failed:donor_agreement_confidence,amplitude_compatibility_score": 13,
+          "strict_filter_failed:reconstruction_consistency_confidence": 3,
+          "strict_filter_failed:amplitude_compatibility_score": 23,
+          "strict_filter_failed:reconstruction_consistency_confidence,amplitude_compatibility_score": 2
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__internal_classifier": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 408,
+        "num_kept": 408,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 408,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 408
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__iforest": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 408,
+        "num_kept": 168,
+        "num_rejected": 240,
+        "counts": {
+          "kept": 168,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 240,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 168,
+          "below_top_quantile_0.5": 240
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__ocsvm": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 408,
+        "num_kept": 168,
+        "num_rejected": 240,
+        "counts": {
+          "kept": 168,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 240,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 168,
+          "below_top_quantile_0.5": 240
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__lof": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 408,
+        "num_kept": 168,
+        "num_rejected": 240,
+        "counts": {
+          "kept": 168,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 240,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 168,
+          "below_top_quantile_0.5": 240
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__autoencoder": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 408,
+        "num_kept": 408,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 408,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 408
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__cnn": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 408,
+        "num_kept": 408,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 408,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 408
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__timesnet": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 408,
+        "num_kept": 408,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 408,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 408
+        }
+      }
+    }
+  },
+  "1": {
+    "real_only": {},
+    "random_event_oversampling": {},
+    "groupwise_cross_dataset_all": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 569,
+        "num_kept": 569,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 569,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 569
+        }
+      }
+    },
+    "groupwise_cross_dataset_compatible": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 569,
+        "num_kept": 172,
+        "num_rejected": 397,
+        "counts": {
+          "kept": 172,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 397,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 172,
+          "below_top_quantile_0.5": 397
+        }
+      }
+    },
+    "groupwise_compatibility_strict": {
+      "groupwise_compatibility_strict": {
+        "donor_policy": "compatibility_strict",
+        "num_candidates": 774,
+        "num_kept": 124,
+        "num_rejected": 650,
+        "counts": {
+          "kept": 124,
+          "rejected_incompatible_donor": 513,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 96,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0,
+          "strict_filter_failed:donor_agreement_confidence,amplitude_compatibility_score": 13,
+          "strict_filter_failed:amplitude_compatibility_score": 20,
+          "strict_filter_failed:reconstruction_consistency_confidence": 5,
+          "strict_filter_failed:reconstruction_consistency_confidence,amplitude_compatibility_score": 2,
+          "strict_filter_failed:reconstruction_consistency_confidence,amplitude_compatibility_score,aggregate_confidence": 1
+        },
+        "reasons": {
+          "kept": 124,
+          "below_top_quantile_0.5": 96,
+          "rejected_incompatible_donor": 513,
+          "strict_filter_failed:donor_agreement_confidence,amplitude_compatibility_score": 13,
+          "strict_filter_failed:amplitude_compatibility_score": 20,
+          "strict_filter_failed:reconstruction_consistency_confidence": 5,
+          "strict_filter_failed:reconstruction_consistency_confidence,amplitude_compatibility_score": 2,
+          "strict_filter_failed:reconstruction_consistency_confidence,amplitude_compatibility_score,aggregate_confidence": 1
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__internal_classifier": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 569,
+        "num_kept": 569,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 569,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 569
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__iforest": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 569,
+        "num_kept": 172,
+        "num_rejected": 397,
+        "counts": {
+          "kept": 172,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 397,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 172,
+          "below_top_quantile_0.5": 397
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__ocsvm": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 569,
+        "num_kept": 172,
+        "num_rejected": 397,
+        "counts": {
+          "kept": 172,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 397,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 172,
+          "below_top_quantile_0.5": 397
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__lof": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 569,
+        "num_kept": 172,
+        "num_rejected": 397,
+        "counts": {
+          "kept": 172,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 397,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 172,
+          "below_top_quantile_0.5": 397
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__autoencoder": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 569,
+        "num_kept": 569,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 569,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 569
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__cnn": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 569,
+        "num_kept": 569,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 569,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 569
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__timesnet": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 569,
+        "num_kept": 569,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 569,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 569
+        }
+      }
+    }
+  },
+  "2": {
+    "real_only": {},
+    "random_event_oversampling": {},
+    "groupwise_cross_dataset_all": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 369,
+        "num_kept": 369,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 369,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 369
+        }
+      }
+    },
+    "groupwise_cross_dataset_compatible": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 369,
+        "num_kept": 168,
+        "num_rejected": 201,
+        "counts": {
+          "kept": 168,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 201,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 168,
+          "below_top_quantile_0.5": 201
+        }
+      }
+    },
+    "groupwise_compatibility_strict": {
+      "groupwise_compatibility_strict": {
+        "donor_policy": "compatibility_strict",
+        "num_candidates": 588,
+        "num_kept": 112,
+        "num_rejected": 476,
+        "counts": {
+          "kept": 112,
+          "rejected_incompatible_donor": 330,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 104,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0,
+          "strict_filter_failed:amplitude_compatibility_score": 20,
+          "strict_filter_failed:donor_similarity_confidence,reconstruction_consistency_confidence,donor_agreement_confidence,amplitude_compatibility_score,aggregate_confidence": 4,
+          "strict_filter_failed:donor_agreement_confidence,amplitude_compatibility_score": 16,
+          "strict_filter_failed:reconstruction_consistency_confidence,amplitude_compatibility_score": 1,
+          "strict_filter_failed:donor_agreement_confidence,amplitude_compatibility_score,aggregate_confidence": 1
+        },
+        "reasons": {
+          "kept": 112,
+          "below_top_quantile_0.5": 104,
+          "rejected_incompatible_donor": 330,
+          "strict_filter_failed:amplitude_compatibility_score": 20,
+          "strict_filter_failed:donor_similarity_confidence,reconstruction_consistency_confidence,donor_agreement_confidence,amplitude_compatibility_score,aggregate_confidence": 4,
+          "strict_filter_failed:donor_agreement_confidence,amplitude_compatibility_score": 16,
+          "strict_filter_failed:reconstruction_consistency_confidence,amplitude_compatibility_score": 1,
+          "strict_filter_failed:donor_agreement_confidence,amplitude_compatibility_score,aggregate_confidence": 1
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__internal_classifier": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 369,
+        "num_kept": 369,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 369,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 369
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__iforest": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 369,
+        "num_kept": 168,
+        "num_rejected": 201,
+        "counts": {
+          "kept": 168,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 201,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 168,
+          "below_top_quantile_0.5": 201
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__ocsvm": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 369,
+        "num_kept": 168,
+        "num_rejected": 201,
+        "counts": {
+          "kept": 168,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 201,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 168,
+          "below_top_quantile_0.5": 201
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__lof": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 369,
+        "num_kept": 168,
+        "num_rejected": 201,
+        "counts": {
+          "kept": 168,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 201,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 168,
+          "below_top_quantile_0.5": 201
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__autoencoder": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 369,
+        "num_kept": 369,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 369,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 369
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__cnn": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 369,
+        "num_kept": 369,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 369,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 369
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__timesnet": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 369,
+        "num_kept": 369,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 369,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 369
+        }
+      }
+    }
+  },
+  "3": {
+    "real_only": {},
+    "random_event_oversampling": {},
+    "groupwise_cross_dataset_all": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 565,
+        "num_kept": 565,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 565,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 565
+        }
+      }
+    },
+    "groupwise_cross_dataset_compatible": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 565,
+        "num_kept": 196,
+        "num_rejected": 369,
+        "counts": {
+          "kept": 196,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 369,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 196,
+          "below_top_quantile_0.5": 369
+        }
+      }
+    },
+    "groupwise_compatibility_strict": {
+      "groupwise_compatibility_strict": {
+        "donor_policy": "compatibility_strict",
+        "num_candidates": 784,
+        "num_kept": 136,
+        "num_rejected": 648,
+        "counts": {
+          "kept": 136,
+          "rejected_incompatible_donor": 524,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 76,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0,
+          "strict_filter_failed:donor_similarity_confidence,reconstruction_consistency_confidence,donor_agreement_confidence,amplitude_compatibility_score,aggregate_confidence": 2,
+          "strict_filter_failed:reconstruction_consistency_confidence,amplitude_compatibility_score": 3,
+          "strict_filter_failed:amplitude_compatibility_score": 37,
+          "strict_filter_failed:reconstruction_consistency_confidence": 4,
+          "strict_filter_failed:donor_agreement_confidence,amplitude_compatibility_score": 2
+        },
+        "reasons": {
+          "rejected_incompatible_donor": 524,
+          "strict_filter_failed:donor_similarity_confidence,reconstruction_consistency_confidence,donor_agreement_confidence,amplitude_compatibility_score,aggregate_confidence": 2,
+          "kept": 136,
+          "below_top_quantile_0.5": 76,
+          "strict_filter_failed:reconstruction_consistency_confidence,amplitude_compatibility_score": 3,
+          "strict_filter_failed:amplitude_compatibility_score": 37,
+          "strict_filter_failed:reconstruction_consistency_confidence": 4,
+          "strict_filter_failed:donor_agreement_confidence,amplitude_compatibility_score": 2
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__internal_classifier": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 565,
+        "num_kept": 565,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 565,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 565
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__iforest": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 565,
+        "num_kept": 196,
+        "num_rejected": 369,
+        "counts": {
+          "kept": 196,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 369,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 196,
+          "below_top_quantile_0.5": 369
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__ocsvm": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 565,
+        "num_kept": 196,
+        "num_rejected": 369,
+        "counts": {
+          "kept": 196,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 369,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 196,
+          "below_top_quantile_0.5": 369
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__lof": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 565,
+        "num_kept": 196,
+        "num_rejected": 369,
+        "counts": {
+          "kept": 196,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 369,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 196,
+          "below_top_quantile_0.5": 369
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__autoencoder": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 565,
+        "num_kept": 565,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 565,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 565
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__cnn": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 565,
+        "num_kept": 565,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 565,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 565
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__timesnet": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 565,
+        "num_kept": 565,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 565,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 565
+        }
+      }
+    }
+  },
+  "4": {
+    "real_only": {},
+    "random_event_oversampling": {},
+    "groupwise_cross_dataset_all": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 372,
+        "num_kept": 372,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 372,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 372
+        }
+      }
+    },
+    "groupwise_cross_dataset_compatible": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 372,
+        "num_kept": 180,
+        "num_rejected": 192,
+        "counts": {
+          "kept": 180,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 192,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 180,
+          "below_top_quantile_0.5": 192
+        }
+      }
+    },
+    "groupwise_compatibility_strict": {
+      "groupwise_compatibility_strict": {
+        "donor_policy": "compatibility_strict",
+        "num_candidates": 630,
+        "num_kept": 138,
+        "num_rejected": 492,
+        "counts": {
+          "kept": 138,
+          "rejected_incompatible_donor": 298,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 152,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0,
+          "strict_filter_failed:amplitude_compatibility_score": 31,
+          "strict_filter_failed:reconstruction_consistency_confidence": 2,
+          "strict_filter_failed:donor_agreement_confidence,amplitude_compatibility_score,aggregate_confidence": 8,
+          "strict_filter_failed:donor_agreement_confidence,amplitude_compatibility_score": 1
+        },
+        "reasons": {
+          "kept": 138,
+          "below_top_quantile_0.5": 152,
+          "rejected_incompatible_donor": 298,
+          "strict_filter_failed:amplitude_compatibility_score": 31,
+          "strict_filter_failed:reconstruction_consistency_confidence": 2,
+          "strict_filter_failed:donor_agreement_confidence,amplitude_compatibility_score,aggregate_confidence": 8,
+          "strict_filter_failed:donor_agreement_confidence,amplitude_compatibility_score": 1
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__internal_classifier": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 372,
+        "num_kept": 372,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 372,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 372
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__iforest": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 372,
+        "num_kept": 180,
+        "num_rejected": 192,
+        "counts": {
+          "kept": 180,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 192,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 180,
+          "below_top_quantile_0.5": 192
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__ocsvm": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 372,
+        "num_kept": 180,
+        "num_rejected": 192,
+        "counts": {
+          "kept": 180,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 192,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 180,
+          "below_top_quantile_0.5": 192
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__lof": {
+      "groupwise_cross_dataset_compatible": {
+        "donor_policy": "cross_dataset_compatible",
+        "num_candidates": 372,
+        "num_kept": 180,
+        "num_rejected": 192,
+        "counts": {
+          "kept": 180,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 192,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 180,
+          "below_top_quantile_0.5": 192
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__autoencoder": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 372,
+        "num_kept": 372,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 372,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 372
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__cnn": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 372,
+        "num_kept": 372,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 372,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 372
+        }
+      }
+    },
+    "adaptive_groupwise_transfer__timesnet": {
+      "groupwise_cross_dataset_all": {
+        "donor_policy": "cross_dataset_all",
+        "num_candidates": 372,
+        "num_kept": 372,
+        "num_rejected": 0,
+        "counts": {
+          "kept": 372,
+          "rejected_incompatible_donor": 0,
+          "no_compatible_donor": 0,
+          "below_compatibility_threshold": 0,
+          "below_top_quantile_0.5": 0,
+          "cross_dataset_disallowed": 0,
+          "synthesis_failed": 0,
+          "invalid_candidate": 0,
+          "evaluator_invalid": 0
+        },
+        "reasons": {
+          "kept": 372
+        }
+      }
+    }
+  }
+}

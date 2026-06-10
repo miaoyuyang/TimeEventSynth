@@ -1,0 +1,1256 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{comment}
+\usepackage{placeins}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{booktabs}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+
+\title{TimeEventSynth: Adaptive Cross-Series Anomaly Augmentation for Low-Label Time-Series Detection}
+
+
+
+\author{\IEEEauthorblockN{1\textsuperscript{st} Given Name Surname}
+\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+\textit{name of organization (of Aff.)}\\
+City, Country \\
+email address or ORCID}
+\and
+\IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
+\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+\textit{name of organization (of Aff.)}\\
+City, Country \\
+email address or ORCID}
+\and
+\IEEEauthorblockN{3\textsuperscript{rd} Given Name Surname}
+\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+\textit{name of organization (of Aff.)}\\
+City, Country \\
+email address or ORCID}
+\and
+\IEEEauthorblockN{4\textsuperscript{th} Given Name Surname}
+\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+\textit{name of organization (of Aff.)}\\
+City, Country \\
+email address or ORCID}
+\and
+\IEEEauthorblockN{5\textsuperscript{th} Given Name Surname}
+\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+\textit{name of organization (of Aff.)}\\
+City, Country \\
+email address or ORCID}
+\and
+\IEEEauthorblockN{6\textsuperscript{th} Given Name Surname}
+\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+\textit{name of organization (of Aff.)}\\
+City, Country \\
+email address or ORCID}
+}
+
+
+
+\maketitle
+
+\begin{abstract}
+Time-series anomaly detection often suffers from limited labeled anomaly events. Although many detectors can assign anomaly scores to points or subsequences, their performance may degrade when only a small fraction of anomaly windows is available for training, calibration, or threshold selection. A natural remedy is to augment rare anomaly events by transferring anomalous patterns from other time series. However, naive cross-series augmentation can introduce negative transfer: an anomaly window that is meaningful in one series may be implausible, mis-scaled, or inconsistent with the local dynamics of another series.
+
+We present TimeEventSynth, a compatibility-aware cross-series event augmentation framework for low-label time-series anomaly detection. The framework extracts labeled anomaly windows, constructs a donor pool of real anomaly events, estimates donor-recipient compatibility using shape, scale, local-context, and group-level signals, and then synthesizes recipient-specific anomaly windows under several transfer policies, including random oversampling, groupwise all-donor transfer, groupwise compatible transfer, groupwise strict transfer, and detector-family heuristic adaptive transfer. Evaluated on controlled TSB-UAD-style low-label settings with multiple
+detector backbones, the results show that augmentation is detector-dependent:
+TimeEventSynth-family policies improve several backbones, while the preferred transfer policy varies across detector families. Naive oversampling remains competitive for some detectors, and some backbones are sensitive to synthetic distribution shift. 
+These findings suggest that time-series anomaly augmentation should be compatibility-aware and detector-aware rather than applied as uniform data expansion.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Time-series anomaly detection, low-label learning, data augmentation, cross-series transfer, event-level detection, detector-aware augmentation
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+Time-series anomaly detection is a fundamental task in many domains, including industrial monitoring, cloud-system observability, financial risk analysis, healthcare, transportation, energy management, and crisis monitoring. In these applications, a time series records the evolution of a system over time, and anomalies often correspond to meaningful temporal events such as equipment faults, traffic incidents, abnormal user behavior, sudden demand shifts, or emergency situations. Detecting such events accurately is important because missed anomalies may delay intervention, while excessive false alarms can reduce the practical usefulness of a detection system.
+
+Despite extensive progress in time-series anomaly detection, learning effective detectors remains challenging when labeled anomaly events are scarce. Many real-world datasets contain only a small number of labeled anomalous windows, and the available anomalies may cover only a limited subset of the possible event patterns. This low-label setting is common because anomaly annotation requires domain expertise, rare events occur infrequently, and the same type of abnormal behavior may appear differently across time series. As a result, detectors trained or calibrated on the limited observed anomalies may generalize poorly to unseen events.
+
+A natural solution is data augmentation. Existing augmentation strategies for time series include perturbing existing subsequences, oversampling labeled anomalies, or generating synthetic windows through heuristic transformations. These methods can increase the number of training examples, but they often fail to exploit a key property of multi-series anomaly datasets: anomaly events observed in one time series may provide useful information for another. For example, a spike, level shift, contextual deviation, or abnormal fluctuation pattern may be transferable across related sensors, servers, financial indicators, or operational processes. This suggests that cross-series event augmentation can be a powerful mechanism for improving low-label anomaly detection.
+
+However, cross-series augmentation also introduces a central risk: negative transfer. An anomaly window that is meaningful in one series may be implausible in another because the two series differ in scale, variance, shape dynamics, periodicity, or local context. Directly copying or injecting anomaly windows without considering such differences may create synthetic examples that are unrealistic or even harmful. This problem becomes more severe when the donor and recipient series come from different datasets or application groups. Therefore, the key challenge is not merely how to generate more anomaly windows, but how to decide which anomaly events can be transferred, to which recipient series, and under what adaptation policy.
+
+In this paper, we study low-label time-series anomaly detection through compatibility-aware cross-series event augmentation. Rather than designing a new anomaly detector, we propose an augmentation framework that can be applied on top of different detector backbones. The framework first extracts labeled anomaly windows from available training series and constructs a donor pool of real anomaly events. It then estimates donor-recipient compatibility using event-shape similarity, amplitude-scale consistency, local-context compatibility, and group-level relatedness. Based on these signals, the framework constructs synthetic anomaly windows under different transfer policies, ranging from random oversampling and all-donor transfer to compatibility-filtered, strict compatibility-filtered, and predefined detector-family adaptive transfer.
+
+The motivation behind our approach is that anomaly augmentation should be both compatibility-aware and detector-aware. Compatibility awareness is needed because not all donor events suit every recipient series. Detector awareness is needed because different anomaly detectors respond differently to synthetic data. Some density-based or tree-based detectors may benefit from compatible synthetic windows that reshape the local anomaly distribution, while reconstruction-based models may benefit from broader event oversampling. In contrast, some sequence models may already learn robust representations from real data and can be sensitive to synthetic distribution shift. Therefore, a single uniform augmentation policy is unlikely to dominate across all detector families.
+
+We evaluate the proposed framework in a TSB-UAD-style low-label anomaly detection setting using multiple detector backbones, including classical score-based, density-based, reconstruction-based,
+convolutional, sequence-model, and supervised low-label detectors.
+
+The experimental results show that cross-series augmentation is useful but detector-dependent. TimeEventSynth-family policies improve several backbones,
+while the preferred transfer policy varies across detectors. Naive oversampling remains competitive for some backbones, and some detectors do not benefit from
+synthetic augmentation. These results support our central claim: effective time-series anomaly augmentation requires controlled transfer rather than indiscriminate data expansion.
+
+This paper makes the following contributions:
+\begin{itemize}
+\item We formulate low-label time-series anomaly detection as a cross-series event augmentation problem, where visible labeled anomaly windows are reused as donor events for training or calibration under limited anomaly supervision.
+
+\item We propose TimeEventSynth, a compatibility-aware augmentation framework that estimates donor-recipient suitability using shape, scale, local-context, and group-level signals, reducing the risk of harmful cross-series transfer.
+
+\item We instantiate multiple augmentation policies, including random oversampling, all-donor transfer, compatibility-filtered transfer, strict compatibility-filtered transfer, and detector-family heuristic adaptive transfer, to enable controlled comparison of data expansion and compatibility-aware selection.
+
+\item We evaluate the framework across multiple anomaly detector backbones and show that augmentation effectiveness is detector-dependent, highlighting when compatibility-aware and adaptive transfer are beneficial and when synthetic data can hurt.
+
+\end{itemize}
+
+
+\section{Problem Definition}
+\label{sec:problem}
+
+We study low-label time-series anomaly detection with cross-series event augmentation. The goal is to improve anomaly detection performance when only a small number of labeled anomaly events are available. Unlike standard augmentation that only perturbs or duplicates existing anomaly windows within the same series, we consider whether anomaly events observed in one time series can be transferred to another series in a controlled manner.
+
+\subsection{Low-Label Time-Series Anomaly Detection}
+
+Let
+
+\[
+\mathcal{D}={X_1,X_2,\ldots,X_N}
+\]
+
+denote a collection of univariate time series. Each series
+
+\[
+X_i=(x_{i,1},x_{i,2},\ldots,x_{i,T_i})
+\]
+
+contains $T_i$ observations. Each time point may have a binary anomaly label
+$y_{i,t}\in\{0,1\}$, where $y_{i,t}=1$ denotes an anomalous point and
+$y_{i,t}=0$ denotes a normal point. In the low-label setting, labels are only
+partially visible. We use a visibility indicator
+$m_{i,t}\in\{0,1\}$, where $m_{i,t}=1$ means that the label at time $t$ is
+available for training, validation, or calibration, and $m_{i,t}=0$ means that
+the label is hidden during model development.
+
+
+A visible anomaly event is a maximal contiguous segment whose labels are visible
+and anomalous:
+\[
+a_{i,j}=\big(s_{i,j},e_{i,j},X_i[s_{i,j}:e_{i,j}]\big),
+\]
+where $s_{i,j}$ and $e_{i,j}$ are the start and end indices of the event.
+The set of visible anomaly events in series $X_i$ is denoted by
+\[
+\mathcal{A}^{\mathrm{vis}}_i
+=
+\{a_{i,1},a_{i,2},\ldots,a_{i,M_i}\}.
+\]
+
+The donor pool is constructed only from visible anomaly events in the training
+split:
+\[
+\mathcal{A}_{\mathrm{donor}}
+=
+\bigcup_{X_i\in\mathcal{D}_{\mathrm{train}}}
+\mathcal{A}^{\mathrm{vis}}_i .
+\]
+
+Given a detector backbone $F_\theta$, the output is an anomaly score sequence
+
+\[
+F_\theta(X_i,t)\rightarrow \mathbb{R},
+\]
+
+where larger scores indicate stronger anomaly likelihood. The predicted anomaly regions are obtained by applying a threshold or event-level decision rule to the score sequence. Our objective is to improve event-level detection performance under limited labeled anomalies by augmenting the available training or calibration data.
+
+\subsection{Cross-Series Event Augmentation}
+Cross-series event augmentation constructs synthetic anomaly windows for a recipient series using anomaly windows extracted from donor series. For a recipient series $X_r$, a donor anomaly window $a_{d,j}\in\mathcal{A}_d$ may be transferred to $X_r$ if the donor event is considered compatible with the recipient series. The resulting synthetic event is written as
+
+\[
+\tilde{a}*{r,k}
+=
+\mathcal{T}(a*{d,j},X_r,\ell_{r,k}),
+\]
+
+where $\mathcal{T}$ is a transfer operator and $\ell_{r,k}$ is the recipient event context constructed from visible low-label anomaly windows.
+
+The augmented anomaly set for $X_r$ is
+
+\[
+\widetilde{\mathcal{A}}*r
+=
+\mathcal{A}*r
+\cup
+{\tilde{a}*{r,1},\tilde{a}*{r,2},\ldots,\tilde{a}_{r,\widetilde{M}_r}}.
+\]
+
+The augmented data may be used for detector training, detector calibration, threshold selection, or synthetic-positive separation, depending on the detector backbone.
+
+The key difficulty is that anomaly events are not universally transferable. A donor anomaly window may be useful for a recipient series when the two series share compatible shape dynamics, amplitude scale, local statistical context, or group-level semantics. However, the same donor window may become harmful if it is injected into an incompatible recipient series. Therefore, cross-series event augmentation must solve both a synthesis problem and a transfer-selection problem.
+
+\subsection{Donor-Recipient Compatibility}
+
+We define a donor-recipient compatibility function
+
+\[
+C(a_{d,j},X_r,\ell_{r,k})\in[0,1],
+\]
+
+which estimates whether donor event $a_{d,j}$ can be plausibly transferred to recipient series $X_r$ at event context $\ell_{r,k}$. Compatibility may combine several signals:
+
+\[
+C
+=
+\alpha_s C_{\mathrm{shape}}
++
+\alpha_a C_{\mathrm{amp}}
++
+\alpha_c C_{\mathrm{context}}
++
+\alpha_g C_{\mathrm{group}},
+\]
+
+where $C_{\mathrm{shape}}$ measures event-shape similarity, $C_{\mathrm{amp}}$ measures amplitude or scale consistency, $C_{\mathrm{context}}$ measures local statistical compatibility, and $C_{\mathrm{group}}$ captures whether donor and recipient series belong to related datasets or groups. The weights $\alpha_s,\alpha_a,\alpha_c,\alpha_g$ control the contribution of each signal.
+
+Compatibility can serve as a soft weight or hard filter. In a permissive transfer policy, most donor events may be considered valid, whereas a stricter policy allows transfer only if
+
+\[
+C(a_{d,j},X_r,\ell_{r,k}) \geq \tau_C,
+\]
+
+where $\tau_C$ is a compatibility threshold. This filtering is intended to reduce negative transfer from implausible donor-recipient pairs.
+
+
+\subsection{Objective and Protocol Constraints}
+
+The objective is to improve held-out anomaly detection under limited visible
+anomaly labels. Let $\mathcal{M}_{\mathrm{event}}$ denote an event-level
+evaluation metric, such as event-level $F_1$ or event-level recall under a
+false-positive constraint. For a detector backbone $F_\theta$ and a transfer
+policy $\pi$, the goal is to obtain a trained or calibrated detector
+$F_{\theta}^{\pi}$ such that
+
+\[
+\mathcal{M}_{\mathrm{event}}(F_{\theta}^{\pi};\mathcal{D}_{\mathrm{test}})
+>
+\mathcal{M}_{\mathrm{event}}(F_{\theta}^{\mathrm{real}};\mathcal{D}_{\mathrm{test}})
+\]
+
+when compatible synthetic evidence is beneficial, while avoiding negative
+transfer when donor-recipient pairs are incompatible.
+
+All donor selection, compatibility estimation, augmentation, threshold
+calibration, and policy selection are performed using only the training and
+validation splits. Test labels are used only for final evaluation.
+
+\begin{comment}
+\subsection{Transfer Policies}
+
+A transfer policy $\pi$ specifies how donor events are selected and adapted for each recipient series. We consider several policy families:
+
+\begin{itemize}
+\item \textbf{Real only}: no synthetic anomaly events are added.
+\item \textbf{Random event oversampling}: existing labeled anomaly windows are duplicated or resampled without cross-series transfer.
+\item \textbf{All-donor transfer}: anomaly windows from all donor series are considered without compatibility filtering.
+\item \textbf{Cross-dataset transfer}: donor windows are selected from different datasets or series groups to test whether broader transfer improves generalization.
+\item \textbf{Compatibility-filtered transfer}: donor windows are retained only when their compatibility score exceeds a threshold.
+\item \textbf{Groupwise transfer}: donor selection is constrained or prioritized according to dataset, domain, or statistical group membership.
+\item \textbf{Adaptive groupwise transfer}: the transfer policy is selected or weighted according to compatibility statistics and detector-specific validation behavior.
+\end{itemize}
+
+These policies define a spectrum from simple data expansion to controlled cross-series transfer. Comparing them allows us to distinguish the effect of adding more synthetic events from the effect of selecting compatible donor events.
+
+\subsection{Learning Objective}
+
+Let $\mathcal{X}*{\mathrm{real}}$ denote the real training or calibration data and $\widetilde{\mathcal{X}}*{\pi}$ denote the synthetic data generated by transfer policy $\pi$. For detector backbones that support supervised or semi-supervised training, the detector can be trained on the combined data:
+
+\[
+\mathcal{L}(\theta)
+=
+\sum_{(x,y)\in\mathcal{X}*{\mathrm{real}}}
+\ell(F*\theta(x),y)
++
+\lambda_{\mathrm{syn}}
+\sum_{(\tilde{x},\tilde{y})\in\widetilde{\mathcal{X}}*{\pi}}
+w(\tilde{x})\ell(F*\theta(\tilde{x}),\tilde{y}),
+\]
+
+where $w(\tilde{x})$ is an optional compatibility-derived weight and $\lambda_{\mathrm{syn}}$ controls the influence of synthetic examples.
+
+For unsupervised or score-based detectors, the synthetic events may instead be used for threshold calibration or synthetic-positive separation. In this case, the detector first produces anomaly scores, and the synthetic events help determine a decision threshold that better separates normal regions from plausible anomaly events.
+
+The final evaluation is performed on held-out test series using event-level and point-level anomaly detection metrics. 
+
+All donor selection, compatibility estimation, augmentation, and calibration are performed using only the training and validation splits. Test labels are used only for final evaluation.
+
+
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/time_arch.png}
+    \caption{Overview of \textsc{CrisisVerse-Align}.}
+    \label{fig:overview}
+\end{figure*}
+\end{comment}
+
+\begin{comment}
+Problem Definition:
+定义低标签事件检测和 cross-series augmentation 任务
+
+TimeEventSynth Framework:
+说明 donor pool、compatibility、retrieval、adaptation、synthetic pool
+
+Transfer Policies and Detector Interface:
+说明不同 transfer policies，以及 synthetic windows 对不同 detector 的不同作用
+
+Analysis:
+解释为什么 compatibility 可以降低 negative transfer，以及为什么效果 detector-dependent
+
+Evaluation:
+用实验验证上述分析
+\end{comment}
+
+\section{TimeEventSynth Framework}
+\label{sec:framework}
+\subsection{Overview}
+This section presents the TimeEventSynth framework for detector-aware cross-series anomaly event augmentation. The framework constructs a donor pool from visible anomaly events in the training split, estimates donor-recipient compatibility, adapts accepted donor events to recipient event contexts, and outputs synthetic anomaly windows under a specified transfer policy.
+
+The framework has three core components. First, it represents each labeled anomaly window as a transferable event pattern. Second, it estimates donor-recipient compatibility using event-shape, amplitude-scale, local-context, and group-level signals. Third, it applies a transfer policy $\pi$ to select donor events and construct synthetic anomaly windows. The generated synthetic windows are then used for detector training, threshold calibration, or synthetic-positive separation, depending on the detector backbone.
+
+Figure~\ref{fig:overview} summarizes the overall workflow. From the limited labeled training data, the framework extracts real anomaly windows and builds a donor event pool $\mathcal{A}$. For a recipient series $X_r$, candidate recipient locations are selected from normal or weakly labeled regions. Donor windows are retrieved from $\mathcal{A}$, scored by compatibility, filtered or ranked according to policy $\pi$, and adapted into the recipient context through a transfer operator $\mathcal{T}$. The output is a set of synthetic anomaly windows $\widetilde{\mathcal{A}}_r$.
+
+\subsection{Event Representation and Donor Pool}
+For each time series $X_i$, we extract labeled anomalous regions as anomaly windows:
+
+\[
+\mathcal{A}*i={a*{i,1},a_{i,2},\ldots,a_{i,M_i}}.
+\]
+
+Each anomaly event $a_{i,j}$ contains an anomalous subsequence and a local context window around it. We write
+
+\[
+a_{i,j}=(X_i[s_{i,j}:e_{i,j}], q_{i,j}),
+\]
+
+where $X_i[s_{i,j}:e_{i,j}]$ is the anomalous segment and $q_{i,j}$ denotes its event descriptor. The descriptor summarizes properties that are useful for transfer, including event length, normalized shape, amplitude range, local mean and variance, local trend, and group identity if available.
+
+The normalized shape of an event is used to compare anomaly patterns independently of their original scale. Let $\mu_{i,j}$ and $\sigma_{i,j}$ denote the local mean and standard deviation around event $a_{i,j}$. We define the normalized event pattern as
+
+\[
+p_{i,j}
+=
+\frac{X_i[s_{i,j}:e_{i,j}]-\mu_{i,j}}
+{\sigma_{i,j}+\epsilon}.
+\]
+
+The pattern $p_{i,j}$ captures the relative anomaly shape, such as a spike, drop, shift, or abnormal fluctuation. This representation allows a donor event to be adapted to a recipient series with a different scale.
+
+All labeled anomaly windows from the training split are collected into a donor pool:
+
+\[
+\mathcal{A}
+=
+\bigcup_{i=1}^{N}\mathcal{A}_i.
+\]
+
+Each donor event stores its source series, dataset or group identity, normalized pattern $p_{i,j}$, local statistics, and descriptor $q_{i,j}$. The donor pool supports both within-group and cross-group retrieval. Within-group retrieval prioritizes donors from related series, while cross-group retrieval increases event diversity by considering donors from different datasets or domains.
+
+For a recipient series $X_r$, we exclude test information and only use donor events available in the training split. This ensures that augmentation does not leak test labels into training or calibration.
+
+
+\subsection{Compatibility Scoring}
+A donor anomaly event should be transferred only when it is plausible for the recipient series and local context. Given a donor event $a_{d,j}$ and a recipient location $\ell_{r,k}$ in series $X_r$, we compute a compatibility score
+
+\[
+C(a_{d,j},X_r,\ell_{r,k})\in[0,1].
+\]
+
+This score combines four signals:
+
+\[
+C
+=
+\alpha_s C_{\mathrm{shape}}
++
+\alpha_a C_{\mathrm{amp}}
++
+\alpha_c C_{\mathrm{context}}
++
+\alpha_g C_{\mathrm{group}},
+\]
+
+where $C_{\mathrm{shape}}$ measures anomaly-shape similarity, $C_{\mathrm{amp}}$ measures amplitude compatibility, $C_{\mathrm{context}}$ measures local statistical compatibility, and $C_{\mathrm{group}}$ measures group-level relatedness. The weights satisfy $\alpha_s+\alpha_a+\alpha_c+\alpha_g=1$.
+
+Shape compatibility compares the normalized donor anomaly pattern with event patterns that are plausible for the recipient series. Amplitude compatibility checks whether the donor deviation can be rescaled to the recipient without producing unrealistic values. Context compatibility measures whether the recipient insertion location has a suitable local baseline and variance. Group compatibility gives higher scores when donor and recipient series belong to the same dataset, domain, or statistical group.
+
+A donor-recipient pair is accepted by a compatibility-filtered policy only when
+
+\[
+C(a_{d,j},X_r,\ell_{r,k}) \geq \tau_C,
+\]
+
+where $\tau_C$ is a compatibility threshold. For softer policies, $C$ is used as a ranking score rather than as a hard gate.
+
+
+\subsection{Donor Retrieval}
+
+For each recipient series $X_r$, the framework constructs recipient event contexts
+
+\[
+\mathcal{L}*r={\ell*{r,1},\ell_{r,2},\ldots,\ell_{r,K_r}}.
+\]
+
+from visible low-label anomaly windows in the training split. For each location $\ell_{r,k}$, the framework retrieves candidate donors from the donor pool according to policy $\pi$:
+
+\[
+\mathcal{R}*{r,k}^{\pi}
+=
+{a*{d,j}\in\mathcal{A}: a_{d,j} \text{ satisfies policy } \pi}.
+\]
+
+Each candidate donor is scored using $C(a_{d,j},X_r,\ell_{r,k})$. The selected donor set is
+
+\[
+\mathcal{S}*{r,k}^{\pi}
+=
+{a*{d,j}\in\mathcal{R}*{r,k}^{\pi}:
+C(a*{d,j},X_r,\ell_{r,k})\geq \tau_C^{\pi}},
+\]
+
+where $\tau_C^{\pi}$ may be zero for permissive policies and positive for compatibility-filtered policies. If a policy uses top-$m$ retrieval instead of thresholding, $\mathcal{S}_{r,k}^{\pi}$ contains the $m$ highest-scoring donors.
+
+This step distinguishes cross-series augmentation from simple oversampling. Oversampling increases the number of anomaly events but does not decide whether an event is suitable for a recipient series. Compatibility-based retrieval explicitly models this donor-recipient selection problem.
+\subsection{Event Adaptation and Synthesis}
+
+After candidate donors are selected for each recipient context, TimeEventSynth
+adapts the donor patterns to the recipient series and constructs the synthetic
+anomaly pool.
+
+Let $p_{d,j}$ be the normalized donor pattern for donor event $a_{d,j}$, and
+let $\mu_{r,k}$ and $\sigma_{r,k}$ denote the local mean and standard deviation
+of recipient context $\ell_{r,k}$. The adapted anomaly segment is constructed as
+
+\[
+\tilde{x}_{r,k} = \mu_{r,k} + \beta_{d,r,k}\sigma_{r,k} p_{d,j},
+\]
+where $\beta_{d,r,k}$ controls the anomaly strength and may be bounded by the
+recipient amplitude range.
+
+Each adapted segment forms a synthetic anomaly window:
+
+\[
+\tilde{a}_{r,k} = (\tilde{x}_{r,k}, \tilde{y}_{r,k}, c_{r,k}, \eta_{r,k}),
+\]
+where $\tilde{y}_{r,k}=1$ indicates a synthetic anomaly label, $c_{r,k}$ is
+the aggregate compatibility confidence score, and $\eta_{r,k}$ stores audit
+metadata.
+
+The augmented anomaly set for recipient series $X_r$ is
+\[
+\widetilde{\mathcal{A}}_r^{\pi} =
+\mathcal{A}_r \cup \{\tilde{a}_{r,k} : a_{d,j} \in \mathcal{S}_{r,k}^{\pi}, 
+\ell_{r,k} \in \mathcal{L}_r \}.
+\]
+
+The final synthetic pool for policy $\pi$ is obtained by combining all
+recipient-specific augmented sets:
+\[
+\widetilde{\mathcal{A}}^{\pi} =
+\bigcup_{r=1}^{N} \widetilde{\mathcal{A}}_r^{\pi}.
+\]
+
+This process is intentionally lightweight: it reuses real anomaly windows as
+templates and focuses on compatibility-aware selection and recipient-specific
+adaptation. Optional perturbations such as small temporal shifts, noise, or
+amplitude jitter can be added, but they are not the central contribution.
+
+\section{Transfer Policies}
+\label{sec:policies}
+
+A transfer policy $\pi$ defines how candidate donors are retrieved, filtered, and selected for each recipient event context. We evaluate the following policies.
+
+\begin{itemize}
+    \item \textbf{No Augmentation.}
+    Only visible real training data are used.
+
+    \item \textbf{Random Augmentation.}
+    Visible anomaly windows are oversampled without compatibility-aware
+    cross-series transfer.
+
+    \item \textbf{Groupwise All-Donor Transfer.}
+    Donor events are retrieved within the permitted groupwise donor pool
+    without compatibility filtering.
+
+    \item \textbf{Groupwise Compatible Transfer.}
+    Donor events are retrieved within the groupwise donor pool and retained
+    when they satisfy the compatibility criterion.
+
+    \item \textbf{Groupwise Strict Transfer.}
+    Donor events are retrieved within the groupwise donor pool using a stricter
+    compatibility threshold or selection rule.
+
+    \item \textbf{Detector-Family Heuristic Adaptive Transfer.}
+    The policy selects a transfer strategy according to detector-family
+    heuristics, with fallback relaxation when too few synthetic windows are
+    generated.
+\end{itemize}
+
+These policies span simple data expansion to controlled transfer. Comparing them helps determine whether performance gains arise from more synthetic data, cross-series diversity, or compatibility-aware donor selection.
+
+\section{Detector Interface and Optimization}
+\label{sec:detector_interface}
+
+TimeEventSynth exposes a detector-aware interface rather than enforcing a
+single training procedure for all anomaly detectors. The role of synthetic
+windows depends on the detector backbone.
+
+\subsection{Confidence Scores for Filtering and Auditing}
+
+For each generated synthetic event, TimeEventSynth records component-wise compatibility scores and an aggregate confidence score over event shape, amplitude scale, local context, and group-level relatedness. The aggregate score is used for filtering, ranking, and auditing synthetic events. It is not assumed to be consumed by all detector backbones as a training weight. When a supervised backbone supports weighted training, the score may be optionally mapped to a sample weight; otherwise, it is used outside detector fitting, such as for calibration analysis or synthetic-pool diagnostics.
+
+\subsection{Detector-Aware Training and Calibration}
+
+The generated synthetic windows are used according to the detector backbone.
+For supervised or semi-supervised detectors that support positive anomaly
+training, synthetic windows can be added as additional positive examples. In
+this case, the augmented objective can be written as
+\[
+\mathcal{L}(\theta)
+=
+\sum_{(x,y)\in\mathcal{X}_{\mathrm{real}}}
+\ell(F_{\theta}(x),y)
++
+\lambda_{\mathrm{syn}}
+\sum_{(\tilde{x},\tilde{y})\in\widetilde{\mathcal{X}}_{\pi}}
+\omega(\tilde{x})
+\ell(F_{\theta}(\tilde{x}),\tilde{y}),
+\]
+where $\lambda_{\mathrm{syn}}$ controls the influence of synthetic positives.
+The weight $\omega(\tilde{x})$ is optional and is used only when the detector
+implementation supports weighted supervised training.
+
+For score-based or unsupervised detectors, TimeEventSynth does not require
+refitting the detector on synthetic positives. Instead, the detector first
+produces anomaly scores, and synthetic windows may be used for threshold
+calibration or synthetic-positive separation. Let $S_{\mathrm{syn}}$ be the
+score set on synthetic anomaly windows and $S_{\mathrm{norm}}$ be the score set
+on normal validation windows. When this calibration mode is enabled, the
+threshold is selected to separate synthetic positives from normal validation
+regions. This gives synthetic events a calibration role even when the detector
+itself is not trained with anomaly labels.
+
+This detector-aware design is necessary because augmentation does not affect
+all backbones in the same way. Some detectors may benefit from broader
+synthetic diversity, while others can be sensitive to synthetic distribution
+shift. Therefore, TimeEventSynth evaluates multiple transfer policies instead
+of assuming a single universal augmentation rule.
+
+\subsection{Algorithm}
+
+Algorithm~\ref{alg:cross-series-augmentation} summarizes the full pipeline.
+The method first extracts visible anomaly windows from the training split and
+builds the donor pool. For each recipient series, it constructs recipient event
+contexts from visible low-label anomaly windows and retrieves donor events
+according to policy $\pi$. Each candidate donor is scored by compatibility.
+Accepted donors are adapted into the recipient context and added to the
+synthetic pool. Finally, the detector uses the synthetic pool according to its
+backbone-specific interface.
+
+\begin{algorithm}[t]
+\caption{Compatibility-Aware Cross-Series Event Augmentation}
+\label{alg:cross-series-augmentation}
+\KwIn{Training time series $\mathcal{D}_{\mathrm{train}}$, visible anomaly windows $\mathcal{A}^{\mathrm{vis}}$, transfer policy $\pi$, detector backbone $F_\theta$}
+\KwOut{Synthetic anomaly pool $\widetilde{\mathcal{A}}^\pi$ and trained or calibrated detector $F_\theta^\pi$}
+
+Extract visible anomaly windows $\mathcal{A}^{\mathrm{vis}}_i$ from each training series $X_i$\;
+Build donor pool $\mathcal{A}_{\mathrm{donor}}=\bigcup_i\mathcal{A}^{\mathrm{vis}}_i$\;
+Initialize $\widetilde{\mathcal{A}}^\pi\leftarrow\emptyset$\;
+
+\ForEach{recipient series $X_r$}{
+    Construct recipient event contexts $\mathcal{L}^{\mathrm{vis}}_r$ from visible low-label anomaly windows\;
+
+    \ForEach{recipient context $\ell_{r,k}\in\mathcal{L}^{\mathrm{vis}}_r$}{
+        Retrieve candidate donors $\mathcal{R}_{r,k}^{\pi}$ under policy $\pi$\;
+        Compute compatibility $C(a_{d,j},X_r,\ell_{r,k})$ for each donor $a_{d,j}\in\mathcal{R}_{r,k}^{\pi}$\;
+        Select accepted donors $\mathcal{S}_{r,k}^{\pi}$ by thresholding or ranking\;
+
+        \ForEach{accepted donor $a_{d,j}\in\mathcal{S}_{r,k}^{\pi}$}{
+            Construct synthetic window $\tilde{a}_{r,k}=\mathcal{T}(a_{d,j},X_r,\ell_{r,k})$\;
+            Record aggregate confidence score and audit metadata\;
+            Add $\tilde{a}_{r,k}$ to $\widetilde{\mathcal{A}}^\pi$\;
+        }
+    }
+}
+
+Use $\widetilde{\mathcal{A}}^\pi$ according to the detector interface: training for compatible supervised backbones, or calibration/separation for score-based backbones\;
+\Return{$\widetilde{\mathcal{A}}^\pi$ and $F_\theta^\pi$}
+\end{algorithm}
+
+\noindent\textbf{Example.}
+Consider two sensor time series in the training split. In the donor series, a
+short spike is visible as a labeled anomaly event. In the recipient series,
+only a small number of anomaly windows are visible. TimeEventSynth treats these
+visible recipient windows as event contexts and evaluates whether the donor
+spike is compatible with each context in event shape, amplitude scale, local context, and group-level relatedness. If the compatibility score is high, the
+normalized donor spike is rescaled using the recipient context statistics and
+stored as a synthetic anomaly event. If the score is low, the donor-recipient
+pair is rejected or ranked below more plausible donors. Thus, the framework
+reuses real anomaly patterns across series while reducing the risk of negative
+transfer.
+
+
+\section{Analysis}
+\label{sec:analysis}
+
+The proposed augmentation framework is not intended to guarantee that every synthetic event improves every detector. Instead, its purpose is to reduce the risk of harmful cross-series transfer. We provide a simple analysis to clarify this design goal.
+
+Consider a donor event $a_{d,j}$ transferred to recipient series $X_r$ at location $\ell_{r,k}$. Let $Z=1$ denote the event that the transferred window is a valid anomaly for the recipient context, and let $Z=0$ denote an invalid or harmful transfer. The compatibility score $C(a_{d,j},X_r,\ell_{r,k})$ estimates the plausibility of this transfer. We assume that compatibility is calibrated in the following weak sense: transfers with higher compatibility are less likely to be invalid. That is, $\Pr(Z=0\mid C=c)$ is non-increasing with $c$.
+
+Under this assumption, applying a compatibility threshold $\tau_C$ reduces the expected synthetic-label noise rate:
+
+\[
+\Pr(Z=0 \mid C\geq \tau_C)
+\leq
+\Pr(Z=0).
+\]
+
+This inequality does not imply that every accepted synthetic event is correct. Rather, it states that compatibility filtering improves the quality of the synthetic pool in expectation by removing donor-recipient pairs that are more likely to cause negative transfer.
+
+This analysis also explains why augmentation is detector-dependent. The effect of synthetic data can be viewed as a tradeoff between coverage gain and transfer error. Let $R_{\mathrm{real}}$ be the detector risk using only real data and $R_{\mathrm{aug}}$ be the risk after augmentation. Informally, augmentation is beneficial when
+
+\[
+R_{\mathrm{aug}}
+\leq
+R_{\mathrm{real}}
+-
+\Delta_{\mathrm{coverage}}
++
+\Delta_{\mathrm{noise}}
++
+\Delta_{\mathrm{shift}},
+\]
+
+where $\Delta_{\mathrm{coverage}}$ denotes the benefit from additional anomaly patterns, $\Delta_{\mathrm{noise}}$ denotes the cost of invalid synthetic labels, and $\Delta_{\mathrm{shift}}$ denotes the cost of distribution mismatch between synthetic and real windows. Therefore, augmentation is expected to help when
+\[
+\Delta_{\mathrm{coverage}}
+>
+\Delta_{\mathrm{noise}}+\Delta_{\mathrm{shift}}.
+\]
+
+Compatibility-aware and groupwise transfer reduce $\Delta_{\mathrm{noise}}$ and $\Delta_{\mathrm{shift}}$ by filtering, ranking, or restricting implausible donor-recipient pairs. However, different detector backbones may have different sensitivity to the same synthetic pool. Density-based and tree-based detectors may benefit from compatible synthetic windows that improve anomaly coverage, while some sequence models may be more sensitive to synthetic distribution shift. Thus, the framework should be understood as a controlled augmentation layer rather than a universally improving detector.
+
+\begin{comment}
+\section{Method}
+\label{sec:method}
+
+This section presents our compatibility-aware cross-series event augmentation framework. The method aims to improve low-label time-series anomaly detection by transferring real anomaly windows from donor series to recipient series. Given the formulation in Section~\ref{sec:problem}, the goal is to construct an augmented anomaly set $\widetilde{\mathcal{A}}_r$ for each recipient series $X_r$, while avoiding harmful transfers from incompatible donor events.
+
+The framework has three core components. First, it represents each labeled anomaly window as a transferable event pattern. Second, it estimates donor-recipient compatibility using shape, scale, local-context, and group-level signals. Third, it applies a transfer policy $\pi$ to select donor events and construct synthetic anomaly windows. The generated synthetic windows are then used for detector training, threshold calibration, or synthetic-positive separation, depending on the detector backbone.
+
+Figure~\ref{fig:overview} summarizes the overall workflow. From the limited labeled training data, the framework extracts real anomaly windows and builds a donor event pool $\mathcal{A}$. For a recipient series $X_r$, candidate recipient locations are selected from normal or weakly labeled regions. Donor windows are retrieved from $\mathcal{A}$, scored by compatibility, filtered or ranked according to policy $\pi$, and adapted into the recipient context through a transfer operator $\mathcal{T}$. The output is a set of synthetic anomaly windows $\widetilde{\mathcal{A}}_r$.
+
+\subsection{1Anomaly Event Representation}
+
+For each time series $X_i$, we extract labeled anomalous regions as anomaly windows:
+
+\[
+\mathcal{A}*i={a*{i,1},a_{i,2},\ldots,a_{i,M_i}}.
+\]
+
+Each anomaly event $a_{i,j}$ contains an anomalous subsequence and a local context window around it. We write
+
+\[
+a_{i,j}=(X_i[s_{i,j}:e_{i,j}], q_{i,j}),
+\]
+
+where $X_i[s_{i,j}:e_{i,j}]$ is the anomalous segment and $q_{i,j}$ denotes its event descriptor. The descriptor summarizes properties that are useful for transfer, including event length, normalized shape, amplitude range, local mean and variance, local trend, and group identity if available.
+
+The normalized shape of an event is used to compare anomaly patterns independently of their original scale. Let $\mu_{i,j}$ and $\sigma_{i,j}$ denote the local mean and standard deviation around event $a_{i,j}$. We define the normalized event pattern as
+
+\[
+p_{i,j}
+=
+\frac{X_i[s_{i,j}:e_{i,j}]-\mu_{i,j}}
+{\sigma_{i,j}+\epsilon}.
+\]
+
+The pattern $p_{i,j}$ captures the relative anomaly shape, such as a spike, drop, shift, or abnormal fluctuation. This representation allows a donor event to be adapted to a recipient series with a different scale.
+
+\subsection{2Event Compatibility}
+
+A donor anomaly event should be transferred only when it is plausible for the recipient series and local context. Given a donor event $a_{d,j}$ and a recipient location $\ell_{r,k}$ in series $X_r$, we compute a compatibility score
+
+\[
+C(a_{d,j},X_r,\ell_{r,k})\in[0,1].
+\]
+
+This score combines four signals:
+
+\[
+C
+=
+\alpha_s C_{\mathrm{shape}}
++
+\alpha_a C_{\mathrm{amp}}
++
+\alpha_c C_{\mathrm{context}}
++
+\alpha_g C_{\mathrm{group}},
+\]
+
+where $C_{\mathrm{shape}}$ measures anomaly-shape similarity, $C_{\mathrm{amp}}$ measures amplitude compatibility, $C_{\mathrm{context}}$ measures local statistical compatibility, and $C_{\mathrm{group}}$ measures group-level relatedness. The weights satisfy $\alpha_s+\alpha_a+\alpha_c+\alpha_g=1$.
+
+Shape compatibility compares the normalized donor anomaly pattern with event patterns that are plausible for the recipient series. Amplitude compatibility checks whether the donor deviation can be rescaled to the recipient without producing unrealistic values. Context compatibility measures whether the recipient insertion location has a suitable local baseline and variance. Group compatibility gives higher scores when donor and recipient series belong to the same dataset, domain, or statistical group.
+
+A donor-recipient pair is accepted by a compatibility-filtered policy only when
+
+\[
+C(a_{d,j},X_r,\ell_{r,k}) \geq \tau_C,
+\]
+
+where $\tau_C$ is a compatibility threshold. For softer policies, $C$ is used as a ranking score or as a synthetic-example weight rather than as a hard gate.
+
+\subsection{4Lightweight Event Alignment and Adaptation}
+
+The purpose of event adaptation is to transfer the anomaly pattern from the donor series into the recipient context without copying the donor scale directly. Given donor event $a_{d,j}$ and recipient location $\ell_{r,k}$, the transfer operator produces
+
+\[
+\tilde{a}*{r,k}
+=
+\mathcal{T}(a*{d,j},X_r,\ell_{r,k}).
+\]
+
+Let $p_{d,j}$ be the normalized donor pattern. Let $\mu_{r,k}$ and $\sigma_{r,k}$ denote the local mean and standard deviation around recipient location $\ell_{r,k}$. The transferred anomaly segment is constructed as
+
+\[
+\tilde{x}*{r,k}
+=
+\mu*{r,k}
++
+\beta_{d,r,k}\sigma_{r,k}p_{d,j},
+\]
+
+where $\beta_{d,r,k}$ controls the anomaly strength after adaptation. In the simplest setting, $\beta_{d,r,k}=1$. In compatibility-aware transfer, $\beta_{d,r,k}$ may be bounded by the recipient amplitude range or adjusted according to compatibility confidence.
+
+This construction preserves the donor anomaly shape while matching the recipient scale. It is intentionally lightweight: the framework uses real anomaly windows as event templates rather than training a high-capacity generative model. The main technical question is therefore not how to invent anomaly shapes, but how to select and adapt real donor events in a controlled way.
+
+\subsection{1Donor Event Pool}
+
+All labeled anomaly windows from the training split are collected into a donor pool:
+
+\[
+\mathcal{A}
+=
+\bigcup_{i=1}^{N}\mathcal{A}_i.
+\]
+
+Each donor event stores its source series, dataset or group identity, normalized pattern $p_{i,j}$, local statistics, and descriptor $q_{i,j}$. The donor pool supports both within-group and cross-group retrieval. Within-group retrieval prioritizes donors from related series, while cross-group retrieval increases event diversity by considering donors from different datasets or domains.
+
+For a recipient series $X_r$, we exclude test information and only use donor events available in the training split. This ensures that augmentation does not leak test labels into training or calibration.
+
+\subsection{3Compatibility-Based Donor Retrieval}
+
+For each recipient series $X_r$, the framework first selects a set of candidate recipient locations
+
+\[
+\mathcal{L}*r={\ell*{r,1},\ell_{r,2},\ldots,\ell_{r,K_r}}.
+\]
+
+These locations are chosen from normal or unlabeled regions in the training split. For each location $\ell_{r,k}$, the framework retrieves candidate donors from the donor pool according to policy $\pi$:
+
+\[
+\mathcal{R}*{r,k}^{\pi}
+=
+{a*{d,j}\in\mathcal{A}: a_{d,j} \text{ satisfies policy } \pi}.
+\]
+
+Each candidate donor is scored using $C(a_{d,j},X_r,\ell_{r,k})$. The selected donor set is
+
+\[
+\mathcal{S}*{r,k}^{\pi}
+=
+{a*{d,j}\in\mathcal{R}*{r,k}^{\pi}:
+C(a*{d,j},X_r,\ell_{r,k})\geq \tau_C^{\pi}},
+\]
+
+where $\tau_C^{\pi}$ may be zero for permissive policies and positive for compatibility-filtered policies. If a policy uses top-$m$ retrieval instead of thresholding, $\mathcal{S}_{r,k}^{\pi}$ contains the $m$ highest-scoring donors.
+
+This step distinguishes cross-series augmentation from simple oversampling. Oversampling increases the number of anomaly events but does not decide whether an event is suitable for a recipient series. Compatibility-based retrieval explicitly models this donor-recipient selection problem.
+
+\subsection{B1-Transfer Confidence}
+
+For each accepted donor-recipient pair, the framework assigns a transfer confidence level. The confidence is determined by the compatibility score and the number of satisfied compatibility signals:
+
+\[
+g(a_{d,j},X_r,\ell_{r,k})\in
+{\textsc{Strict},\textsc{Weak},\textsc{Fallback}}.
+\]
+
+A transfer is marked \textsc{Strict} when shape, amplitude, and local-context compatibility are all high. It is marked \textsc{Weak} when only part of the compatibility evidence is strong. It is marked \textsc{Fallback} when the donor is selected mainly for diversity or oversampling rather than strong compatibility.
+
+The confidence level determines the training weight of a synthetic example:
+
+\[
+w(\tilde{a})=
+\begin{cases}
+w_{\mathrm{strict}}, & g=\textsc{Strict},\
+w_{\mathrm{weak}}, & g=\textsc{Weak},\
+w_{\mathrm{fallback}}, & g=\textsc{Fallback}.
+\end{cases}
+\]
+
+In the default compatibility-aware setting, $w_{\mathrm{strict}}>w_{\mathrm{weak}}>w_{\mathrm{fallback}}$, and fallback transfers may be removed entirely. This lets us separate controlled cross-series transfer from generic data expansion.
+
+\subsection{4Synthetic Window Construction}
+
+For each selected donor $a_{d,j}\in\mathcal{S}_{r,k}^{\pi}$, we construct a synthetic anomaly window
+
+\[
+\tilde{a}*{r,k}
+=
+(\tilde{x}*{r,k},\tilde{y}*{r,k},g*{r,k},w_{r,k}),
+\]
+
+where $\tilde{x}*{r,k}$ is the adapted anomaly segment, $\tilde{y}*{r,k}=1$ indicates an anomaly label, $g_{r,k}$ is the transfer confidence, and $w_{r,k}$ is the corresponding training or calibration weight.
+
+The augmented anomaly set for recipient series $X_r$ is
+
+\[
+\widetilde{\mathcal{A}}*r^{\pi}
+=
+\mathcal{A}*r
+\cup
+{\tilde{a}*{r,k}: a*{d,j}\in\mathcal{S}*{r,k}^{\pi},
+\ell*{r,k}\in\mathcal{L}_r}.
+\]
+
+The final augmented data for policy $\pi$ is obtained by combining all recipient-specific augmented sets:
+
+\[
+\widetilde{\mathcal{A}}^{\pi}
+=
+\bigcup_{r=1}^{N}\widetilde{\mathcal{A}}_r^{\pi}.
+\]
+
+The synthetic construction is deterministic by default. Optional perturbations such as small temporal shifts, noise, or amplitude jitter can be added, but they are not the main contribution. The central contribution is the compatibility-aware selection and adaptation of real anomaly events.
+
+\subsection{B2-Detector-Aware Training and Calibration}
+The generated synthetic windows are used according to the detector backbone. For supervised or semi-supervised detectors, synthetic windows are added as positive anomaly examples. The training objective follows the formulation in Section~\ref{sec:problem}:
+
+\[
+\mathcal{L}(\theta)
+=
+\sum_{(x,y)\in\mathcal{X}*{\mathrm{real}}}
+\ell(F*\theta(x),y)
++
+\lambda_{\mathrm{syn}}
+\sum_{(\tilde{x},\tilde{y})\in\widetilde{\mathcal{X}}*{\pi}}
+w(\tilde{x})\ell(F*\theta(\tilde{x}),\tilde{y}).
+\]
+
+For unsupervised or score-based detectors, the detector first produces anomaly scores on real and synthetic windows. Synthetic events are then used for threshold calibration. Let $S_{\mathrm{syn}}$ be the score set on synthetic anomaly windows and $S_{\mathrm{norm}}$ be the score set on normal validation windows. The threshold is selected to separate synthetic positives from normal validation regions. This gives synthetic events a calibration role even when the detector itself is not trained with labels.
+
+This detector-aware design is necessary because augmentation does not affect all backbones in the same way. Some detectors benefit from broader synthetic diversity, while others are sensitive to distribution shift. Therefore, our framework evaluates multiple transfer policies instead of assuming a single universal augmentation rule.
+
+\subsection{C1-Transfer Policies}
+
+A transfer policy $\pi$ defines the donor candidate set, compatibility threshold, and confidence weighting scheme. We evaluate the following policies:
+
+\begin{itemize}
+\item \textbf{Real only}: $\widetilde{\mathcal{A}}*r^\pi=\mathcal{A}*r$; no synthetic windows are added.
+\item \textbf{Random event oversampling}: real anomaly windows are duplicated or resampled without cross-series compatibility.
+\item \textbf{All-donor transfer}: donors are selected from all available series with no compatibility filter.
+\item \textbf{Cross-dataset transfer}: donors are selected from different datasets or groups.
+\item \textbf{Compatibility-filtered transfer}: donors are accepted only when $C(a*{d,j},X_r,\ell*{r,k})\geq\tau_C$.
+\item \textbf{Groupwise transfer}: donor retrieval is constrained or prioritized by dataset or statistical group membership.
+\item \textbf{Adaptive groupwise transfer}: the framework selects or weights groupwise transfer based on compatibility statistics and validation behavior.
+\end{itemize}
+
+These policies form a spectrum from simple data expansion to controlled transfer. By comparing them, we can determine whether performance gains come from more synthetic data, from cross-series diversity, or from compatibility-aware donor selection.
+
+\subsection{B3-Algorithm}
+
+
+Algorithm~\ref{alg:cross-series-augmentation} summarizes the full pipeline. The method first extracts labeled anomaly windows and builds the donor pool. For each recipient series, it selects candidate recipient locations and retrieves donor events according to policy $\pi$. Each candidate donor is scored by compatibility. Accepted donors are adapted into the recipient context and added to the augmented data. Finally, the detector is trained or calibrated using the real and synthetic data.
+
+\begin{algorithm}[t]
+\caption{Compatibility-Aware Cross-Series Event Augmentation}
+\label{alg:cross-series-augmentation}
+\KwIn{Training time series $\mathcal{D}$, anomaly windows $\mathcal{A}$, transfer policy $\pi$, detector backbone $F_\theta$}
+\KwOut{Augmented anomaly windows $\widetilde{\mathcal{A}}^\pi$ and calibrated detector $F_\theta$}
+
+Extract labeled anomaly windows $\mathcal{A}_i$ from each training series $X_i$;
+Build donor pool $\mathcal{A}=\bigcup_i\mathcal{A}_i$;
+Initialize $\widetilde{\mathcal{A}}^\pi\leftarrow\emptyset$;
+
+\ForEach{recipient series $X_r$}{
+Select candidate recipient locations $\mathcal{L}*r$;
+\ForEach{location $\ell*{r,k}\in\mathcal{L}*r$}{
+Retrieve candidate donors $\mathcal{R}*{r,k}^{\pi}$ under policy $\pi$;
+Compute compatibility $C(a_{d,j},X_r,\ell_{r,k})$ for each donor;
+Select accepted donors $\mathcal{S}*{r,k}^{\pi}$;
+\ForEach{accepted donor $a*{d,j}\in\mathcal{S}*{r,k}^{\pi}$}{
+Assign confidence level $g(a*{d,j},X_r,\ell_{r,k})$;
+Construct synthetic window $\tilde{a}*{r,k}=\mathcal{T}(a*{d,j},X_r,\ell_{r,k})$;
+Add $\tilde{a}*{r,k}$ to $\widetilde{\mathcal{A}}^\pi$;
+}
+}
+}
+Train or calibrate $F*\theta$ using real data and $\widetilde{\mathcal{A}}^\pi$;
+\Return{$\widetilde{\mathcal{A}}^\pi$ and calibrated detector $F_\theta$}
+\end{algorithm}
+
+\noindent\textbf{Example.}
+Consider two sensor time series. In the donor series, a short spike is labeled as an anomaly. In the recipient series, labeled anomalies are scarce, but there are normal regions with similar local variance and baseline behavior. A naive all-donor policy may inject the spike into many locations, including regions where the spike is unrealistic. In contrast, compatibility-aware transfer first computes whether the donor spike is compatible with the recipient location in shape, scale, and local context. If the compatibility score is high, the normalized spike pattern is rescaled using the recipient local statistics and inserted as a synthetic anomaly. If the score is low, the transfer is rejected or down-weighted. Thus, the framework reuses real anomaly patterns across series while reducing negative transfer.
+
+\subsection{D1-Analysis: Compatibility and Negative Transfer}
+\label{sec:analysis}
+
+The proposed augmentation framework is not intended to guarantee that every synthetic event improves every detector. Instead, its purpose is to reduce the risk of harmful cross-series transfer. We provide a simple analysis to clarify this design goal.
+
+Consider a donor event $a_{d,j}$ transferred to recipient series $X_r$ at location $\ell_{r,k}$. Let $Z=1$ denote the event that the transferred window is a valid anomaly for the recipient context, and let $Z=0$ denote an invalid or harmful transfer. The compatibility score $C(a_{d,j},X_r,\ell_{r,k})$ estimates the plausibility of this transfer. We assume that compatibility is calibrated in the following weak sense: transfers with higher compatibility are less likely to be invalid. That is, $\Pr(Z=0\mid C=c)$ is non-increasing with $c$.
+
+Under this assumption, applying a compatibility threshold $\tau_C$ reduces the expected synthetic-label noise rate:
+
+\[
+\Pr(Z=0 \mid C\geq \tau_C)
+\leq
+\Pr(Z=0).
+\]
+
+This inequality does not imply that every accepted synthetic event is correct. Rather, it states that compatibility filtering improves the quality of the synthetic pool in expectation by removing donor-recipient pairs that are more likely to cause negative transfer.
+
+This analysis also explains why augmentation is detector-dependent. The effect of synthetic data can be viewed as a tradeoff between coverage gain and transfer error. Let $R_{\mathrm{real}}$ be the detector risk using only real data and $R_{\mathrm{aug}}$ be the risk after augmentation. Informally, augmentation is beneficial when
+
+\[
+R_{\mathrm{aug}}
+\leq
+R_{\mathrm{real}}
+-
+\Delta_{\mathrm{coverage}}
++
+\Delta_{\mathrm{noise}}
++
+\Delta_{\mathrm{shift}},
+\]
+
+where $\Delta_{\mathrm{coverage}}$ denotes the benefit from additional anomaly patterns, $\Delta_{\mathrm{noise}}$ denotes the cost of invalid synthetic labels, and $\Delta_{\mathrm{shift}}$ denotes the cost of distribution mismatch between synthetic and real windows. Therefore, augmentation is expected to help when
+\[
+\Delta_{\mathrm{coverage}}
+>
+\Delta_{\mathrm{noise}}+\Delta_{\mathrm{shift}}.
+\]
+
+Compatibility-aware and groupwise transfer reduce $\Delta_{\mathrm{noise}}$ and $\Delta_{\mathrm{shift}}$ by filtering or down-weighting implausible donor-recipient pairs. However, different detector backbones may have different sensitivity to the same synthetic pool. Density-based and tree-based detectors may benefit from compatible synthetic windows that improve anomaly coverage, while some sequence models may be more sensitive to synthetic distribution shift. Thus, the framework should be understood as a controlled augmentation layer rather than a universally improving detector.
+\end{comment}
+
+
+
+\begin{comment}
+
+\section{EVALUATION}
+\label{sec:evaluation}
+In this section, we conduct experiments to evaluate the effectiveness of the proposed synthetic event transfer framework for low-label time-series anomaly detection. We seek to answer the following research questions:
+
+
+\begin{itemize}
+\item \textbf{RQ1}: Can synthetic event transfer improve anomaly detection performance compared with existing augmentation strategies?
+\item \textbf{RQ2}: How do augmentation effects vary across heterogeneous anomaly detectors?
+\item \textbf{RQ3}: Does synthetic event transfer provide larger benefits under low-label settings?
+\item \textbf{RQ4}: What are the contributions of compatibility-aware transfer, groupwise event modeling, and adaptive policy selection?
+\end{itemize}
+
+
+
+\paragraph{Benchmark.}
+We evaluate TimeEventSynth on a controlled subset of TSB-UAD-Public-v2, a heterogeneous time-series anomaly detection benchmark suite containing time series from multiple source datasets and application domains. To avoid domination by large domains and to obtain a controlled multi-domain benchmark, we use at most 100 eligible time series and apply balanced per-domain sampling. The final benchmark contains \textbf{[NUM\_DOMAINS]} domains, including \textbf{[DOMAIN\_LIST]}, with \textbf{[NUM\_SERIES]} total time series after balancing. Table~\ref{tab:dataset_stats} reports the domain-level statistics used in our experiments.
+
+
+\begin{table}[t]
+\centering
+\caption{Dataset statistics for the controlled TSB-UAD-Public-v2 subset.}
+\label{tab:dataset_stats}
+\begin{tabular}{lrrrr}
+\toprule
+Domain & Series & Train & Val & Test \\
+\midrule
+[DOMAIN-1] & [ ] & [ ] & [ ] & [ ] \\
+[DOMAIN-2] & [ ] & [ ] & [ ] & [ ] \\
+[DOMAIN-3] & [ ] & [ ] & [ ] & [ ] \\
+[DOMAIN-4] & [ ] & [ ] & [ ] & [ ] \\
+[DOMAIN-5] & [ ] & [ ] & [ ] & [ ] \\
+\midrule
+Total & [ ] & [ ] & [ ] & [ ] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\paragraph{Low-label setting.}
+We focus on a low-label anomaly detection setting where only a small fraction of labeled anomaly events is visible during training and augmentation. Unless otherwise stated, we use a labeled anomaly fraction of \textbf{20\%}. The donor pool for synthetic event transfer is constructed only from the visible labeled events in the training split, preventing leakage from held-out test labels. We evaluate all methods over \textbf{five random split seeds} \textbf{[0,1,2,3,4]} and report mean and standard deviation.
+
+
+\paragraph{Detector backbones.}
+We evaluate TimeEventSynth with heterogeneous detector backbones, including classical unsupervised detectors, reconstruction-based models, sequence models, and a supervised low-label classifier. Specifically, we use Isolation Forest (IForest), Local Outlier Factor (LOF), One-Class SVM (OCSVM), AutoEncoder, CNN, TimesNet-style forecasting backbone, and an internal supervised classifier. Synthetic windows are used in a detector-dependent manner: supervised or trainable models may use synthetic windows as positive examples, whereas score-based unsupervised detectors primarily use synthetic windows for threshold calibration or synthetic-positive separation.
+
+\paragraph{Augmentation baselines.}
+We compare the following augmentation policies:
+\begin{itemize}
+\item \textbf{No Aug.}: training or calibration uses only the visible real data.
+\item \textbf{Random Aug.}: labeled anomaly windows are randomly oversampled without compatibility-aware transfer.
+\item \textbf{Sampling Aug.}: donor events are sampled from the available donor pool without compatibility filtering.
+\item \textbf{TimeEventSynth}: the proposed adaptive groupwise transfer policy, which selects a detector-family-specific transfer strategy using compatibility-aware and groupwise donor retrieval.
+\end{itemize}
+
+For ablation analysis, we additionally evaluate groupwise all-donor transfer, groupwise compatible transfer, and groupwise strict transfer.
+
+\paragraph{Metrics.}
+We report event-level metrics as the primary evaluation criterion because anomaly labels in time-series benchmarks often correspond to contiguous events rather than isolated points. The main metrics are Event-F1, event precision, event recall, and the number of false-positive events. We also report point-level metrics and threshold diagnostics as secondary evidence. For false-positive-aware analysis, we compare the best Event-F1 operating point with an FP-limited operating point.
+\end{comment}
+
+\section{EVALUATION}
+\label{sec:evaluation}
+
+In this section, we evaluate TimeEventSynth as a synthetic event transfer layer for low-label, cross-domain time-series anomaly detection. We study whether labeled anomaly events from related time series can be transferred to improve existing detector backbones. Given the challenging nature of event-level detection under limited supervision, we report both absolute performance and relative changes, and analyze false-positive behavior in detail.
+
+We seek to answer the following research questions:
+\begin{itemize}
+\item \textbf{RQ1}: Can synthetic event transfer improve existing detector backbones compared with no augmentation and random augmentation?
+\item \textbf{RQ2}: How detector-dependent are the effects of synthetic event transfer?
+\item \textbf{RQ3}: How does TimeEventSynth behave under different low-label budgets?
+\item \textbf{RQ4}: Does compatibility-aware event transfer provide measurable evidence beyond random donor usage?
+\end{itemize}
+
+
+
+\subsection{Experiment Setup}
+\label{sec:setup}
+
+\paragraph{Benchmark}
+
+We evaluate TimeEventSynth on a controlled subset of TSB-UAD-Public-v2, a heterogeneous time-series anomaly detection benchmark covering multiple source datasets and application domains. To avoid domination by large domains, we apply balanced per-domain sampling and retain eligible series from five domains: Genesis, IOPS, MSL, NAB, and TODS. The main controlled setting contains 63 time series per split seed, with 43 training series, 8 validation series, and 12 test series. All main results are averaged over five random split seeds.
+
+Table~\ref{tab:dataset_stats} reports the main benchmark statistics.
+
+\begin{table}[t]
+\centering
+\caption{Dataset statistics of the main controlled TSB-UAD-Public-v2 setting. Counts are averaged over five split seeds; split counts are stable across seeds.}
+\label{tab:dataset_stats}
+\begin{tabular}{lrrrr}
+\toprule
+Domain & Series & Train & Val & Test \\
+\midrule
+Genesis & 4 & 2 & 1 & 1 \\
+IOPS & 7 & 5 & 1 & 1 \\
+MSL & 17 & 12 & 2 & 3 \\
+NAB & 20 & 14 & 2 & 4 \\
+TODS & 15 & 10 & 2 & 3 \\
+\midrule
+Total & 63 & 43 & 8 & 12 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Low-label setting}
+We focus on a low-label setting where only 20\% of labeled anomaly events in the training split are visible for training and augmentation. The donor pool for synthetic event transfer is constructed only from visible labeled events in the training split, preventing leakage from validation or test labels. All results are averaged over five random split seeds, $\{0,1,2,3,4\}$, and we report mean performance across seeds.
+
+\paragraph{Detector backbones}
+We evaluate TimeEventSynth with seven heterogeneous detector backbones: Isolation Forest (IForest), Local Outlier Factor (LOF), One-Class SVM (OCSVM), AutoEncoder, CNN, a TimesNet-style sequence backbone, and a supervised low-label classifier. This design allows us to examine detector-dependent augmentation effects across heterogeneous detector families.
+
+\paragraph{Augmentation policies}
+We compare No Augmentation, Random Augmentation, and multiple TimeEventSynth variants. No Aug. uses only visible real training data. Random Aug. oversamples labeled anomaly windows without compatibility-aware transfer. TimeEventSynth variants include groupwise all-donor transfer, groupwise compatible transfer, groupwise strict transfer, and an adaptive policy that selects a detector-family-specific transfer strategy.
+
+\paragraph{Metrics}
+We use event-level metrics as the primary evaluation criterion because time-series anomalies are usually contiguous events. The absolute Event-F1 values are modest across all methods, reflecting the difficulty of event-level anomaly detection under the controlled low-label cross-domain setting. We therefore interpret the results as evidence that synthetic event transfer can improve existing detector backbones, rather than as evidence of saturated anomaly detection performance.
+
+\begin{comment}
+\subsection{Experiment Setup}
+\subsection{Main Results}
+\subsection{Policy-Family Analysis}
+\subsection{False-Positive-Aware Analysis}
+\subsection{Low-Label Analysis}
+\subsection{Compatibility Mechanism Analysis}
+\subsection{Robustness on the 100-Series Controlled Setting}
+\end{comment}
+
+
+
+\FloatBarrier
+\subsection{Overall Effectiveness}
+\label{sec:overall_effectiveness}
+
+\begin{table*}[!t]
+\centering
+\caption{Event-F1 of the default adaptive TimeEventSynth policy on the controlled TSB-UAD-Public-v2 setting.  Values are averaged over five split seeds.}
+\label{tab:adaptive_main_results}
+\begin{tabular}{lrrrrr}
+\toprule
+Detector & No Aug. & Random Aug. & Adaptive TES & $\Delta$ vs No Aug. & $\Delta$ vs Random \\
+\midrule
+IForest     & 0.0051 & 0.0242 & 0.0122 & +0.0071 & -0.0121 \\
+LOF         & 0.0383 & 0.0033 & 0.0698 & +0.0315 & +0.0665 \\
+OCSVM       & 0.0121 & 0.0128 & 0.0116 & -0.0005 & -0.0012 \\
+AutoEncoder & 0.0038 & 0.0475 & 0.0594 & +0.0556 & +0.0119 \\
+CNN         & 0.0051 & 0.0414 & 0.0503 & +0.0452 & +0.0089 \\
+TimesNet    & 0.0134 & 0.0046 & 0.0099 & -0.0035 & +0.0054 \\
+Supervised  & 0.0737 & 0.0944 & 0.1037 & +0.0300 & +0.0093 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+
+We first report the performance of the default adaptive TimeEventSynth policy.
+Unlike post-hoc policy selection, the adaptive policy is fixed before evaluation according to the detector family. In our implementation, density-based detectors
+use groupwise compatible transfer, while trainable or broad-capacity detectors use groupwise all-donor transfer. Therefore, this setting reflects the deployable TimeEventSynth configuration rather than a test-set-selected policy. The absolute Event-F1 values are modest across all methods, reflecting the difficulty of event-level anomaly detection under the controlled low-label
+cross-domain setting. We therefore interpret the results as evidence that synthetic event transfer can improve existing detector backbones, rather than as evidence of saturated anomaly detection performance.
+
+
+Table~\ref{tab:adaptive_main_results} shows that the default adaptive
+TimeEventSynth policy improves over No Augmentation on five out of seven
+detectors and over Random Augmentation on five out of seven detectors. The
+largest gains are observed on LOF, AutoEncoder, CNN, and the supervised
+classifier. However, the improvement is not universal: Adaptive TES underperforms
+Random Augmentation on IForest and OCSVM, and does not exceed No Augmentation on
+TimesNet. These results show that synthetic event transfer is beneficial for
+most backbones, but its effect is detector-dependent.
+
+\subsection{Detector-Dependent Effects}
+\label{sec:detector_dependent_effects}
+
+We next analyze the TimeEventSynth policy family. Table~\ref{tab:policy_upper}
+reports the upper envelope among evaluated TimeEventSynth-family policies for each detector. This table should not be interpreted as the performance of a single deployable policy. Instead, it is a post-hoc policy sensitivity analysis that quantifies the best attainable Event-F1 within the evaluated policy family.
+
+\begin{table*}[t]
+\centering
+\caption{Detector-wise upper envelope of TimeEventSynth-family policies on the controlled TSB-UAD-Public-v2 setting.}
+\label{tab:policy_upper}
+\begin{tabular}{lrrrlrr}
+\toprule
+Detector & No Aug. & Random Aug. & Best TES & TES Policy & $\Delta$ vs No Aug. & $\Delta$ vs Random \\
+\midrule
+IForest     & 0.0051 & 0.0242 & 0.0276 & TES-Strict     & +0.0225 & +0.0033 \\
+LOF         & 0.0383 & 0.0033 & 0.0698 & TES-Adaptive   & +0.0315 & +0.0665 \\
+OCSVM       & 0.0121 & 0.0128 & 0.0121 & TES-Strict     & +0.0000 & -0.0007 \\
+AutoEncoder & 0.0038 & 0.0475 & 0.0623 & TES-Compatible & +0.0586 & +0.0148 \\
+CNN         & 0.0051 & 0.0414 & 0.0565 & TES-Compatible & +0.0514 & +0.0151 \\
+TimesNet    & 0.0134 & 0.0046 & 0.0134 & TES-Strict     & +0.0000 & +0.0089 \\
+Supervised  & 0.0737 & 0.0944 & 0.1037 & TES-Adaptive   & +0.0300 & +0.0093 \\
+\bottomrule
+
+\end{tabular}
+\end{table*}
+
+Under detector-wise post-hoc policy selection, TimeEventSynth-family variants
+improve over No Augmentation on five out of seven detectors and over Random
+Augmentation on six out of seven detectors. 
+
+The largest absolute gain over No Augmentation is observed on AutoEncoder, where Event-F1 increases from 0.0038 to 0.0623, corresponding to a +0.0586 absolute gain. The largest gain over Random Augmentation is observed on LOF, where Event-F1 increases from 0.0033 to 0.0698, corresponding to a +0.0665 absolute gain.
+
+
+This result supports the claim that the TimeEventSynth policy family contains useful augmentation strategies for most detector backbones, while also showing that the preferred transfer policy varies across detectors.
+
+
+\begin{table*}[t]
+\centering
+\caption{Policy ablation measured by Event-F1.}
+\label{tab:ablation}
+\begin{tabular}{lrrrrrr}
+\toprule
+Detector & No Aug. & Random & TES-All & TES-Compatible & TES-Strict & TES-Adaptive \\
+\midrule
+IForest     & 0.0051 & 0.0242 & 0.0054 & 0.0122 & 0.0276 & 0.0122 \\
+LOF         & 0.0383 & 0.0033 & 0.0232 & 0.0698 & 0.0470 & 0.0698 \\
+OCSVM       & 0.0121 & 0.0128 & 0.0045 & 0.0116 & 0.0121 & 0.0116 \\
+AutoEncoder & 0.0038 & 0.0475 & 0.0594 & 0.0623 & 0.0393 & 0.0594 \\
+CNN         & 0.0051 & 0.0414 & 0.0503 & 0.0565 & 0.0531 & 0.0503 \\
+TimesNet    & 0.0134 & 0.0046 & 0.0099 & 0.0134 & 0.0134 & 0.0099 \\
+Supervised  & 0.0737 & 0.0944 & 0.1037 & 0.0804 & 0.0700 & 0.1037 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Table~\ref{tab:ablation} provides a policy-level ablation of the evaluated
+TimeEventSynth variants. TES-Compatible ties for the best LOF result and
+achieves the best results for AutoEncoder and CNN, confirming the benefit of
+compatibility-aware donor selection. TES-Strict performs best for IForest and
+matches the best TimesNet result, suggesting that stricter donor filtering can
+reduce harmful transfers for sensitive unsupervised detectors. TES-Adaptive ties
+for the best LOF result and also ties with TES-All for the best supervised
+result, but it is not universally optimal. This suggests that adaptive policy
+selection is useful, while more fine-grained detector-specific policy learning
+remains a promising direction.
+
+
+\subsection{False-Positive Trade-offs}
+\label{sec:false_positive_tradeoffs}
+
+Synthetic augmentation may improve event recall by making detectors more
+sensitive, but this can also increase false-positive events. Therefore, Event-F1 alone is insufficient for understanding whether the improvement comes from better event transfer or from overly aggressive detection. We explicitly compare Event-F1 gains with changes in false-positive events.
+
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/timeeventsynth_fp_tradeoff_vs_random_icde_v2.png}
+\caption{False-positive-aware trade-off between the detector-wise Best TES policy and Random Augmentation. Points to the right indicate Event-F1 improvement, while points below zero indicate fewer false-positive events.}
+\label{fig:fp_tradeoff}
+\end{figure}
+
+Figure~\ref{fig:fp_tradeoff} shows that the upper-envelope gains are not always obtained by simply increasing detector sensitivity. For IForest, AutoEncoder, CNN, and TimesNet, the selected Best TES policy improves or preserves Event-F1 while reducing false-positive events compared with Random Augmentation. For example, AutoEncoder improves Event-F1 by +0.0148 while reducing false-positive events by 167.0, and IForest improves Event-F1 by +0.0033 while reducing false-positive events by 69.4.
+
+In contrast, LOF and the supervised classifier obtain higher Event-F1 with more false-positive events, indicating a recall-oriented trade-off. LOF achieves the
+largest Event-F1 gain over Random Augmentation (+0.0665), but increases false-positive events by 187.2. OCSVM does not benefit from the selected TimeEventSynth-family policy under this comparison. 
+
+Overall, this analysis shows that TimeEventSynth can improve event-level detection quality without necessarily increasing false alarms, but the trade-off depends on the detector backbone.
+
+%对应Q4
+\subsection{Effect of Compatibility Filtering}
+\label{sec:compatibility_filtering}
+
+We further examine whether compatibility-aware transfer actually selects more plausible donor-recipient pairs. This analysis is based on the synthetic audit
+records from the main controlled TSB-UAD-Public-v2 setting. For the adaptive policy, density-based detectors select groupwise compatible transfer. For IForest, LOF, and OCSVM, the compatibility-aware stage considers 25,109 donor pairs per detector, keeps 3,423 pairs, and rejects 21,686 pairs, corresponding to a keep rate of 13.63\%. The mean compatibility score of kept pairs is 0.6920,
+compared with 0.5877 for rejected pairs.
+
+The stricter compatibility policy is more selective. TES-Strict considers 34,885 donor pairs, keeps 3,281 pairs, and rejects 31,604 pairs, corresponding to a keep rate of 9.41\%. The mean compatibility score of kept pairs is 0.9105, substantially higher than 0.6408 for rejected pairs. These results show that compatibility-aware policies do not simply reuse donor events uniformly. Instead,
+they preferentially retain donor-recipient pairs with stronger compatibility evidence, supporting the role of compatibility filtering in reducing potentially harmful cross-series transfer.
+
+\begin{table}[t]
+\centering
+\caption{Compatibility filtering statistics.}
+\label{tab:compatibility_filtering}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+Policy & Cand. & Kept & Drop & Rate & $S_{\rm keep}$ & $S_{\rm drop}$ \\
+\midrule
+TES-Comp. & 25,109 & 3,423 & 21,686 & 13.63\% & 0.6920 & 0.5877 \\
+TES-Strict & 34,885 & 3,281 & 31,604 & 9.41\% & 0.9105 & 0.6408 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+% 等结果中
+\subsection{Low-Label Analysis}
+\label{sec:low_label_analysis}
+
+The current experiments evaluate a fixed 20\% low-label setting. Therefore, the results support that TimeEventSynth is effective under low-label supervision, but they do not by themselves establish that the benefit monotonically increases as the label fraction decreases. We report this as evidence under low-label supervision. The 5\%, 10\%, and 20\% label-fraction sweep is currently running and will be used to complete this analysis.
+
+
+\subsection{Robustness Across Controlled Subsets}
+\label{sec:controlled_subset_robustness}
+We additionally evaluate a smaller controlled setting with 41 balanced time series over the same five domains and five split seeds. In this setting, the best TimeEventSynth-family policy improves over No Augmentation on five out of seven detectors, ties OCSVM, and underperforms No Augmentation on the supervised classifier. Compared with Random Augmentation, it improves on six out of seven detectors. The largest gains are observed on AutoEncoder, with a +0.0510
+improvement over No Augmentation, and on the supervised classifier, with a
++0.0309 improvement over Random Augmentation. This secondary result supports the robustness of TimeEventSynth across controlled subset sizes, while also showing that detector-specific behavior remains important.
+
+
+
+
+\section{RELATED WORK}
+\section{CONCLUSION}
+\section{ACKNOWLEDGMENT}
+\section{REFERENCES}
+\end{document}

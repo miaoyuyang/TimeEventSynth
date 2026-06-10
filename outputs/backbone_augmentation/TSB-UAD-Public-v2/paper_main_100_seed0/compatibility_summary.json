@@ -1,0 +1,86 @@
+{
+  "0": {
+    "real_only": {},
+    "random_event_oversampling": {
+      "policy_name": "random_event_oversampling",
+      "compatibility_enabled": false
+    },
+    "all_donors_no_filter": {
+      "policy_name": "all_donors_no_filter",
+      "compatibility_enabled": false,
+      "num_donor_pairs": 3171,
+      "num_candidate_windows": 151,
+      "num_kept_donor_pairs": 3171,
+      "num_rejected_donor_pairs": 0,
+      "mean_compatibility_score": NaN,
+      "min_compatibility_score": NaN,
+      "max_compatibility_score": NaN
+    },
+    "adaptive_groupwise_transfer__internal_classifier": {
+      "policy_name": "groupwise_cross_dataset_all",
+      "compatibility_enabled": false,
+      "num_donor_pairs": 2315,
+      "num_candidate_windows": 151,
+      "num_kept_donor_pairs": 2315,
+      "num_rejected_donor_pairs": 0,
+      "mean_compatibility_score": NaN,
+      "min_compatibility_score": NaN,
+      "max_compatibility_score": NaN
+    },
+    "adaptive_groupwise_transfer__iforest": {
+      "policy_name": "groupwise_cross_dataset_compatible",
+      "compatibility_enabled": true,
+      "num_donor_pairs": 2315,
+      "num_candidate_windows": 151,
+      "num_kept_donor_pairs": 453,
+      "num_rejected_donor_pairs": 1862,
+      "mean_compatibility_score": 0.6099125084801188,
+      "min_compatibility_score": 0.5111530325681948,
+      "max_compatibility_score": 0.7445376703826911
+    },
+    "adaptive_groupwise_transfer__lof": {
+      "policy_name": "groupwise_cross_dataset_compatible",
+      "compatibility_enabled": true,
+      "num_donor_pairs": 2315,
+      "num_candidate_windows": 151,
+      "num_kept_donor_pairs": 453,
+      "num_rejected_donor_pairs": 1862,
+      "mean_compatibility_score": 0.6099125084801188,
+      "min_compatibility_score": 0.5111530325681948,
+      "max_compatibility_score": 0.7445376703826911
+    },
+    "adaptive_groupwise_transfer__ocsvm": {
+      "policy_name": "groupwise_cross_dataset_compatible",
+      "compatibility_enabled": true,
+      "num_donor_pairs": 2315,
+      "num_candidate_windows": 151,
+      "num_kept_donor_pairs": 453,
+      "num_rejected_donor_pairs": 1862,
+      "mean_compatibility_score": 0.6099125084801188,
+      "min_compatibility_score": 0.5111530325681948,
+      "max_compatibility_score": 0.7445376703826911
+    },
+    "adaptive_groupwise_transfer__autoencoder": {
+      "policy_name": "groupwise_cross_dataset_all",
+      "compatibility_enabled": false,
+      "num_donor_pairs": 2315,
+      "num_candidate_windows": 151,
+      "num_kept_donor_pairs": 2315,
+      "num_rejected_donor_pairs": 0,
+      "mean_compatibility_score": NaN,
+      "min_compatibility_score": NaN,
+      "max_compatibility_score": NaN
+    },
+    "adaptive_groupwise_transfer__timesnet": {
+      "policy_name": "groupwise_cross_dataset_all",
+      "compatibility_enabled": false,
+      "num_donor_pairs": 2315,
+      "num_candidate_windows": 151,
+      "num_kept_donor_pairs": 2315,
+      "num_rejected_donor_pairs": 0,
+      "mean_compatibility_score": NaN,
+      "min_compatibility_score": NaN,
+      "max_compatibility_score": NaN
+    }
+  }
+}

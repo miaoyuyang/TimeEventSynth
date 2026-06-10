@@ -1,0 +1,9 @@
+| Detector | No Aug. Event-F1 | Random Aug. Event-F1 | Best TimeEventSynth Event-F1 | Best TES Policy | Delta vs No Aug. | Delta vs Random | FP Delta vs No Aug. | FP Delta vs Random |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| IForest | 0.0011 | 0.0481 | 0.0478 | TES-Strict | +0.0466 | -0.0003 | +95.8 | +50.2 |
+| LOF | 0.0303 | 0.0477 | 0.0651 | TES-Strict | +0.0348 | +0.0175 | +98.4 | +112.4 |
+| OCSVM | 0.0022 | 0.0000 | 0.0022 | TimeEventSynth | +0.0000 | +0.0022 | +0.0 | +16.2 |
+| AutoEncoder | 0.0014 | 0.0491 | 0.0524 | TES-Compatible | +0.0510 | +0.0033 | +173.0 | -114.0 |
+| CNN | 0.0123 | 0.0463 | 0.0533 | TES-Strict | +0.0410 | +0.0070 | +267.0 | +68.6 |
+| TimesNet | 0.0078 | 0.0102 | 0.0132 | TimeEventSynth | +0.0054 | +0.0030 | +33.0 | +29.6 |
+| Supervised | 0.0769 | 0.0349 | 0.0657 | TES-Strict | -0.0111 | +0.0309 | +86.0 | -5.8 |
